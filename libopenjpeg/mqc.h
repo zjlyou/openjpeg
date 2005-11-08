@@ -79,7 +79,7 @@ void mqc_bypass_init_enc();
 /*
  * BYPASS mode switch
  */
-void mqc_bypass_enc(int d);
+void mqc_bypass_enc();
 
 /*
  * BYPASS mode switch

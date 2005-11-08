@@ -28,26 +28,18 @@
 #define __TGT_H
 
 typedef struct tgt_node {
-  struct tgt_node *parent;
-  int value;
-  int low;
-  int known;
+	struct tgt_node *parent;
+	int value;
+	int low;
+	int known;
 } tgt_node_t;
 
 typedef struct {
-  int numleafsh;
-  int numleafsv;
-  int numnodes;
-  tgt_node_t *nodes;
+	int numleafsh;
+	int numleafsv;
+	int numnodes;
+	tgt_node_t *nodes;
 } tgt_tree_t;
-
-
-
-/*
- * Reset a tag-tree (set all leaves to 0)
- * tree: tag-tree to reset
- */
-void tgt_reset(tgt_tree_t * tree);
 
 /*
  * Create a tag-tree
@@ -55,6 +47,12 @@ void tgt_reset(tgt_tree_t * tree);
  * numleafsv: height of the array of leafs of the tree
  */
 tgt_tree_t *tgt_create(int numleafsh, int numleafsv);
+
+/*
+ * Reset a tag-tree (set all leafs to 0)
+ * tree: tag-tree to reset
+ */
+void tgt_reset(tgt_tree_t * tree);
 
 /*
  * Destroy a tag-tree, liberating memory

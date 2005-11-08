@@ -25,39 +25,17 @@
  */
 
 #include "fix.h"
-#include <math.h>   /*Add Antonin : multbug1*/
 
-#ifdef WIN32
+#ifdef DAVID_WIN32
 #define int64 __int64
 #else
 #define int64 long long
 #endif
 
-/*
- * Multiply two fixed-precision rational numbers.
- */
-
-/*int fix_mul(int a, int b)
-{
-  return (int) ((int64) a * (int64) b >> 13);
-}*/
-
-
-/*Mod Antonin : multbug1*/
-/*
+/* <summary> */
+/* Multiply two fixed-precision rational numbers. */
+/* </summary> */
 int fix_mul(int a, int b)
 {
-  double tmp= (double) ((int64) a * (int64) b);
-  int64 v = (int64) ((fabs(tmp/8192.0)>=floor(fabs(tmp/8192.0))+0.5)?fabs(tmp/8192.0)+1.0:fabs(tmp/8192.0));
-  v = (tmp<0)?-v:v;
-  return (int) v;
+	return (int) ((int64) a * (int64) b >> 13);
 }
-*/
-/*doM*/
-
-int fix_mul(int a, int b)   /* Luke Lee optimized : 11/16/2004*/
-{
-    int64 temp = (int64) a * (int64) b >> 12;
-    return (int) ((temp >> 1) + (temp & 1)) ;
-}
-

@@ -27,55 +27,103 @@
 #include "raw.h"
 
 
-unsigned char raw_c;		/* temporary buffer where bits are coded or decoded */
-unsigned int raw_ct;		/* number of bits already read or free to write */
-unsigned int raw_lenmax;	/* maximum length to decode */
-unsigned int raw_len;		/* length decoded */
-unsigned char *raw_bp;		/* pointer to the current position in the buffer */
-unsigned char *raw_start;	/* pointer to the start of the buffer */
-unsigned char *raw_end;		/* pointer to the end of the buffer */
+unsigned char raw_c;
+unsigned int raw_ct, raw_lenmax, raw_len;
+unsigned char *raw_bp;
+unsigned char *raw_start;
+unsigned char *raw_end;
 
-/*
- * Return the number of bytes already encoded.
- */
+/* <summary> */
+/* Return the number of bytes already encoded. */
+/* </summary> */
 int raw_numbytes()
 {
-  return raw_bp - raw_start;
+	return raw_bp - raw_start;
 }
 
-/*
- * Initialize raw-decoder.
- *
- * bp  : pointer to the start of the buffer from which the bytes will be read
- * len : length of the input buffer
- */
+/* <summary> */
+/* Initialize raw-encoder. */
+/* </summary> */
+/* <param name="bp">Output buffer.</param> */
+void raw_init_enc(unsigned char *bp)
+{
+	raw_bp = bp - 1;
+	raw_c = 0;
+	raw_ct = 7;
+	raw_start = bp;
+}
+
+/* <summary> */
+/* Encode a symbol using the RAW-coder. */
+/* </summary> */
+/* <param name="d"> The symbol to be encoded (0 or 1).</param> */
+void raw_encode(int d)
+{
+	/*  raw_c+=d; */
+
+	raw_ct--;
+	raw_c += (d << raw_ct);
+
+	if (raw_ct == 0) {
+		raw_bp++;
+		*raw_bp = raw_c;
+		raw_ct = 7;
+		if (raw_c == 0xff) {
+			raw_ct = 6;
+		}
+		raw_c = 0;
+	}
+	/*else 
+	   {
+	   raw_ct--;
+	   raw_c<<=1;
+	   } */
+}
+
+/* <summary> */
+/* Flush encoded data. */
+/* </summary> */
+void raw_flush()
+{
+	char first = 1;
+	int prev = 1;
+	while (raw_ct != 7) {
+		raw_encode(first ? 0 : !(prev));
+		prev = first ? 0 : !(prev);
+		first = 0;
+	}
+}
+
+/* <summary> */
+/* Initialize raw-decoder. */
+/* </summary> */
 void raw_init_dec(unsigned char *bp, int len)
 {
-  raw_start = bp;
-  raw_lenmax = len;
-  raw_len = 0;
-  raw_c = 0;
-  raw_ct = 0;
+	raw_start = bp;
+	raw_lenmax = len;
+	raw_len = 0;
+	raw_c = 0;
+	raw_ct = 0;
 }
 
-/*
- * Decode a symbol using raw-decoder. Cfr p.506 TAUBMAN
- */
+/* <summary> */
+/* Decode a symbol using raw-decoder. Cfr p.506 TAUBMAN */
+/* </summary> */
 int raw_decode()
 {
-  int d;
-  if (raw_ct == 0) {
-    raw_ct = 8;
-    if (raw_len == raw_lenmax)
-      raw_c = 0xff;
-    else {
-      if (raw_c == 0xff)
-	raw_ct = 7;
-      raw_c = *(raw_start + raw_len);
-      raw_len++;
-    }
-  }
-  raw_ct--;
-  d = (raw_c >> raw_ct) & 0x01;
-  return d;
+	int d;
+	if (raw_ct == 0) {
+		raw_ct = 8;
+		if (raw_len == raw_lenmax)
+			raw_c = 0xff;
+		else {
+			if (raw_c == 0xff)
+				raw_ct = 7;
+			raw_c = *(raw_start + raw_len);
+			raw_len++;
+		}
+	}
+	raw_ct--;
+	d = (raw_c >> raw_ct) & 0x01;
+	return d;
 }

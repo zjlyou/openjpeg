@@ -24,8 +24,6 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef __JP2_H
-#define __JP2_H
 
 #include "j2k.h"
 
@@ -40,5 +38,3 @@ void jp2_write_ftyp();
 int jp2_write_jp2c(char *J2K_file);
 
 void jp2_write_jp();
-
-#endif

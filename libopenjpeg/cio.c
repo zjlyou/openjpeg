@@ -26,154 +26,111 @@
 
 #include "cio.h"
 #include <setjmp.h>
-#include <memory.h>
 
-static unsigned char *cio_start;	/* pointer to the start of the stream */
-static unsigned char *cio_end;	/* pointer to the end of the stream */
-static unsigned char *cio_bp;	/* pointer to the present position */
+static unsigned char *cio_start, *cio_end, *cio_bp;
 
 extern jmp_buf j2k_error;
 
-/* 
- * Number of bytes written.
- */
+/* <summary> */
+/* Number of bytes written. */
+/* </summary> */
 int cio_numbytes()
 {
-  return cio_bp - cio_start;
+	return cio_bp - cio_start;
 }
 
-/*
- * Get position in byte stream.
- */
+/* <summary> */
+/* Get position in byte stream. */
+/* </summary> */
 int cio_tell()
 {
-  return cio_bp - cio_start;
+	return cio_bp - cio_start;
 }
 
-/*
- * Set position in byte stream.
- *
- * pos : position, in number of bytes, from the beginning of the stream
- */
+/* <summary> */
+/* Set position in byte stream. */
+/* </summary> */
 void cio_seek(int pos)
 {
-  cio_bp = cio_start + pos;
+	cio_bp = cio_start + pos;
 }
 
-/*
- * Number of bytes left before the end of the stream.
- */
+/* <summary> */
+/* Number of bytes left before the end of the stream. */
+/* </summary> */
 int cio_numbytesleft()
 {
-  return cio_end - cio_bp;
+	return cio_end - cio_bp;
 }
 
-/*
- * Get pointer to the current position in the stream.
- */
+/* <summary> */
+/* Get pointer to the current position in the stream. */
+/* </summary> */
 unsigned char *cio_getbp()
 {
-  return cio_bp;
+	return cio_bp;
 }
 
-/* 
- * Initialize byte IO
- *
- * bp  : destination/source stream
- * len : length of the stream
- */
+/* <summary> */
+/* Initialize byte IO. */
+/* </summary> */
 void cio_init(unsigned char *bp, int len)
 {
-  cio_start = bp;
-  cio_end = bp + len;
-  cio_bp = bp;
+	cio_start = bp;
+	cio_end = bp + len;
+	cio_bp = bp;
 }
 
-/*
- * Write a byte.
- */
+/* <summary> */
+/* Write a byte. */
+/* </summary> */
 void cio_byteout(unsigned char v)
 {
-  if (cio_bp >= cio_end)
-    longjmp(j2k_error, 1);
-  *cio_bp++ = v;
+	if (cio_bp >= cio_end)
+		longjmp(j2k_error, 1);
+	*cio_bp++ = v;
 
 }
 
-/*
- * Read a byte.
- */
+/* <summary> */
+/* Read a byte. */
+/* </summary> */
 unsigned char cio_bytein()
 {
-  if (cio_bp >= cio_end)
-    longjmp(j2k_error, 1);
-  return *cio_bp++;
+	if (cio_bp >= cio_end)
+		longjmp(j2k_error, 1);
+	return *cio_bp++;
 }
 
-/*
- * Write some bytes.
- *
- * v : value to write
- * n : number of bytes to write
- */
+/* <summary> */
+/* Write a byte. */
+/* </summary> */
 void cio_write(unsigned int v, int n)
 {
-  int i;
-  for (i = n - 1; i >= 0; i--) {
-    cio_byteout((unsigned char) ((v >> (i << 3)) & 0xff));
-  }
+	int i;
+	for (i = n - 1; i >= 0; i--) {
+		cio_byteout((unsigned char) ((v >> (i << 3)) & 0xff));
+	}
 }
 
-/*
- * Read some bytes.
- *
- * n : number of bytes to read
- *
- * return : value of the n bytes read
- */
+/* <summary> */
+/* Read some bytes. */
+/* </summary> */
 unsigned int cio_read(int n)
 {
-  int i;
-  unsigned int v;
-  v = 0;
-  for (i = n - 1; i >= 0; i--) {
-    v += cio_bytein() << (i << 3);
-  }
-  return v;
+	int i;
+	unsigned int v;
+	v = 0;
+	for (i = n - 1; i >= 0; i--) {
+		v += cio_bytein() << (i << 3);
+	}
+	return v;
 }
 
-/* 
- * Skip some bytes.
- *
- * n : number of bytes to skip
- */
+/* <summary> */
+/* Write some bytes. */
+/* </summary> */
 void cio_skip(int n)
 {
-  cio_bp += n;
-}
-
-/* 
- * Read n bytes, copy to buffer
- *
- * n : number of bytes to transfer
- */
-void cio_read_to_buf(unsigned char* src_buf, int n)/* Glenn adds */
-{
-  if (cio_bp + n > cio_end)
-    longjmp(j2k_error, 1);
-  memcpy(cio_bp, src_buf, n);
-  cio_bp += n;
-}
-
-/* 
- * Write n bytes, copy from buffer
- *
- * n : number of bytes to transfer
- */
-void cio_write_from_buf(unsigned char* dest_buf, int n)/* Glenn adds */
-{
-  if (cio_bp + n > cio_end)
-    longjmp(j2k_error, 1);
-  memcpy(dest_buf, cio_bp, n);
-  cio_bp += n;
+	cio_bp += n;
 }

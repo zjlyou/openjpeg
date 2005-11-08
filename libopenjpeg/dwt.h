@@ -33,16 +33,23 @@
 
 /*
  * Apply a reversible DWT transform to a component of an image  
- * tilec : tile component information (present tile)
+ * a: samples of the component
+ * w: width of the component
+ * h: height of the component
+ * l: number of decomposition levels in the DWT
  */
 /* void dwt_encode(int* a, int w, int h, int l); */
-void dwt_encode(tcd_tilecomp_t * tilec);
+void dwt_encode(int *a, int w, int h, tcd_tilecomp_t * tilec, int l);
 /*
  * Apply a reversible inverse DWT transform to a component of an image  
- * tilec : tile component information (present tile)
+ * a: samples of the component
+ * w: width of the component
+ * h: height of the component
+ * l: number of decomposition levels in the DWT
  */
-void dwt_decode(tcd_tilecomp_t * tilec, int stop);
-
+void dwt_decode(int *a, int w, int h, tcd_tilecomp_t * tilec, int l,
+								tcd_tilecomp_t * row_tilec, tcd_tilecomp_t * col_tilec);
+/* void dwt_decode(int* a, int w, int h,tcd_tilecomp_t *tilec, int l); */
 /*
  * Get the gain of a subband for the reversible DWT
  * orient: number that identifies the subband (0->LL, 1->HL, 2->LH, 3->HH)
@@ -58,13 +65,23 @@ double dwt_getnorm(int level, int orient);
 
 /*
  * Apply an irreversible DWT transform to a component of an image  
+ * a: samples of the component
+ * w: width of the component
+ * h: height of the component
+ * l: number of decomposition levels in the DWT
  */
-void dwt_encode_real(tcd_tilecomp_t * tilec);
+void dwt_encode_real(int *a, int w, int h, tcd_tilecomp_t * tilec, int l);
 
 /*
  * Apply an irreversible inverse DWT transform to a component of an image  
+ * a: samples of the component
+ * w: width of the component
+ * h: height of the component
+ * l: number of decomposition levels in the DWT
  */
-void dwt_decode_real(tcd_tilecomp_t * tilec, int stop);
+void dwt_decode_real(int *a, int w, int h, tcd_tilecomp_t * tilec, int l,
+										 tcd_tilecomp_t * row_tilec,
+										 tcd_tilecomp_t * col_tilec);
 /*
  * Get the gain of a subband for the irreversible DWT
  * orient: number that identifies the subband (0->LL, 1->HL, 2->LH, 3->HH)

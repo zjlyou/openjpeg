@@ -25,18 +25,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __JPIP_H
-#define __JPIP_H
-
 #include "j2k.h"
 
 // Codestream index box (superbox)
-int jpip_write_cidx(int offset, info_image_t img, j2k_cp_t *j2k_cp, int version);
+int jpip_write_cidx(int offset, info_image_t img, j2k_cp_t *j2k_cp);
 
 // Index Finder Box
 void jpip_write_iptr(int offset, int length);
 
 // File Index Box
 int jpip_write_fidx(int offset_jp2c, int length_jp2c, int offset_idx, int length_idx);
-
-#endif
