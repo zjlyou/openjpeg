@@ -41,11 +41,11 @@ make doc
 }}}
 
 Main './configure' options (type './configure --help' for more details)
-  '--enable-mj2'
-  '--enable-jp3d'
-  '--enable-jpwl'
-  '--prefix=/path/to/install/directory' (example : '--prefix=$PWD/installed')
-  '--enable-debug' (default : disabled)
+  * '--enable-mj2'
+  * '--enable-jp3d'
+  * '--enable-jpwl'
+  * '--prefix=/path/to/install/directory' (example : '--prefix=$PWD/installed')
+  * '--enable-debug' (default : disabled)
 
 You can also specify your own CFLAGS and LDFLAGS with (for example):
 {{{
