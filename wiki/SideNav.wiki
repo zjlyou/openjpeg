@@ -5,4 +5,4 @@
     * JPEG 2000 codec
     * Motion JPEG 2000
     * JPWL
-    * JPIP
+    * [JPIP JPIP]
