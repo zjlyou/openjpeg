@@ -55,8 +55,8 @@ The documentation can be build this way (requires doxygen utility):
 =Usage=
 
 ==Preliminary notes==
-  * HTML documentation is available at http://www.openjpeg.org/jpip/doc/html)
-  * Example image is available at http://www.openjpeg.org/jpip/data)
+  * HTML documentation is available at http://www.openjpeg.org/jpip/doc/html
+  * Example image is available at http://www.openjpeg.org/jpip/data/copenhague1.zip
 
 ==Webserver==
   You need a webserver running with the fastcgi module enabled and correctly configured. 
