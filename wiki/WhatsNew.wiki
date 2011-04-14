@@ -1,6 +1,10 @@
 #summary News from the OpenJPEG project
 #labels Featured,Restrict-AddWikiComment-Commit
 
+==April 2011: OpenJPIP 1.0 released==
+
+[http://code.google.com/p/openjpeg/downloads/list OpenJPIP 1.0] has been released and committed on the svn. More info [http://code.google.com/p/openjpeg/wiki/JPIP here].
+
 ==January 2011: Version 1.4 released==
 
 [http://code.google.com/p/openjpeg/downloads/list Version 1.4] has been released which includes all bugfixes since 1.3 (see CHANGES for  list of them) and autotools.
