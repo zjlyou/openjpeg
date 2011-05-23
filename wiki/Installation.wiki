@@ -41,6 +41,7 @@ make doc
 }}}
 
 Main './configure' options (type './configure --help' for more details)
+  * '--enable-jpip'
   * '--enable-mj2'
   * '--enable-jpwl'
   * '--prefix=/path/to/install/directory' (example : '--prefix=$PWD/installed')
