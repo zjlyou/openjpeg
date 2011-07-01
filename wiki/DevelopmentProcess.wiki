@@ -1,0 +1,3 @@
+#summary Development process for the openjpeg project : trunk, branches and tags management
+
+tbw
