@@ -126,13 +126,13 @@ unsigned char *cio_getbp(opj_cio_t *cio) {
 /*
  * Write a byte.
  */
-opj_bool cio_byteout(opj_cio_t *cio, unsigned char v) {
+bool cio_byteout(opj_cio_t *cio, unsigned char v) {
 	if (cio->bp >= cio->end) {
 		opj_event_msg(cio->cinfo, EVT_ERROR, "write error\n");
-		return OPJ_FALSE;
+		return false;
 	}
 	*cio->bp++ = v;
-	return OPJ_TRUE;
+	return true;
 }
 
 /*

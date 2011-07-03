@@ -1280,11 +1280,6 @@ static void j2k_read_sot(opj_j2k_t *j2k) {
 	
 	partno = cio_read(cio, 1);
 	numparts = cio_read(cio, 1);
-  
-  if (partno >= numparts) {
-    opj_event_msg(j2k->cinfo, EVT_WARNING, "SOT marker inconsistency in tile %d: tile-part index greater (%d) than number of tile-parts (%d)\n", tileno, partno, numparts);
-    numparts = partno+1;
-  }
 	
 	j2k->curtileno = tileno;
 	j2k->cur_tp_num = partno;
@@ -1300,14 +1295,15 @@ static void j2k_read_sot(opj_j2k_t *j2k) {
 			j2k->cstr_info->tile[tileno].tileno = tileno;
 			j2k->cstr_info->tile[tileno].start_pos = cio_tell(cio) - 12;
 			j2k->cstr_info->tile[tileno].end_pos = j2k->cstr_info->tile[tileno].start_pos + totlen - 1;				
-    } else {
-			j2k->cstr_info->tile[tileno].end_pos += totlen;
+			j2k->cstr_info->tile[tileno].num_tps = numparts;
+			if (numparts)
+				j2k->cstr_info->tile[tileno].tp = (opj_tp_info_t *) opj_malloc(numparts * sizeof(opj_tp_info_t));
+			else
+				j2k->cstr_info->tile[tileno].tp = (opj_tp_info_t *) opj_malloc(10 * sizeof(opj_tp_info_t)); // Fixme (10)
 		}
-    j2k->cstr_info->tile[tileno].num_tps = numparts;
-    if (numparts)
-      j2k->cstr_info->tile[tileno].tp = (opj_tp_info_t *) opj_realloc(j2k->cstr_info->tile[tileno].tp, numparts * sizeof(opj_tp_info_t));
-    else
-      j2k->cstr_info->tile[tileno].tp = (opj_tp_info_t *) opj_realloc(j2k->cstr_info->tile[tileno].tp, 10 * sizeof(opj_tp_info_t)); // Fixme (10)
+		else {
+			j2k->cstr_info->tile[tileno].end_pos += totlen;
+		}		
 		j2k->cstr_info->tile[tileno].tp[partno].tp_start_pos = cio_tell(cio) - 12;
 		j2k->cstr_info->tile[tileno].tp[partno].tp_end_pos = 
 			j2k->cstr_info->tile[tileno].tp[partno].tp_start_pos + totlen - 1;
@@ -1496,7 +1492,7 @@ static void j2k_write_eoc(opj_j2k_t *j2k) {
 
 static void j2k_read_eoc(opj_j2k_t *j2k) {
 	int i, tileno;
-	opj_bool success;
+	bool success;
 
 	/* if packets should be decoded */
 	if (j2k->cp->limit_decoding != DECODE_ALL_BUT_PACKETS) {
@@ -1509,7 +1505,7 @@ static void j2k_read_eoc(opj_j2k_t *j2k) {
 			opj_free(j2k->tile_data[tileno]);
 			j2k->tile_data[tileno] = NULL;
 			tcd_free_decode_tile(tcd, i);
-			if (success == OPJ_FALSE) {
+			if (success == false) {
 				j2k->state |= J2K_STATE_ERR;
 				break;
 			}
@@ -1764,7 +1760,7 @@ opj_image_t* j2k_decode(opj_j2k_t *j2k, opj_cio_t *cio, opj_codestream_info_t *c
 		if (j2k->cp->correct) {
 
 			int orig_pos = cio_tell(cio);
-			opj_bool status;
+			bool status;
 
 			/* call the corrector */
 			status = jpwl_correct(j2k);
@@ -2040,12 +2036,12 @@ void j2k_setup_encoder(opj_j2k_t *j2k, opj_cparameters_t *parameters, opj_image_
 		int i;
 
 		/* set JPWL on */
-		cp->epc_on = OPJ_TRUE;
-		cp->info_on = OPJ_FALSE; /* no informative technique */
+		cp->epc_on = true;
+		cp->info_on = false; /* no informative technique */
 
 		/* set EPB on */
 		if ((parameters->jpwl_hprot_MH > 0) || (parameters->jpwl_hprot_TPH[0] > 0)) {
-			cp->epb_on = OPJ_TRUE;
+			cp->epb_on = true;
 			
 			cp->hprot_MH = parameters->jpwl_hprot_MH;
 			for (i = 0; i < JPWL_MAX_NO_TILESPECS; i++) {
@@ -2066,7 +2062,7 @@ void j2k_setup_encoder(opj_j2k_t *j2k, opj_cparameters_t *parameters, opj_image_
 
 		/* set ESD writing */
 		if ((parameters->jpwl_sens_size == 1) || (parameters->jpwl_sens_size == 2)) {
-			cp->esd_on = OPJ_TRUE;
+			cp->esd_on = true;
 
 			cp->sens_size = parameters->jpwl_sens_size;
 			cp->sens_addr = parameters->jpwl_sens_addr;
@@ -2080,10 +2076,10 @@ void j2k_setup_encoder(opj_j2k_t *j2k, opj_cparameters_t *parameters, opj_image_
 		}
 
 		/* always set RED writing to false: we are at the encoder */
-		cp->red_on = OPJ_FALSE;
+		cp->red_on = false;
 
 	} else {
-		cp->epc_on = OPJ_FALSE;
+		cp->epc_on = false;
 	}
 #endif /* USE_JPWL */
 
@@ -2215,7 +2211,7 @@ void j2k_setup_encoder(opj_j2k_t *j2k, opj_cparameters_t *parameters, opj_image_
 	}
 }
 
-opj_bool j2k_encode(opj_j2k_t *j2k, opj_cio_t *cio, opj_image_t *image, opj_codestream_info_t *cstr_info) {
+bool j2k_encode(opj_j2k_t *j2k, opj_cio_t *cio, opj_image_t *image, opj_codestream_info_t *cstr_info) {
 	int tileno, compno;
 	opj_cp_t *cp = NULL;
 
@@ -2428,7 +2424,7 @@ opj_bool j2k_encode(opj_j2k_t *j2k, opj_cio_t *cio, opj_image_t *image, opj_code
 	}
 #endif /* USE_JPWL */
 
-	return OPJ_TRUE;
+	return true;
 }
 
 

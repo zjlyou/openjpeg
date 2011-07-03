@@ -2,6 +2,10 @@ MAJOR = 1
 MINOR = 4
 BUILD = 0
 
+JP3D_MAJOR = 1
+JP3D_MINOR = 3
+JP3D_BUILD = 0
+
 prefix=/usr/local
 CC = gcc
 AR = ar
@@ -21,7 +25,9 @@ WITH_TIFF = no
 #
 # Set to yes if you want compile/install 
 #    jpwl libraries/binaries
+#    jp3d libraries/binaries
 WITH_JPWL = no
+WITH_JP3D = no
 #
 #Set to yes if you have doxygen installed
 #Set to no if doxygen is missing.

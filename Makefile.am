@@ -1,59 +1,28 @@
-DISTCHECK_CONFIGURE_FLAGS = --enable-jpip=yes --enable-jpwl=yes --enable-mj2=yes
+#OpenJPEG top source directory
+SUBDIRS = libopenjpeg codec mj2 @jpwl_dir@ @jp3d_dir@ doc
 
-ACLOCAL_AMFLAGS = -I m4
+clean-local:
+	@rm -rf bin
+	@l='$(SUBDIRS)'; for f in $$l ; do \
+	rm -f $$f/.report.txt ; \
+	done
 
-SUBDIRS = libopenjpeg applications doc
+distclean-local: clean-local
 
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = libopenjpeg1.pc
-
-
-MAINTAINERCLEANFILES = \
-Makefile.in \
-aclocal.m4 \
-config.guess \
-opj_config.h.in \
-opj_config.h.in~ \
-config.sub \
-configure \
-depcomp \
-install-sh \
-ltmain.sh \
-missing
-
-EXTRA_DIST = \
-CMake/CheckHaveGetopt.cmake \
-CMake/OpenJPEGConfig.cmake.in \
-testing/CTestCustom.cmake.in \
-testing/CTestConfig.cmake \
-CMakeLists.txt \
-LICENSE \
-CHANGES \
-README \
-INSTALL \
-bootstrap.sh \
-libopenjpeg1.pc.cmake \
-libopenjpeg1.pc.in \
-opj_configh.cmake.in \
-opj_config.h.in.user \
-m4/opj_check_lib.m4 \
-m4/opj_doxygen.m4 \
-m4/pkg.m4
-
-.PHONY: doc
-
-# Documentation
-
-doc:
-	@echo "entering doc/"
-	@cd doc && make doc
+pkgconf_dir = /usr/lib/pkgconfig
 
 install-data-hook:
-	$(LN_S) -nf libopenjpeg1.pc $(DESTDIR)$(pkgconfigdir)/libopenjpeg.pc
-	@echo -e " (PC)\t$(pkgconfigdir)/libopenjpeg1.pc" >> $(top_builddir)/report.txt
-	@echo -e " (LN)\t$(pkgconfigdir)/libopenjpeg.pc" >> $(top_builddir)/report.txt
-	@cat $(top_builddir)/report.txt
-	@rm $(top_builddir)/report.txt
+	@echo ""
+	@l='$(SUBDIRS)'; for f in $$l ; do \
+	cat $$f/.report.txt ; \
+	done
+	@echo ""
+	@echo "Installing: libopenjpeg1.pc $(pkgconf_dir)"
+	@echo ""
+	@$(INSTALL) -d $(pkgconf_dir)
+	@cp libopenjpeg.pc $(pkgconf_dir)/libopenjpeg1.pc
+	@(cd $(pkgconf_dir) && $(RM) libopenjpeg.pc && \
+	$(LN_S) libopenjpeg1.pc libopenjpeg.pc)
 
 uninstall-hook:
-	rm -f $(DESTDIR)$(pkgconfigdir)/libopenjpeg.pc
+	@(cd $(pkgconf_dir) && $(RM) libopenjpeg.pc libopenjpeg1.pc)

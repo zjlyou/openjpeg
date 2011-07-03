@@ -7,38 +7,34 @@ UNIX/LINUX similar systems
 
 1) Using configure tools
 
-To build from top-level directory, you can simply type: 
-  ./bootstrap.sh
-  ./configure
+You can simply type
+  ./configure [--prefix=/path]
   make
 
-To keep all build files in a separate directory, you can type instead: 
-  ./bootstrap.sh
-  mkdir build
-  cd build
-  ../configure
-  make
-
-To install:
-  sudo make install
-  
-To clean:
+If you are root:
+  make install
   make clean
   make distclean
 
-To build doc (requires 'doxygen' to be found on your system):
-(this will create an html directory in TOP_LEVEL/doc)
-  make doc
+else:
+  sudo make install
+  make clean
+  make distclean
 
-Main './configure' options (type './configure --help' for more details)
-  '--enable-mj2'
-  '--enable-jpwl'
-  '--prefix=/path/to/install/directory' (example : '--prefix=$PWD/installed')
-  '--enable-debug' (default : disabled)
+Binaries are located in the 'bin' directory.
 
-You can also specify your own CFLAGS and LDFLAGS with (for example):
-  CFLAGS="-O3 -pipe" LDFLAGS="-Wl,-s" ./configure
+If 'configure' does not work on your system please
+call './bootstrap.sh'.
 
+If 'configure' does not find a library or header file,
+or to see available configure options, please try 
+'./configure --help'.
+
+Note: if Doxygen is found on your system, a target 'docs'
+will automatically be created in 'doc/Makefile'. To build
+the documentation (it will create an 'html' directory):
+  cd doc
+	make docs
 
 2) Using cmake (see www.cmake.org)
 
@@ -53,10 +49,6 @@ If you are root:
 else:
   sudo make install
   make clean
-  
-To build the Doxygen documentation (Doxygen needs to be found on the system):
-(A 'html' directory is generated in the 'doc' directory)
-  make doc
 
 Binaries are located in the 'bin' directory.
 
@@ -67,6 +59,9 @@ Main available cmake flags:
 * To build the CODEC executables: '-DBUILD_CODEC:bool=on' (default: 'ON')
 * To build the MJ2 executables: '-DBUILD_MJ2:bool=on' (default: 'OFF')
 * To build the JPWL executables and JPWL library: '-DBUILD_JPWL:bool=on' (default: 'OFF')
+* To build the JP3D executables and JP3D library: '-DBUILD_JP3D:bool=on' (default: 'OFF')
+* [WIN32 ONLY] To build the INDEXER_JPIP executable: '-DBUILD_INDEXER_JPIP:bool=on' (default: 'OFF')
+* To build the doxygen documentation: '-DBUILD_DOC:bool=on' (default: 'OFF')
 * To enable testing (and automatic result upload to http://my.cdash.org/index.php?project=OPENJPEG):
     cmake . -DBUILD_TESTING:BOOL=ON -DJPEG2000_CONFORMANCE_DATA_ROOT:PATH=/path/to/your/JPEG2000/test/files
     make
@@ -77,28 +72,34 @@ Main available cmake flags:
 - Manually edit the config.nix file
 - Manually create an opj_config.h file from opj_config.h.in.user
   and edit this opj_config.h
-- Then : (if 'WITH_JPWL' is defined in config.nix)
+- Then : (if 'WITH_JPWL' and/or 'WITH_JP3D' are defined in config.nix)
     make -f Makefile.nix all
     make -f Makefile.nix install
     make -f Makefile.nix clean
     make -f Makefile.nix uninstall
-- If 'WITH_JPWL' is not defined in config.nix
-  and you want to clean/compile/install/uninstall JPWL:
+- If neither 'WITH_JPWL' nor 'WITH_JP3D' is defined in config.nix
+  and you want to clean/compile/install/uninstall JPWL/JP3D:
   call the respective target in the respective directory.
 
 MACOSX
 ------
 
-The same building procedures as above (autotools and cmake) work for MACOSX.
-The xcode project file can also be used.
-
+The same building procedures as above will soon be available for MACOSX.
+The xcode project file has also to be updated.
+Right now, the CMake procedure is the only one working. Please refer to instructions above.
 If it does not work, try adding the following flag to the cmake command : 
   '-DCMAKE_OSX_ARCHITECTURES:STRING=i386'
 
 WINDOWS
 -------
 
-If you're using cygwin or MinGW, the same procedures as for Unix can be used. 
+If you're using cygwin, the same procedures as for Unix should work. Otherwise:
 
-Otherwise you can use cmake to generate project files for the IDE you are using (VC2010, etc).
-Type 'cmake --help' for available generators on your platform.
+1) Using cmake to generate project files
+
+Use the cmake procedure above with the '-G <generator-name>' flag to generate the project
+files for the IDE you are using. Type 'cmake --help' for available generators on your platform.
+
+2) Using the provided project files
+
+These files are obsolete and will be updated soon.
