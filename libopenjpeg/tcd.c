@@ -418,19 +418,12 @@ void tcd_init_encode(opj_tcd_t *tcd, opj_image_t * image, opj_cp_t * cp, int cur
 		/* Modification of the RATE >> */
 		for (j = 0; j < tcp->numlayers; j++) {
 			tcp->rates[j] = tcp->rates[j] ? 
-				cp->tp_on ? 
-					(((float) (tile->numcomps 
-					* (tile->x1 - tile->x0) 
-					* (tile->y1 - tile->y0)
-					* image->comps[0].prec))
-					/(tcp->rates[j] * 8 * image->comps[0].dx * image->comps[0].dy)) - (((tcd->cur_totnum_tp - 1) * 14 )/ tcp->numlayers)
-					:
-				((float) (tile->numcomps 
-					* (tile->x1 - tile->x0) 
-					* (tile->y1 - tile->y0) 
-					* image->comps[0].prec))/ 
-					(tcp->rates[j] * 8 * image->comps[0].dx * image->comps[0].dy)
-					: 0;
+						((float) (tile->numcomps 
+								* (tile->x1 - tile->x0) 
+								* (tile->y1 - tile->y0) 
+								* image->comps[0].prec))/ 
+						(tcp->rates[j] * 8 * image->comps[0].dx * image->comps[0].dy) 
+						: 0;
 
 			if (tcp->rates[j]) {
 				if (j && tcp->rates[j] < tcp->rates[j - 1] + 10) {
@@ -591,9 +584,7 @@ void tcd_init_encode(opj_tcd_t *tcd, opj_image_t * image, opj_cp_t * cp, int cur
 							cblk->y0 = int_max(cblkystart, prc->y0);
 							cblk->x1 = int_min(cblkxend, prc->x1);
 							cblk->y1 = int_min(cblkyend, prc->y1);
-							cblk->data = (unsigned char*) opj_calloc(8192+2, sizeof(unsigned char));
-							/* FIXME: mqc_init_enc and mqc_byteout underrun the buffer if we don't do this. Why? */
-							cblk->data += 2;
+							cblk->data = (unsigned char*) opj_calloc(8192, sizeof(unsigned char));
 							cblk->layers = (opj_tcd_layer_t*) opj_calloc(100, sizeof(opj_tcd_layer_t));
 							cblk->passes = (opj_tcd_pass_t*) opj_calloc(100, sizeof(opj_tcd_pass_t));
 						}
@@ -997,7 +988,7 @@ void tcd_makelayer(opj_tcd_t *tcd, int layno, double thresh, int final) {
 	}
 }
 
-opj_bool tcd_rateallocate(opj_tcd_t *tcd, unsigned char *dest, int len, opj_codestream_info_t *cstr_info) {
+bool tcd_rateallocate(opj_tcd_t *tcd, unsigned char *dest, int len, opj_codestream_info_t *cstr_info) {
 	int compno, resno, bandno, precno, cblkno, passno, layno;
 	double min, max;
 	double cumdisto[100];	/* fixed_quality */
@@ -1094,7 +1085,7 @@ opj_bool tcd_rateallocate(opj_tcd_t *tcd, unsigned char *dest, int len, opj_code
 			opj_t2_t *t2 = t2_create(tcd->cinfo, tcd->image, cp);
 			double thresh = 0;
 
-			for (i = 0; i < 128; i++) {
+			for (i = 0; i < 32; i++) {
 				int l = 0;
 				double distoachieved = 0;	/* fixed_quality */
 				thresh = (lo + hi) / 2;
@@ -1149,7 +1140,7 @@ opj_bool tcd_rateallocate(opj_tcd_t *tcd, unsigned char *dest, int len, opj_code
 		}
 		
 		if (!success) {
-			return OPJ_FALSE;
+			return false;
 		}
 		
 		if(cstr_info) {	/* Threshold for Marcela Index */
@@ -1161,7 +1152,7 @@ opj_bool tcd_rateallocate(opj_tcd_t *tcd, unsigned char *dest, int len, opj_code
 		cumdisto[layno] = (layno == 0) ? tcd_tile->distolayer[0] : (cumdisto[layno - 1] + tcd_tile->distolayer[layno]);	
 	}
 
-	return OPJ_TRUE;
+	return true;
 }
 
 int tcd_encode_tile(opj_tcd_t *tcd, int tileno, unsigned char *dest, int len, opj_codestream_info_t *cstr_info) {
@@ -1313,7 +1304,7 @@ int tcd_encode_tile(opj_tcd_t *tcd, int tileno, unsigned char *dest, int len, op
 	return l;
 }
 
-opj_bool tcd_decode_tile(opj_tcd_t *tcd, unsigned char *src, int len, int tileno, opj_codestream_info_t *cstr_info) {
+bool tcd_decode_tile(opj_tcd_t *tcd, unsigned char *src, int len, int tileno, opj_codestream_info_t *cstr_info) {
 	int l;
 	int compno;
 	int eof = 0;
@@ -1396,7 +1387,7 @@ opj_bool tcd_decode_tile(opj_tcd_t *tcd, unsigned char *src, int len, int tileno
 			if (tcd->image->comps[compno].resno_decoded < 0) {				
 				opj_event_msg(tcd->cinfo, EVT_ERROR, "Error decoding tile. The number of resolutions to remove [%d+1] is higher than the number "
 					" of resolutions in the original codestream [%d]\nModify the cp_reduce parameter.\n", tcd->cp->reduce, tile->comps[compno].numresolutions);
-				return OPJ_FALSE;
+				return false;
 			}
 		}
 
@@ -1476,10 +1467,10 @@ opj_bool tcd_decode_tile(opj_tcd_t *tcd, unsigned char *src, int len, int tileno
 	opj_event_msg(tcd->cinfo, EVT_INFO, "- tile decoded in %f s\n", tile_time);
 
 	if (eof) {
-		return OPJ_FALSE;
+		return false;
 	}
 	
-	return OPJ_TRUE;
+	return true;
 }
 
 void tcd_free_decode(opj_tcd_t *tcd) {
@@ -1511,6 +1502,5 @@ void tcd_free_decode_tile(opj_tcd_t *tcd, int tileno) {
 	}
 	opj_free(tile->comps);
 }
-
 
 
