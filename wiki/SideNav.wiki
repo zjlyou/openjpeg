@@ -3,8 +3,7 @@
   * Documentation
     * [http://www.openjpeg.org/libdoc/index.html OpenJPEG library (Doxygen)]
     * [DocJ2KCodec JPEG 2000 codec]
-    * Motion JPEG 2000
-    * JPWL
+    * [DocMJ2K Motion JPEG 2000]
     * [JPIP JPIP]
   * [ConformanceTesting Conformance Testing]
   * [DevelopmentProcess Development Process]
