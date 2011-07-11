@@ -1,5 +1,7 @@
 #summary New folder organization and naming convention
 
+<wiki:toc max_depth="2" />
+
 = New names for libraries and executables =
 
 In order to make the openjpeg project libraries and executables more consistent, we plan to rename some of them. The current proposal is the following.
@@ -63,5 +65,3 @@ A new directory structure is also proposed for the svn repository. Based on Vinc
 Remaining questions : 
   * Where do we put the code of thirdparty libraries, as only executables depend on them ?
   * Another proposal is to create different projects : openjpeg, openjpip, openjp3d, each with its 'branches', 'trunk' and 'tags' folders. Good idea ?
-
-
