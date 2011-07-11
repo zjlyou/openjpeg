@@ -7,3 +7,4 @@
     * [JPIP JPIP]
   * [ConformanceTesting Conformance Testing]
   * [DevelopmentProcess Development Process]
+  * [FolderReorgProposal New folder organization and naming convention]
