@@ -1,0 +1,67 @@
+#summary New folder organization and naming convention
+
+= New names for libraries and executables =
+
+In order to make the openjpeg project libraries and executables more consistent, we plan to rename some of them. The current proposal is the following.
+
+== Libraries ==
+
+|| *name* || *description* || *dependencies* || *remarks* ||
+|| libopenjpeg || basic J2K/JP2 library || none || Rename to "libopenjp2k" to disambiguate from JPEG format ? or is it too late ? ||
+|| libopenjpwl || basic J2K/JP2 library with JPWL capabilities || none || ||
+|| libopenjpip || JPIP library || none || ||
+|| libopenjp3d || JP3D library || none || ||
+
+== Executables ==
+
+|| *name* || *description* || *dependencies* || *remarks* ||
+|| opj_compress || was: image_to_j2k || libopenjpeg, libtiff, libpng, liblcms || ||
+|| opj_decompress || was: j2k_to_image || libopenjpeg, libtiff, libpng, liblcms || ||
+|| opj_dump || was: j2k_dump || libopenjpeg, libtiff, libpng, liblcms || ||
+|| opj_jpwl_compress || was: image_to_j2k_JPWL || libopenjpwl, libtiff, libpng, liblcms || ||
+|| opj_jpwl_decompress || was: j2k_to_image_JPWL || libopenjpwl, libtiff, libpng, liblcms || ||
+|| opj_server || JPIP server || libopenjpeg, libopenjpip_server, libfastcgi || ||
+|| opj_dec_server || JPIP decoding server || libopenjpeg, libopenjpip_local || ||
+|| opj_jpip_viewer || was: opj_viewer ; JAVA JPIP viewer || none || ||
+|| opj_viewer || was: OPJviewer ; JAVA viewer || libopenjpeg || should be merged with opj_jpip_viewer||
+|| opj_mj2_compress || was: frames_to_mj2 || libopenjpeg || currently, it does not use the openjpeg API correctly ||
+|| opj_mj2_decompress || was: mj2_to_frames || libopenjpeg || currently, it does not use the openjpeg API correctly ||
+|| opj_mj2_extract || was: extract_j2k_from_mj2 || libopenjpeg || currently, it does not use the openjpeg API correctly ||
+|| opj_mj2_wrap || was: wrap_j2k_in_mj2 || libopenjpeg || currently, it does not use the openjpeg API correctly ||
+
+= New directory structure =
+
+A new directory structure is also proposed for the svn repository. Based on Vincent Torri suggestion, here is the current proposal : 
+
+  * openjpeg
+    * src/
+      * lib/  (where the code for the libraries are located)
+        * openjpeg/
+        * openjpip/
+        * openjpwl/
+        * openjp3d/
+      * bin/ (where the code of binaries are located)
+        * common/
+        * opj_compress/
+        * opj_decompress/
+        * opj_dump/
+        * opj_jpwl_compress/
+        * opj_jpwl_decompress/
+        * opj_server/
+        * opj_dec_server/
+        * opj_jpip_viewer/
+        * opj_viewer/
+        * opj_mj2_compress/
+        * opj_mj2_decompress/
+        * opj_mj2_extract/
+        * opj_mj2_wrap/
+      * include/  (the location of exported headers)
+    * data/
+    * doc/
+    * tests/
+
+Remaining questions : 
+  * Where do we put the code of thirdparty libraries, as only executables depend on them ?
+  * Another proposal is to create different projects : openjpeg, openjpip, openjp3d, each with its 'branches', 'trunk' and 'tags' folders. Good idea ?
+
+
