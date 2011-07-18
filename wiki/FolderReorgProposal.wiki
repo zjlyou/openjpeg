@@ -4,7 +4,7 @@
 
 = New names for libraries and executables =
 
-In order to make the openjpeg project libraries and executables more consistent, we plan to rename some of them. The current proposal is the following.
+In order to make the openjpeg project libraries and executables more consistent, we plan to rename some of them. The current proposal is the following (italic indicate optional dependencies).
 
 == Libraries ==
 
