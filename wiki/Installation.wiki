@@ -107,7 +107,7 @@ Main available cmake flags:
   * To build the JPIP library and executables: '-DBUILD_JPIP:bool=on' (default: 'OFF')
   * To enable testing (and automatic result upload to http://my.cdash.org/index.php?project=OPENJPEG):
 {{{
-cmake . -DBUILD_TESTING:BOOL=ON
+cmake . -DBUILD_TESTING:BOOL=ON -DOPJ_DATA_ROOT:PATH='path/to/the/data/directory'
 make
 make Experimental
 }}}
@@ -115,6 +115,9 @@ Note : JPEG2000 test files are available with
 {{{
 svn checkout http://openjpeg.googlecode.com/svn/data
 }}}
+If '-DOPJ_DATA_ROOT:PATH' option is omitted, test files will be automatically searched in '${CMAKE_SOURCE_DIR}/../data',
+corresponding to the location of the data directory when compiling from the trunk (and assuming the data directory has
+been checked out of course).
 
 =MACOSX=
 
