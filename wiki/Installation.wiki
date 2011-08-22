@@ -5,7 +5,7 @@
 
 =UNIX/LINUX similar systems=
 
-==Using configure tools==
+==Using autotools==
 
 It is highly recommended that pkg-config is installed. If needed, you have to
 properly set the environment variable PKG_CONFIG_PATH so that the .pc files
@@ -48,6 +48,7 @@ Main './configure' options (type './configure --help' for more details)
   * '--enable-jpip'
   * '--enable-mj2'
   * '--enable-jpwl'
+  * '--enable-jpip'
   * '--prefix=/path/to/install/directory' (example : '--prefix=$PWD/installed')
   * '--enable-debug' (default : disabled)
 
@@ -103,25 +104,17 @@ Main available cmake flags:
   * To build the CODEC executables: '-DBUILD_CODEC:bool=on' (default: 'ON')
   * To build the MJ2 executables: '-DBUILD_MJ2:bool=on' (default: 'OFF')
   * To build the JPWL executables and JPWL library: '-DBUILD_JPWL:bool=on' (default: 'OFF')
+  * To build the JPIP library and executables: '-DBUILD_JPIP:bool=on' (default: 'OFF')
   * To enable testing (and automatic result upload to http://my.cdash.org/index.php?project=OPENJPEG):
 {{{
-cmake . -DBUILD_TESTING:BOOL=ON -DJPEG2000_CONFORMANCE_DATA_ROOT:PATH=/path/to/your/JPEG2000/test/files
+cmake . -DBUILD_TESTING:BOOL=ON
 make
 make Experimental
 }}}
-Note : JPEG2000 test files are available here : http://www.crc.ricoh.com/~gormish/jpeg2000conformance/
-
-==Manually using Makefile.nix==
-  * Manually edit the config.nix file
-  * Manually create an opj_config.h file from opj_config.h.in.user and edit this opj_config.h
-  * Then : (if 'WITH_JPWL' is defined in config.nix)
+Note : JPEG2000 test files are available with
 {{{
-make -f Makefile.nix all
-make -f Makefile.nix install
-make -f Makefile.nix clean
-make -f Makefile.nix uninstall
+svn checkout http://openjpeg.googlecode.com/svn/data
 }}}
-  * If 'WITH_JPWL' is not defined in config.nix and you want to clean/compile/install/uninstall JPWL: call the respective target in the respective directory.
 
 =MACOSX=
 
