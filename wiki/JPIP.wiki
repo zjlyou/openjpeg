@@ -117,7 +117,7 @@ An example to encode a TIF image "copenhague1.tif" at resolution 4780x4050, 8bit
 
   * JP2 encoding with embedding indexing data
 {{{
-  % ./index_create copenhague1.j2k copenhague1.jp2 2
+  % ./j2k_to_idxjp2 copenhague1.j2k copenhague1.jp2
 }}}
 
   * (Optional) Embed metadata into JP2 file
