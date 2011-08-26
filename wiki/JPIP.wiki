@@ -138,7 +138,7 @@ Input metadata file "copenhague1.xml" looks like:
 =Roadmap: JPIP todo's=
   * Implement DICOM integration: goal is to have the openjpeg JPIP capabilities usable by the GDCM library
   * Merge Lucian's work from GSoC with current openjpip version
-  * Target-ID handling
+  * ~~Target-ID handling~~
   * Enabling multiple quality layer support
   * Update opj_viewer to be able to use JPP-stream
   * Replace current index creation with the one provided by he openjpeg library itself.
