@@ -107,7 +107,7 @@ Main available cmake flags:
   * To build the JPIP library and executables: '-DBUILD_JPIP:bool=on' (default: 'OFF')
   * To enable testing (and automatic result upload to http://my.cdash.org/index.php?project=OPENJPEG):
 {{{
-cmake . -DBUILD_TESTING:BOOL=ON -DOPJ_DATA_ROOT:PATH='path/to/the/data/directory'
+cmake . -DBUILD_TESTING:BOOL=ON -DOPJ_DATA_ROOT:PATH='path/to/the/data/directory' -DBUILDNAME:STRING='name_of_the_build'
 make
 make Experimental
 }}}
@@ -118,6 +118,11 @@ svn checkout http://openjpeg.googlecode.com/svn/data
 If '-DOPJ_DATA_ROOT:PATH' option is omitted, test files will be automatically searched in '${CMAKE_SOURCE_DIR}/../data',
 corresponding to the location of the data directory when compiling from the trunk (and assuming the data directory has
 been checked out of course).
+
+Note 2 : to execute the encoding test suite, kakadu binaries are needed to decode encoded image and compare it to the baseline. Kakadu binaries are freely available for non-commercial purposes at http://www.kakadusoftware.com. To specify the binary path, please add to the cmake command the following option 
+{{{
+-DREF_DECODER_BIN_PATH:STRING='path/to/the/kakadu/binaries/directory'
+}}}
 
 =MACOSX=
 
