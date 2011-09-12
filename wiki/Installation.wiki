@@ -124,6 +124,18 @@ Note 2 : to execute the encoding test suite, kakadu binaries are needed to decod
 -DREF_DECODER_BIN_PATH:STRING='path/to/the/kakadu/binaries/directory'
 }}}
 
+=== Using ctest script to perform dashboard submission===
+You can used ctest command to build the openjepg lib and submit to the dashboard.
+{{{
+ctest -S mymachine_openjpeg.cmake -V
+}}} 
+
+Openjpeg ctest scripts are available with
+{{{
+svn checkout http://openjpeg.googlecode.com/svn/dev-utils
+}}}
+However you need to specify some variables inside the script, so explore the mymachine_openjpeg.cmake file and read the comments. Other files expose the way to perform a nightly submission with different platforms and can provide some tips to create a specific script.
+
 =MACOSX=
 
 The same building procedures as above (autotools and cmake) work for MACOSX.
