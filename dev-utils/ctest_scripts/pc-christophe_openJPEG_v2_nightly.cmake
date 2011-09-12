@@ -9,7 +9,7 @@
 
 cmake_minimum_required(VERSION 2.8)
 
-# Set where to find srr and test data and where to build binaries.
+# Set where to find src and test data and where to build binaries.
 SET (CTEST_SOURCE_DIRECTORY       "$ENV{HOME}/OpenJPEG/trunk/opj-2")
 SET (CTEST_BINARY_DIRECTORY       "$ENV{HOME}/OpenJPEG/bin/OpenJPEG_v2")
 SET (CTEST_SOURCE_DATA_DIRECTORY  "$ENV{HOME}/OpenJPEG/trunk/opj-data")
@@ -56,6 +56,7 @@ file(WRITE "${CTEST_BINARY_DIRECTORY}/CMakeCache.txt" "${CACHE_CONTENTS}")
 # Perform the Nightly build
 ctest_start(Nightly TRACK Nightly-v2)
 ctest_update(SOURCE "${CTEST_SOURCE_DIRECTORY}")
+ctest_configure(BUILD "${CTEST_BINARY_DIRECTORY}")
 ctest_configure(BUILD "${CTEST_BINARY_DIRECTORY}")
 ctest_build(BUILD "${CTEST_BINARY_DIRECTORY}")
 ctest_test(BUILD "${CTEST_BINARY_DIRECTORY}")

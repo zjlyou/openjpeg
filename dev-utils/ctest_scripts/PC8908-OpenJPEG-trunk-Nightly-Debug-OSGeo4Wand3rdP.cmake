@@ -9,7 +9,7 @@
 
 cmake_minimum_required(VERSION 2.8)
 
-# Set where to find srr and test data and where to build binaries.
+# Set where to find src and test data and where to build binaries.
 SET (CTEST_SOURCE_DIRECTORY       "C:/OpenJPEG/nightly/opj-trunk")
 SET (CTEST_BINARY_DIRECTORY       "C:/OpenJPEG/nightly/build/OpenJPEG_trunk-OSGeo4Wand3rdP")
 SET (CTEST_SOURCE_DATA_DIRECTORY  "C:/OpenJPEG/opj-data")
