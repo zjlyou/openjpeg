@@ -87,6 +87,12 @@ REF_DECODER_BIN_PATH:PATH=C:/Program Files/Kakadu
 
 " )
 
+# Files to submit to the dashboard
+SET (CTEST_NOTES_FILES
+${CTEST_SCRIPT_DIRECTORY}/${CTEST_SCRIPT_NAME}
+${CTEST_BINARY_DIRECTORY}/CMakeCache.txt
+)
+
 # Update method 
 # repository: http://openjpeg.googlecode.com/svn/trunk/ (openjpeg-read-only)
 # need to use https for CS machine

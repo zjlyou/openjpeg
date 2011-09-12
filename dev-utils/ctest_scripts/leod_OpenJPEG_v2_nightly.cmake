@@ -36,6 +36,12 @@ BUILD_EXAMPLES:BOOL=TRUE
 JPEG2000_CONFORMANCE_DATA_ROOT:PATH=${CTEST_SOURCE_DATA_DIRECTORY}
 " )
 
+# Files to submit to the dashboard
+SET (CTEST_NOTES_FILES
+${CTEST_SCRIPT_DIRECTORY}/${CTEST_SCRIPT_NAME}
+${CTEST_BINARY_DIRECTORY}/CMakeCache.txt
+)
+
 # Update method 
 # repository: http://openjpeg.googlecode.com/svn/trunk/ (openjpeg-read-only)
 # need to use https for CS machine 
