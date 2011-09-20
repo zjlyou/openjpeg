@@ -2,7 +2,7 @@
 # Nightly script for OpenJPEG trunk with hulk paltform
 # This will retrieve/compile/run tests/upload to cdash OpenJPEG
 # Results will be available at: http://my.cdash.org/index.php?project=OPENJPEG
-# ctest -S hulk_openJPEG_trunk_nightly-3rdP-MJ2.cmake -V
+# ctest -S hulk_openJPEG_trunk_nightly-JPIP.cmake -V
 # Author: mickael.savinaud@c-s.fr
 # Date: 2011-07-12
 # -----------------------------------------------------------------------------
@@ -11,7 +11,7 @@ cmake_minimum_required(VERSION 2.8)
 
 # Set where to find src and test data and where to build binaries.
 SET (CTEST_SOURCE_DIRECTORY       "$ENV{HOME}/Dashboard/src/OpenJPEG/opj-trunk")
-SET (CTEST_BINARY_DIRECTORY       "$ENV{HOME}/Dashboard/build/OpenJPEG_trunk-3rdP-MJ2")
+SET (CTEST_BINARY_DIRECTORY       "$ENV{HOME}/Dashboard/build/OpenJPEG_trunk-JWL")
 SET (CTEST_SOURCE_DATA_DIRECTORY  "$ENV{HOME}/Dashboard/src/OpenJPEG/opj-data")
 
 # User inputs:
@@ -20,7 +20,7 @@ SET( CTEST_CMAKE_COMMAND        "cmake" )
 SET( CTEST_BUILD_COMMAND        "/usr/bin/make " )
 SET( CTEST_SITE                 "hulk.c-s.fr" )       # Generally the output of hostname
 SET( CTEST_BUILD_CONFIGURATION  Debug)                # What type of build do you want ?
-SET( CTEST_BUILD_NAME           "Ubuntu10.04-64bits-trunk-${CTEST_BUILD_CONFIGURATION}-3rdP-MJ2") # Build Name
+SET( CTEST_BUILD_NAME           "Ubuntu10.04-64bits-trunk-${CTEST_BUILD_CONFIGURATION}-JPWL") # Build Name
 
 set( CACHE_CONTENTS "
 CMAKE_BUILD_TYPE:STRING=${CTEST_BUILD_CONFIGURATION}
@@ -34,8 +34,7 @@ OPJ_DATA_ROOT:PATH=${CTEST_SOURCE_DATA_DIRECTORY}
 
 REF_DECODER_BIN_PATH:PATH=$ENV{HOME}/Dashboard/src/OpenJPEG/kakadu
 
-BUILD_MJ2=ON
-BUILD_THIRDPARTY=ON
+BUILD_JPWL=ON
 
 " )
 
