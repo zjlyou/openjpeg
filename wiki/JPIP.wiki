@@ -15,8 +15,8 @@ OpenJPIP software is an implementation of JPEG 2000 Part9: Interactivity tools, 
 ( For more info about JPIP, check the website: http://www.jpeg.org/jpeg2000/j2kpart9.html)
 The current implementation uses some results from the 2KAN project (http://www.2kan.org).
 
-First Version 1.0 covers:
-  * JPT-stream (Tile based) media types
+First Version 2.0 covers:
+  * JPT-stream (Tile based) and JPP-stream (Precinct based) media types
   * Session, channels, cache model managements
   * JPIP over HTTP
   * Indexing JPEG 2000 files
@@ -110,17 +110,9 @@ The documentation can be build this way (requires doxygen utility):
 
 An example to encode a TIF image "copenhague1.tif" at resolution 4780x4050, 8bit/pixel, grayscale.
 
-  * J2K encoding using Kakadu with an option which introduces the tile-part flag at each resolution level
-{{{
-  % ./kdu_compress -i copenhague1.tif -o copenhague1.j2k Corder=RPCL  ORGtparts=R Stiles={256,256}
-}}}
+  % ./image_to_j2k -i copenhague1.tif -o copenhague1.jp2 -p RPCL -c [64,64] -t 640,480 -jpip
 
-  * JP2 encoding with embedding indexing data
-{{{
-  % ./j2k_to_idxjp2 copenhague1.j2k copenhague1.jp2
-}}}
-
-  * (Optional) Embed metadata into JP2 file
+  (Optional) Embed metadata into JP2 file
 {{{
   % ./addXMLinJP2 copenhague1.jp2 copenhague1.xml
 }}}
