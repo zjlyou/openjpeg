@@ -34,7 +34,6 @@ Neither the author, nor the university accept any responsibility for any kind of
   * OpenJPEG library (currently assumes it is installed on the system => will not use the one built higher in the directory structure)
   * FastCGI development kit (C libraries) at server (http://www.fastcgi.com)
   * Java application launcher at client
-  * Kakadu software ( http://www.kakadusoftware.com). Currently required to encode jpeg 2000 images with tile-parts. This will be implemented soon in openjpeg, making this requirement obsolete.
   * (Optional) Xerces2 java XML parser on the client for accessing embedded image metadata (http://xerces.apache.org/xerces2-j)
 
 We tested this software with a virtual server running on the same Linux machine as the clients. Currently, it works only on linux or macosx platforms, windows version should come later.
