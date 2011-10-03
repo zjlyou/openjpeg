@@ -108,9 +108,9 @@ The documentation can be build this way (requires doxygen utility):
 =JP2 encoding instructions=
 
 An example to encode a TIF image "copenhague1.tif" at resolution 4780x4050, 8bit/pixel, grayscale.
-
+{{{
   % ./image_to_j2k -i copenhague1.tif -o copenhague1.jp2 -p RPCL -c [64,64] -t 640,480 -jpip
-
+}}}
   (Optional) Embed metadata into JP2 file
 {{{
   % ./addXMLinJP2 copenhague1.jp2 copenhague1.xml
