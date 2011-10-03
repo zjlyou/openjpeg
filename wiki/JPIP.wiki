@@ -137,11 +137,11 @@ Input metadata file "copenhague1.xml" looks like:
 
 =Roadmap: JPIP todo's=
   * Implement DICOM integration: goal is to have the openjpeg JPIP capabilities usable by the GDCM library
-  * Merge Lucian's work from GSoC with current openjpip version
+  * ~~Merge Lucian's work from GSoC with current openjpip version~~
   * ~~Target-ID handling~~
   * Enabling multiple quality layer support
   * Enabling other progression orders than RPCL
-  * Update opj_viewer to be able to use JPP-stream
+  * ~~Update opj_viewer to be able to use JPP-stream~~
   * ~~Replace current index creation with the one provided by he openjpeg library itself.~~
   * Develop a transcoder utility that processes existing JPEG 2000 code-streams to make them comply with the required options of the JPIP server. If the JPIP server requires JPEG 2000 code-streams to be formatted in a certain way, provide a tool that can convert any JPEG 2000 code-stream to comply with these requirements.
   * JPIP implementation over UDP protocol (ISO/IEC 15444-9 Annex H, H.2 Reliable Requests with Unreliable Data)
