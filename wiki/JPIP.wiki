@@ -98,9 +98,9 @@ The documentation can be build this way (requires doxygen utility):
   The arguments
     * http://hostname/myFCGI is the HTTP server URI (myFCGI refers to opj_server by the server setting)
     * JP2_filename.jp2 is the name of a JP2 file available on the server.
-  Image viewer GUI instructions
-    * Request type stateless for no caching, session (default) for caching
+    * Request type, stateless for no caching, session (default) for caching
     * Return media type, JPT-stream tile based stream, or JPP-stream (default) precinct based stream
+  Image viewer GUI instructions
     * Scale up request: Enlarge the window
     * ROI request:      Select a region by mouse click and drag, then click inside the red frame of the selected region
     * If Xerces2 is installed
@@ -119,8 +119,8 @@ An example to encode a TIF image "copenhague1.tif" at resolution 4780x4050, 8bit
   % ./image_to_j2k -i copenhague1.tif -o copenhague1.jp2 -p RPCL -c [64,64] -t 640,480 -jpip -v R
 }}}
   Note:
-   -jpip : embed index table box into the output JP2 file (obligation for JPIP)
-   -v R  : partition a tile into tile parts of different resolution levels (obligation for JPT-stream)
+   *--jpip Embed index table box into the output JP2 file (obligation for JPIP)
+   *--v R  Partition a tile into tile parts of different resolution levels (obligation for JPT-stream)
 
   (Optional) Embed metadata into JP2 file
 {{{
