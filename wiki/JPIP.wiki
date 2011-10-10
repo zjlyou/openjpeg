@@ -40,10 +40,10 @@ We tested this software with a virtual server running on the same Linux machine 
 
 =Building instructions=
 
-A Makefile is available in the same directory as this README file. Simply type 'make' and it will build all the required C-executables.
-Concerning the java-based opj_viewer, simply type 'ant' in the corresponding directory (requires 'ant' utility of course)
+JPIP utilities are built through cmake and autotools procedures described in the [http://code.google.com/p/openjpeg/wiki/Installation Installation] page. Use '-DBUILD_JPIP=on' and '--enable-jpip' respectively.
 
-CMake files ar planned to be included ASAP.
+To build JPIP utilities apart from the openjpeg project, a Makefile.nix is available in the same directory as this README file. Simply type 'make -f Makefile.nix' and it will build all the required C-executables.
+Concerning the java-based opj_viewer, simply type 'ant' in the corresponding directory (requires 'ant' utility of course)
 
 The documentation can be build this way (requires doxygen utility):
 {{{
