@@ -17,7 +17,7 @@ SET (CTEST_SOURCE_DATA_DIRECTORY  "$ENV{HOME}/OpenJPEG/trunk/opj-data")
 # User inputs:
 SET( CTEST_CMAKE_GENERATOR      "Unix Makefiles" )    # What is your compilation apps ? (Eclipse CDT4 - Unix Makefiles)
 SET( CTEST_CMAKE_COMMAND        "cmake" )
-SET( CTEST_BUILD_COMMAND        "/usr/bin/make " )
+SET( CTEST_BUILD_COMMAND        "/usr/bin/make -j4 -i -k" )
 SET( CTEST_SITE                 "pc-christophe.cst.cnes.fr" )       # Generally the output of hostname
 SET( CTEST_BUILD_CONFIGURATION  Debug)                # What type of build do you want ?
 SET( CTEST_BUILD_NAME           "ArchLinux-64bits-v2-${CTEST_BUILD_CONFIGURATION}") # Build Name
