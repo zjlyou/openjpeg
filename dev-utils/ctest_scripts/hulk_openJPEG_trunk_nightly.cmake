@@ -26,7 +26,7 @@ SET( CTEST_BUILD_NAME           "Ubuntu10.04-64bits-trunk-${CTEST_BUILD_CONFIGUR
 SET(CTEST_MEMORYCHECK_COMMAND /usr/bin/valgrind)
 SET(CTEST_MEMORYCHECK_COMMAND_OPTIONS "--trace-children=yes --quiet --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=50 --verbose --demangle=yes --gen-suppressions=all")
 # If necessery add a file which remove some vlagrind warnings (see InsightValgrind.supp file from ITK)
-#set(CTEST_MEMORYCHECK_SUPPRESSIONS_FILE ${CTEST_SOURCE_DIRECTORY}/CMake/openjpeg_valgrind.supp)
+SET(CTEST_MEMORYCHECK_SUPPRESSIONS_FILE ${CTEST_SOURCE_DIRECTORY}/CMake/openjpeg_valgrind.supp)
 
 # User Options
 set( CACHE_CONTENTS "
