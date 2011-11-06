@@ -1,0 +1,12 @@
+Roadmap for OpenJPEG
+
+= Short Term (within next 6-12 months) =
+
+ * JP3D ?
+ * Java bindings ?
+ * more tests ?
+ * optimization ? which platform/OS ?
+ * jasper binding ? prepare a jasper compatible API which calls openjpeg
+
+
+= Long Term (more than a year) =
