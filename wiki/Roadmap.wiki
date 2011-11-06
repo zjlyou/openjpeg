@@ -9,5 +9,6 @@ Roadmap for OpenJPEG
  * jasper binding ? prepare a jasper compatible API which calls openjpeg
  * bugs ? needs priority ?
  * fuzzing (see testing) ?
+ * JPIP, MJ2 et JPWL ?
 
 = Long Term (more than a year) =
