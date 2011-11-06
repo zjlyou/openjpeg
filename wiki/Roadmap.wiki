@@ -7,6 +7,7 @@ Roadmap for OpenJPEG
  * more tests ?
  * optimization ? which platform/OS ?
  * jasper binding ? prepare a jasper compatible API which calls openjpeg
-
+ * bugs ? needs priority ?
+ * fuzzing (see testing) ?
 
 = Long Term (more than a year) =
