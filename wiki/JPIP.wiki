@@ -120,7 +120,7 @@ An example to encode a TIF image "copenhague1.tif" at resolution 4780x4050, 8bit
 }}}
   Note:
    *--jpip Embed index table box into the output JP2 file (obligation for JPIP)
-   *--v R  Partition a tile into tile parts of different resolution levels (obligation for JPT-stream)
+   *--TP R  Partition a tile into tile parts of different resolution levels (obligation for JPT-stream)
 
   (Optional) Embed metadata into JP2 file
 {{{
