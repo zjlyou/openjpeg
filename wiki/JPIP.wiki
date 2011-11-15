@@ -76,9 +76,11 @@ The documentation can be build this way (requires doxygen utility):
 }}}
 
  For shutting down JPIP server:
+{{{
      %GET http://hostname/myFCGI?quitJPIP
-     Notice, http://hostname/myFCGI is the HTTP server URI (myFCGI refers to opj_server by the server setting)
-     Requst message "quitJPIP" can be changed in Makfile, modify -DQUIT_SIGNAL=\"quitJPIP\"
+}}}
+  # Notice, http://hostname/myFCGI is the HTTP server URI (myFCGI refers to opj_server by the server setting)
+  # Request message "quitJPIP" can be changed in Makefile, modify -DQUIT_SIGNAL=\"quitJPIP\"
 
 ==Client==
   * Launch image decoding server, and keep it alive as long as image viewers are open
