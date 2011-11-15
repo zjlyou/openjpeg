@@ -6,7 +6,7 @@ Roadmap for OpenJPEG
   * JPIP/MJ2/JPWL testing !!
  * JP3D ?
   * testing !!
- * Large file compression ?
+ * Large file compression (chunk by chunk) ?
   * testing ?
  * Java bindings ?
  * optimization ? which platform/OS ?
