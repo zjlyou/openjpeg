@@ -2,14 +2,15 @@ Roadmap for OpenJPEG
 
 = Short Term (within next 6-12 months) =
 
+ * JPIP, MJ2 et JPWL ?
+  * JPIP/MJ2/JPWL testing !!
  * JP3D ?
+  * testing !!
  * Java bindings ?
- * more tests ?
  * optimization ? which platform/OS ?
  * jasper binding ? prepare a jasper compatible API which calls openjpeg
  * bugs ? needs priority ?
- * fuzzing (see testing) ?
- * JPIP, MJ2 et JPWL ?
- * JPIP testing !!
+ * fuzzing ?
+  * only core for now
 
 = Long Term (more than a year) =
