@@ -10,5 +10,6 @@ Roadmap for OpenJPEG
  * bugs ? needs priority ?
  * fuzzing (see testing) ?
  * JPIP, MJ2 et JPWL ?
+ * JPIP testing !!
 
 = Long Term (more than a year) =
