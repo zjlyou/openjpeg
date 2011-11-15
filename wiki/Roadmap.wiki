@@ -2,7 +2,7 @@ Roadmap for OpenJPEG
 
 = Short Term (within next 6-12 months) =
 
- * JPIP, MJ2 et JPWL ?
+ * Fix JPIP, MJ2 et JPWL 
   * JPIP/MJ2/JPWL testing !!
  * JP3D ?
   * testing !!
