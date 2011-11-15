@@ -6,6 +6,8 @@ Roadmap for OpenJPEG
   * JPIP/MJ2/JPWL testing !!
  * JP3D ?
   * testing !!
+ * Large file compression ?
+  * testing ?
  * Java bindings ?
  * optimization ? which platform/OS ?
  * jasper binding ? prepare a jasper compatible API which calls openjpeg
