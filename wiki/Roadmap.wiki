@@ -26,7 +26,7 @@
     * Update Doxygen
     * Update MAN pages
     * Update --help option
-  * Move to Mercurial for Version Control (option available in GCode)
+  * Move to Mercurial/Git for Version Control (option available in GCode)
   * Solve problems detected by Valgrind
   * Add OpenJPEG to the coverity scan and fix problems detected by the scan
   * Integrate OpenCinemaTools to the OpenJPEG project (http://code.google.com/p/opencinematools/). Marc Vandenbosch is ok with that.
