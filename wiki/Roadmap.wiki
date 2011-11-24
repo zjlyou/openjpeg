@@ -16,7 +16,7 @@
   * Large file compression (chunk by chunk) ?
     * testing ?
   * Large file decompression
-    * testing ? -> kakadu provide a tool to merge different codestream into one big mosaïc. so it should be easy to generate at least a fake giant file but assembling several times the same small file.
+    * testing ? -> kakadu provide a tool to merge different codestream into one big mosaïc. so it should be easy to generate at least a fake giant file by assembling several times the same small file.
   * Java bindings ?
   * optimization ? which platform/OS ?
     * Win 7 32/64
