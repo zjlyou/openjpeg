@@ -12,6 +12,10 @@ Currently OpenJPEG provides three build systems
   * CMake
 
 || || *autotools* || *CMake* || *Makefiles* ||
-|| system tiff || yes || yes || yes ||
+|| JPIP || yes || yes || yes ||
+|| system lcms1 || ?? || yes || ?? ||
+|| system lcms2 || ?? || yes || ?? ||
 || system png || yes || yes || yes ||
+|| system tiff || yes || yes || yes ||
+|| system zlib || yes || yes || yes ||
 || [http://my.cdash.org/index.php?project=OPENJPEG regression testing] || no || yes || no ||
