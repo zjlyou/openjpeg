@@ -7,5 +7,6 @@
     * [JPIP JPIP]
   * [ConformanceTesting Conformance Testing]
   * [DevelopmentProcess Development Process]
+    * [BuildSystems Build Systems]
   * [FolderReorgProposal New folder organization and naming convention]
   * [Roadmap OpenJPEG Roadmap]
