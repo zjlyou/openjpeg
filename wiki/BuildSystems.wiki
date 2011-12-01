@@ -12,7 +12,12 @@ Currently OpenJPEG provides three build systems
   * CMake
 
 || || *autotools* || *CMake* || *Makefiles* ||
-|| JPIP || yes || yes || yes ||
+|| static/shared libs || yes || yes || ?? ||
+|| build documentation || yes || yes || ?? ||
+|| build JPIP || yes || yes || yes ||
+|| build JPWL || yes || yes || ?? ||
+|| build MJ2 || yes || yes || ?? ||
+|| build tests || yes || yes || ?? ||
 || system lcms1 || ?? || yes || ?? ||
 || system lcms2 || ?? || yes || ?? ||
 || system png || yes || yes || yes ||
