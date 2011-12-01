@@ -1,0 +1,12 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+This page describe the situation with build systems in OpenJPEG
+
+= Details =
+
+Currently OpenJPEG provides three build systems
+  * Makefiles
+  * autotools
+  * CMake
