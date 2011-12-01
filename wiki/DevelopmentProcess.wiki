@@ -20,3 +20,14 @@ Based on the current development pace of OpenJPEG, the following use of branches
 In summary, branching would be used only in case of a future major release.
 
 Concerning the current state of the SVN, we are in the process of merging the v2 branch with the trunk. Just before committing the changes, we'll create a new branch to host release 1.5 and future 1.5.x releases. After the merge, the v2 branch will become obsolete and all development should be done in the trunk.
+
+== Dev Process ==
+
+=== Bug Fix ===
+
+Merge bug fix to say 1.5n then merge to trunk
+
+=== Dev (new funcs) ===
+
+1.5 is frozen. No new code should be merged there.
+Directly to trunk
