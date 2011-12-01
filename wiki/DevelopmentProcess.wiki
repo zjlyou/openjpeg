@@ -31,3 +31,7 @@ Merge bug fix to say 1.5n then merge to trunk
 
 1.5 is frozen. No new code should be merged there.
 Directly to trunk
+
+Need to add new functions into 'CHANGES' file.
+
+Need to find a way to present changes. svn2cl ?
