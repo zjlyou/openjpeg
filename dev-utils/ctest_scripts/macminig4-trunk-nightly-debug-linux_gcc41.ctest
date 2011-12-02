@@ -6,6 +6,8 @@ set(ENV{CC} /usr/bin/gcc-4.1)
 macro(dashboard_hook_init)
   set( dashboard_cache "
   BUILD_TESTING:BOOL=ON
+  BUILD_JPIP:BOOL=ON
+  BUILD_THIRDPARTY:BOOL=ON
     "
     )
 endmacro(dashboard_hook_init)
