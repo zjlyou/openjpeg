@@ -2,7 +2,6 @@
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/bin/gcc-4.4)
-set(ENV{CFLAGS} "-m32")
 
 macro(dashboard_hook_init)
   set( dashboard_cache "

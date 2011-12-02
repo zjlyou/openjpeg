@@ -2,4 +2,6 @@
 
 cd $HOME/Dashboards/ctest_scripts && svn up
 
-ctest -S ks200451-trunk-nightly-debug-linux_gcc44.ctest -V -O gcc44.log
+for i in `ls ks200451-*.ctest`; do
+  ctest -S $i -V -O $i.log 
+done
