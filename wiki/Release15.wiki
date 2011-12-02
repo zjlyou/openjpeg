@@ -1,0 +1,9 @@
+#summary Wiki page for the prep of v1.5 release
+
+= Introduction =
+
+Let's list the things remainings to do before v1.5
+
+= Details =
+
+Quite a few tests are still failings:
