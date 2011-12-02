@@ -1,7 +1,7 @@
 # Client maintainer: mathieu . malaterre  gmail . com
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
-set(ENV{PATH} /usr/lib/llvm-2.7/gcc-4.2/bin/:$ENV{PATH})
+set(ENV{PATH} /usr/lib/llvm-2.7/bin/:/usr/lib/llvm-2.7/gcc-4.2/bin/:$ENV{PATH})
 set(ENV{CC} llvm-gcc)
 
 macro(dashboard_hook_init)
