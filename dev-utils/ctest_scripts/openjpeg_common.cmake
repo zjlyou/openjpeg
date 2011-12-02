@@ -66,12 +66,18 @@
 #   set(ENV{CXX} /path/to/cxx)  # C++ compiler
 #   set(ENV{LD_LIBRARY_PATH} /path/to/vendor/lib) # (if necessary)
 
-
-string(REGEX REPLACE <regular_expression>
-  <replace_expression> <output variable>
-  <input> [<input>...])
-
 cmake_minimum_required(VERSION 2.8.2 FATAL_ERROR)
+
+# Calling parent script has a name, let's figure out settings from the filename:
+if(DEFINED OPJ_CTEST_NAME)
+  # Compute default options from filename
+  string(REPLACE "-" ";" output_variable "${OPJ_CTEST_NAME}")
+  list(GET output_variable 0 CTEST_SITE)
+  list(GET output_variable 1 dashboard_svn_branch)
+  list(GET output_variable 2 dashboard_model)
+  list(GET output_variable 3 CTEST_BUILD_CONFIGURATION)
+  list(GET output_variable 4 CTEST_BUILD_NAME)
+endif()
 
 set(dashboard_user_home "$ENV{HOME}")
 
