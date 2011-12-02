@@ -72,6 +72,9 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
 #   ".*warning C4820.*"
 )
 
+set(KDUPATH "C:/Program Files/Kakadu")
+set(ENV{PATH} $ENV{PATH}\;${KDUPATH})
+
 # Here we used the OSGeo4W environement for tiff and png, lcms2 is builded from provided sources
 set( CACHE_CONTENTS "
 CMAKE_BUILD_TYPE:STRING=${CTEST_BUILD_CONFIGURATION}
@@ -82,8 +85,6 @@ BUILD_TESTING:BOOL=TRUE
 BUILD_EXAMPLES:BOOL=TRUE
 
 OPJ_DATA_ROOT:PATH=${CTEST_SOURCE_DATA_DIRECTORY}
-
-REF_DECODER_BIN_PATH:PATH=C:/Program Files/Kakadu
 
 " )
 

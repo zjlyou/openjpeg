@@ -17,6 +17,13 @@ SET( CTEST_CMAKE_GENERATOR	"Unix Makefiles")	# What is your compilation apps ?
 SET( CTEST_SITE			"mymachine" )		# Generally the output of hostname
 SET( CTEST_BUILD_CONFIGURATION	Debug)			# What type of build do you want ?
 
+# To execute the encoding test suite, kakadu binaries are needed to decode encoded image and compare 
+# it to the baseline. Kakadu binaries are freely available for non-commercial purposes 
+# at http://www.kakadusoftware.com. Please specify the binary path in the following variable:  
+set(KDUPATH path/to/the/kakadu/binary/directory)
+set(ENV{LD_LIBRARY_PATH} ${KDUPATH})
+set(ENV{PATH} $ENV{PATH}:${KDUPATH})
+
 # Options 
 SET( CACHE_CONTENTS "
 CMAKE_BUILD_TYPE:STRING=${CTEST_BUILD_CONFIGURATION}
@@ -34,10 +41,6 @@ BUILD_THIRDPARTY:BOOL=FALSE
 #OPJ_DATA_ROOT:PATH=path/to/the/data/directory
 OPJ_DATA_ROOT:PATH=/home/mickael/dev/src/OpenJPEG/opj-data
 
-# To execute the encoding test suite, kakadu binaries are needed to decode encoded image and compare 
-# it to the baseline. Kakadu binaries are freely available for non-commercial purposes 
-# at http://www.kakadusoftware.com. Please specify the binary path in the following variable:  
-REF_DECODER_BIN_PATH:PATH=path/to/the/kakadu/binary/directory
 
 " )
 

@@ -21,6 +21,9 @@ SET (CTEST_SITE                 "PC8908.c-s.fr" )              # generally the o
 set( CTEST_BUILD_CONFIGURATION  "Debug")                       # What type of build do you want ?
 SET (CTEST_BUILD_NAME           "WinXP-VS2008-32bits-v2-${CTEST_BUILD_CONFIGURATION}") # Add by MS
 
+set(KDUPATH "C:/Program Files/Kakadu")
+set(ENV{PATH} $ENV{PATH}\;${KDUPATH})
+
 # For the moment we need the OSGeo4W environement and use the lib freeimage compiled by opj 
 set( CACHE_CONTENTS "
 CMAKE_BUILD_TYPE:STRING=${CTEST_BUILD_CONFIGURATION}
@@ -44,8 +47,6 @@ ZLIB_INCLUDE_DIR:PATH=C:/OSGeo4W/include
 ZLIB_LIBRARY:FILEPATH=C:/OSGeo4W/lib/zlib.lib
 
 OPJ_DATA_ROOT=${CTEST_SOURCE_DATA_DIRECTORY}
-
-REF_DECODER_BIN_PATH:PATH=C:/Program Files/Kakadu
 
 ")
 

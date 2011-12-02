@@ -22,6 +22,10 @@ SET( CTEST_SITE                 "hulk.c-s.fr" )       # Generally the output of 
 SET( CTEST_BUILD_CONFIGURATION  Debug)                # What type of build do you want ?
 SET( CTEST_BUILD_NAME           "Ubuntu10.04-64bits-v1.5-${CTEST_BUILD_CONFIGURATION}-3rdP") # Build Name
 
+set(KDUPATH $ENV{HOME}/Dashboard/src/OpenJPEG/kakadu)
+set(ENV{LD_LIBRARY_PATH} ${KDUPATH})
+set(ENV{PATH} $ENV{PATH}:${KDUPATH})
+
 # User Options
 set( CACHE_CONTENTS "
 CMAKE_BUILD_TYPE:STRING=${CTEST_BUILD_CONFIGURATION}
@@ -31,8 +35,6 @@ CMAKE_C_FLAGS:STRING= -Wall
 BUILD_TESTING:BOOL=TRUE
 
 OPJ_DATA_ROOT:PATH=${CTEST_SOURCE_DATA_DIRECTORY}
-
-REF_DECODER_BIN_PATH:PATH=$ENV{HOME}/Dashboard/src/OpenJPEG/kakadu
 
 BUILD_THIRDPARTY=ON
 
