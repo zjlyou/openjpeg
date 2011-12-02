@@ -138,6 +138,10 @@ endif()
 # b15 -> branches 1.5
 if("${dashboard_svn_branch}" STREQUAL "b15")
   set(dashboard_svn_branch branches/openjpeg-1.5)
+  # make sure that on same client source checkout will not conflict:
+  if(NOT DEFINED dashboard_source_name)
+    set(dashboard_source_name openjpeg-b15)
+  endif()
 endif()
 
 # compute full URL:
