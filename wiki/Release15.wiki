@@ -2,7 +2,10 @@
 
 = Introduction =
 
-Let's list the things remainings to do before v1.5
+Let's list the things remainings to do before v1.5.
+
+v1.5 is frozen, this means no NEW feature should go in, only bug fixes.
+
 
 = Details =
 
