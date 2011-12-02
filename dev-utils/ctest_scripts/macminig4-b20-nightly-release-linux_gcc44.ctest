@@ -6,6 +6,10 @@ set(ENV{CC} /usr/bin/gcc-4.4)
 macro(dashboard_hook_init)
   set( dashboard_cache "
   BUILD_TESTING:BOOL=ON
+  # in v2, static is the default
+  BUILD_SHARED_LIBS:BOOL=ON
+  # In v2 the following is required to get tests
+  BUILD_EXAMPLES:BOOL=ON
     "
     )
 endmacro(dashboard_hook_init)
