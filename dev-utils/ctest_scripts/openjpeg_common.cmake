@@ -142,6 +142,11 @@ if("${dashboard_svn_branch}" STREQUAL "b15")
   if(NOT DEFINED dashboard_source_name)
     set(dashboard_source_name openjpeg-b15)
   endif()
+elseif("${dashboard_svn_branch}" STREQUAL "b20")
+  set(dashboard_svn_branch branches/v2)
+  if(NOT DEFINED dashboard_source_name)
+    set(dashboard_source_name openjpeg-b20)
+  endif()
 endif()
 
 # compute full URL:
