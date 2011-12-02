@@ -2,14 +2,14 @@
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/bin/gcc-4.4)
-
-set(dashboard_do_memcheck TRUE)
-set(CTEST_MEMORYCHECK_COMMAND           "/usr/bin/valgrind")
-set(CTEST_MEMORYCHECK_COMMAND_OPTIONS   "-q --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=10")
+set(ENV{CFLAGS} "-m32")
 
 macro(dashboard_hook_init)
   set( dashboard_cache "
   BUILD_TESTING:BOOL=ON
+  # cant set jpip as it is not yet available on multi-arch:
+  BUILD_JPIP:BOOL=OFF
+  BUILD_THIRDPARTY:BOOL=ON
     "
     )
 endmacro(dashboard_hook_init)
