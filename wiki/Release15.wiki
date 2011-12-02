@@ -191,3 +191,5 @@ We have:
 ||NR-file9.jp2-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
 ||NR-p0_07.j2k-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
 ||NR-p0_07.j2k-dump||Failed||Passed||0.22||Completed (Failed)||
+
+See [http://code.google.com/p/openjpeg/source/browse/dev-utils/scripts/script.sh script] to generate the page:
