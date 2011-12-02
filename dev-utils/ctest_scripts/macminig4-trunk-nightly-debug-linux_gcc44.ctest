@@ -1,15 +1,4 @@
 # Client maintainer: mathieu . malaterre  gmail . com
-# Filename convention is:
-# ctestsite-branchname-model-configuration-buildname.ctest
-
-get_filename_component(inputname ${CMAKE_CURRENT_LIST_FILE} NAME_WE)
-# Compute default options from filename
-string(REPLACE "-" ";" output_variable "${inputname}")
-list(GET output_variable 0 CTEST_SITE)
-list(GET output_variable 1 dashboard_svn_branch)
-list(GET output_variable 2 dashboard_model)
-list(GET output_variable 3 CTEST_BUILD_CONFIGURATION)
-list(GET output_variable 4 CTEST_BUILD_NAME)
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/bin/gcc-4.4)
@@ -21,4 +10,7 @@ macro(dashboard_hook_init)
     )
 endmacro(dashboard_hook_init)
 
+# Filename convention is:
+# ctestsite-branchname-model-configuration-buildname.ctest
+get_filename_component(OPJ_CTEST_NAME ${CMAKE_CURRENT_LIST_FILE} NAME_WE)
 include(${CTEST_SCRIPT_DIRECTORY}/openjpeg_common.cmake)
