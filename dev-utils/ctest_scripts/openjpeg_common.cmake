@@ -135,6 +135,7 @@ endif()
 # compute full URL:
 set(dashboard_svn_url "${dashboard_svn_root_url}/${dashboard_svn_branch}")
 
+
 # Look for a SVN command-line client.
 if(NOT DEFINED CTEST_SVN_COMMAND)
   find_program(CTEST_SVN_COMMAND NAMES svn)
@@ -159,6 +160,28 @@ if(NOT DEFINED CTEST_BINARY_DIRECTORY)
 endif()
 
 set(CTEST_CHECKOUT_COMMAND "${CTEST_SVN_COMMAND} co ${dashboard_svn_url} \"${CTEST_SOURCE_DIRECTORY}\"")
+
+# data dir too:
+# http://www.cmake.org/Wiki/CMake_Scripting_Of_CTest#More_Settings
+#set(CTEST_CVS_COMMAND "svn")
+#set(CTEST_EXTRA_UPDATES_1 "--non-interactive" "http://openjpeg.googlecode.com/svn/data")
+#set(CTEST_EXTRA_UPDATES_1 "--non-interactive" "${CTEST_DASHBOARD_ROOT}/data")
+# cant get the above to work at all. instead manually update data dir:
+
+# need to call the directory data so that it is automatically found during openjpeg conf:
+if(NOT EXISTS "${CTEST_DASHBOARD_ROOT}/data")
+  message("pulling data from scratch")
+  execute_process(
+    COMMAND ${CTEST_SVN_COMMAND} "checkout" "http://openjpeg.googlecode.com/svn/data"
+    WORKING_DIRECTORY ${CTEST_DASHBOARD_ROOT}
+    )
+else()
+  message("updating data")
+  execute_process(
+    COMMAND ${CTEST_SVN_COMMAND} "update"
+    WORKING_DIRECTORY ${CTEST_DASHBOARD_ROOT}/data
+    )
+endif()
 
 #-----------------------------------------------------------------------------
 
