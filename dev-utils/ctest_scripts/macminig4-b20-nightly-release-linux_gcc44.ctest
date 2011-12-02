@@ -10,6 +10,8 @@ macro(dashboard_hook_init)
   BUILD_SHARED_LIBS:BOOL=ON
   # In v2 the following is required to get tests
   BUILD_EXAMPLES:BOOL=ON
+  # v2 requires a subset of data:
+  JPEG2000_CONFORMANCE_DATA_ROOT:PATH=$ENV{HOME}/Dashboards/My\ Tests/data/baseline/nonregression
     "
     )
 endmacro(dashboard_hook_init)
