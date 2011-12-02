@@ -24,3 +24,4 @@ Currently OpenJPEG provides three build systems
 || system tiff || yes || yes || yes ||
 || system zlib || yes || yes || yes ||
 || [http://my.cdash.org/index.php?project=OPENJPEG regression testing] || no || yes || no ||
+|| export build settings || yes: openjpeg.pc || yes:openjpeg.cmake || no ||
