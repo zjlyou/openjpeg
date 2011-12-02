@@ -133,11 +133,13 @@ endif()
 if(NOT DEFINED dashboard_svn_branch)
   if("${dashboard_model}" STREQUAL "Nightly")
     set(dashboard_svn_branch trunk)
-  else()
-    #FIXME hardcoded:
-    set(dashboard_svn_branch branches/openjpeg-1.5)
   endif()
 endif()
+# b15 -> branches 1.5
+if("${dashboard_svn_branch}" STREQUAL "b15")
+  set(dashboard_svn_branch branches/openjpeg-1.5)
+endif()
+
 # compute full URL:
 set(dashboard_svn_url "${dashboard_svn_root_url}/${dashboard_svn_branch}")
 
