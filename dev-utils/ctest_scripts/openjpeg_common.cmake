@@ -91,6 +91,12 @@ if(NOT DEFINED CTEST_DASHBOARD_ROOT)
   get_filename_component(CTEST_DASHBOARD_ROOT "${CTEST_SCRIPT_DIRECTORY}/../${dashboard_root_name}" ABSOLUTE)
 endif()
 
+# Make sure directory exist:
+file(MAKE_DIRECTORY ${CTEST_DASHBOARD_ROOT})
+if(NOT IS_DIRECTORY ${CTEST_DASHBOARD_ROOT})
+  message(FATAL_ERROR "Could not create ${CTEST_DASHBOARD_ROOT}")
+endif()
+
 # Select the model (Nightly, Experimental, Continuous).
 if(NOT DEFINED dashboard_model)
   set(dashboard_model Nightly)
