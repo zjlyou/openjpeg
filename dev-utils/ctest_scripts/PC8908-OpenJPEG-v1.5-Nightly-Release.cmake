@@ -74,7 +74,7 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
 )
 
 set(KDUPATH "C:/Program Files/Kakadu")
-set(ENV{PATH} $ENV{PATH}\;${KDUPATH})
+set(ENV{PATH} "$ENV{PATH};${KDUPATH}")
 
 # User options
 set( CACHE_CONTENTS "
