@@ -1,4 +1,5 @@
-cd $HOME/Dashboards/ctest_scripts && svn up
+@update ourself:
+cd C:/Dashboards/ctest_scripts && svn up
 
 setlocal
 @rem Use Visual Studio 2010:
