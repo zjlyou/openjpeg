@@ -3,7 +3,7 @@
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/bin/gcc-4.4)
 
-set(dashboard_do_coverage FALSE)
+set(dashboard_do_coverage TRUE)
 # http://www.cmake.org/Wiki/CTest:Coverage
 set(ENV{CFLAGS} "-fprofile-arcs -ftest-coverage")
 set(ENV{LDFLAGS} "-fprofile-arcs -ftest-coverage")
