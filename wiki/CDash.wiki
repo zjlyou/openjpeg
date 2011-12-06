@@ -16,10 +16,10 @@ make Experimental
 
 Configuration possibilities:
 
-|| Nightly Expected || Registered machine only, see [http://code.google.com/p/openjpeg/source/browse/#svn%2Fdev-utils%2Fctest_scripts ctest_scripts]
-|| Nightly Release 1.5 || Registered machine only, see [http://code.google.com/p/openjpeg/source/browse/#svn%2Fdev-utils%2Fctest_scripts ctest_scripts]
-|| Nightly Release 2.0 || Registered machine only, see [http://code.google.com/p/openjpeg/source/browse/#svn%2Fdev-utils%2Fctest_scripts ctest_scripts]
-|| Nightly || Default for make Nightly
+|| Nightly Expected || Registered machine only, see [http://code.google.com/p/openjpeg/source/browse/#svn%2Fdev-utils%2Fctest_scripts ctest_scripts] ||
+|| Nightly Release 1.5 || Registered machine only, see [http://code.google.com/p/openjpeg/source/browse/#svn%2Fdev-utils%2Fctest_scripts ctest_scripts] ||
+|| Nightly Release 2.0 || Registered machine only, see [http://code.google.com/p/openjpeg/source/browse/#svn%2Fdev-utils%2Fctest_scripts ctest_scripts] ||
+|| Nightly || Default for make Nightly ||
 || Experimental || eg. new compiler, new arch, new OS ||
 
 = Links =
