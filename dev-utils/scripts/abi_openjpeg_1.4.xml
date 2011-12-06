@@ -1,0 +1,9 @@
+<version>1.4.0</version>
+<headers>
+/tmp/install/opj14/usr/local/include/openjpeg-1.4
+</headers>
+<libs>
+/tmp/install/opj14/usr/local/lib/
+</libs>
+<include_paths>
+</include_paths>
