@@ -8,17 +8,12 @@ v1.5 is frozen, this means no NEW feature should go in, only bug fixes.
 
 = Summary of tests failing =
 
-La principale source de test en failed est le fait que les tests en C0 (Cclass0) décode toutes les composantes en pgx alors que les fichiers de référence n'ont qu'une seule bande. Si j'ai bien compris ce problème est lié au fait que la class0 correspond à des fichiers ne contenant en théorie qu'une composante (Tableau A.1 de la Part4 de la norme). J'avais posé la question à Antonin et voilà  ce qu'il m'avait répondu :
+For the moment we have worked on the decoding part and the encoding part must be considered as unstable so all test with prefix ENC should ignored for the moment in the trunk. broken, broken2, broken3 and broken4 should failed.
 
-"Pour les tests de la classe 0, il ne faut toujours prendre en compte que la première composante, celle de luminance. Pour les code-streams qui impliquent une MCT, il faudrait pour bien faire avoir une option de décodage qui empêche de faire la reverse MCT, afin de générer la composante de luminance. Je propose que tant que cette option n'est pas implémentée, on skip les tests concernés. Ca te semble ok ?"
+If you used dashboard filter, you can see that it remains 38 tests linked to the fact when we decode some C0 (Cclass0) conformance files we produce multiband files but we must not because reference pgx file have only one. 36 tests are linked to this point. I am not sure to understand what we can do to avoid this point, perhaps Antonin have more ideas on it.
+For the trunk, we have a strong problem with p0_07.j2k file described in issue 80 http://code.google.com/p/openjpeg/issues/detail?id=80 which is not correctly decoded.
 
-Donc 2 possibilités: désactiver les tests ou bien prendre le temps d'implémenter l'option décrite par Antonin et de gérer la comparaison en fonction de la classe C0=>comparaison d'une bande.
-
-Par contre le fichier de conformance p0_07 n'est pas correctement décodé par la lib cf. issue 80 http://code.google.com/p/openjpeg/issues/detail?id=80. Le problème n'est pas totalement résolu dans la v2 car il reste un problème avec la 1ère tuile et le marqueur EPH: http://my.cdash.org/testDetails.php?test=8047743&build=264685 (toute à la fin de l'output).
-
-Le test d'encodage de bretagne segfault http://my.cdash.org/testSummary.php?project=237&name=NR-ENC-Bretagne2.ppm-4-encode&date=2011-11-29 sauf sur leod ce qui est assez bizarre.
-
-Ensuite il est possible que certains tests failed pour des broutilles mais à vérifier sur le dashboard car j'ai des souvenirs de comportements différents selon les plateformes. 
+For the branch 1.5 which will be the next release, the list of tests with problems not linked to C0P0 or C0P1 files are listed here http://my.cdash.org/viewTest.php?onlyfailed&buildid=264729&filtercount=3&showfilters=1&filtercombine=and&field1=testname/string&compare1=64&value1=C0P0&field2=testname/string&compare2=64&value2=C0P1&field3=testname/string&compare3=64&value3=broken <http://my.cdash.org/viewTest.php?onlyfailed&buildid=264729&filtercount=3&showfilters=1&filtercombine=and&field1=testname/string&compare1=64&value1=C0P0&field2=testname/string&compare2=64&value2=C0P1&field3=testname/string&compare3=64&value3=broken>
 
 = Details =
 
