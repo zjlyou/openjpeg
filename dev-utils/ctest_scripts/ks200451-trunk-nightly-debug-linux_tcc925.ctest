@@ -8,6 +8,8 @@ macro(dashboard_hook_init)
   BUILD_TESTING:BOOL=ON
   # cmake/tcc do not work in dynamic:
   BUILD_SHARED_LIBS:BOOL=OFF
+  # run cppcheck
+  OPENJPEG_CPPCHECK:BOOL=ON
     "
     )
 endmacro(dashboard_hook_init)
