@@ -6,6 +6,19 @@ Let's list the things remainings to do before v1.5.
 
 v1.5 is frozen, this means no NEW feature should go in, only bug fixes.
 
+= Summary of tests failing =
+
+La principale source de test en failed est le fait que les tests en C0 (Cclass0) décode toutes les composantes en pgx alors que les fichiers de référence n'ont qu'une seule bande. Si j'ai bien compris ce problème est lié au fait que la class0 correspond à des fichiers ne contenant en théorie qu'une composante (Tableau A.1 de la Part4 de la norme). J'avais posé la question à Antonin et voilà  ce qu'il m'avait répondu :
+
+"Pour les tests de la classe 0, il ne faut toujours prendre en compte que la première composante, celle de luminance. Pour les code-streams qui impliquent une MCT, il faudrait pour bien faire avoir une option de décodage qui empêche de faire la reverse MCT, afin de générer la composante de luminance. Je propose que tant que cette option n'est pas implémentée, on skip les tests concernés. Ca te semble ok ?"
+
+Donc 2 possibilités: désactiver les tests ou bien prendre le temps d'implémenter l'option décrite par Antonin et de gérer la comparaison en fonction de la classe C0=>comparaison d'une bande.
+
+Par contre le fichier de conformance p0_07 n'est pas correctement décodé par la lib cf. issue 80 http://code.google.com/p/openjpeg/issues/detail?id=80. Le problème n'est pas totalement résolu dans la v2 car il reste un problème avec la 1ère tuile et le marqueur EPH: http://my.cdash.org/testDetails.php?test=8047743&build=264685 (toute à la fin de l'output).
+
+Le test d'encodage de bretagne segfault http://my.cdash.org/testSummary.php?project=237&name=NR-ENC-Bretagne2.ppm-4-encode&date=2011-11-29 sauf sur leod ce qui est assez bizarre.
+
+Ensuite il est possible que certains tests failed pour des broutilles mais à vérifier sur le dashboard car j'ai des souvenirs de comportements différents selon les plateformes. 
 
 = Details =
 
