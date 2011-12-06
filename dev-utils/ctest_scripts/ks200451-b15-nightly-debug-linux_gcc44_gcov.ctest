@@ -1,0 +1,21 @@
+# Client maintainer: mathieu . malaterre  gmail . com
+
+set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
+set(ENV{CC} /usr/bin/gcc-4.4)
+
+set(dashboard_do_coverage FALSE)
+# http://www.cmake.org/Wiki/CTest:Coverage
+set(ENV{CFLAGS} "-fprofile-arcs -ftest-coverage")
+set(ENV{LDFLAGS} "-fprofile-arcs -ftest-coverage")
+
+macro(dashboard_hook_init)
+  set( dashboard_cache "
+  BUILD_TESTING:BOOL=ON
+    "
+    )
+endmacro(dashboard_hook_init)
+
+# Filename convention is:
+# ctestsite-branchname-model-configuration-buildname.ctest
+get_filename_component(OPJ_CTEST_NAME ${CMAKE_CURRENT_LIST_FILE} NAME_WE)
+include(${CTEST_SCRIPT_DIRECTORY}/openjpeg_common.cmake)
