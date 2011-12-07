@@ -2,7 +2,7 @@
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/bin/clang)
-#set(ENV{CFLAGS} "-g -O2 -fstack-protector --param=ssp-buffer-size=4 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security")
+set(ENV{CFLAGS} "-pedantic")
 
 macro(dashboard_hook_init)
   set( dashboard_cache "
