@@ -77,6 +77,8 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
 
 set(KDUPATH "C:/Program Files/Kakadu")
 set(ENV{PATH} "$ENV{PATH};${KDUPATH}")
+# Avoid non-ascii characters in tool output.
+set(ENV{LC_ALL} C)
 
 # User options
 set( CACHE_CONTENTS "
