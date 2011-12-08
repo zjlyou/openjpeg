@@ -85,7 +85,7 @@ get_filename_component(dashboard_self_dir ${CMAKE_CURRENT_LIST_FILE} PATH)
 
 # Select the top dashboard directory.
 if(NOT DEFINED dashboard_root_name)
-  set(dashboard_root_name "My Tests")
+  set(dashboard_root_name "MyTests")
 endif()
 if(NOT DEFINED CTEST_DASHBOARD_ROOT)
   get_filename_component(CTEST_DASHBOARD_ROOT "${CTEST_SCRIPT_DIRECTORY}/../${dashboard_root_name}" ABSOLUTE)
