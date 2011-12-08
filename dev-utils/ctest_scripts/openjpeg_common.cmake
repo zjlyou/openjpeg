@@ -166,11 +166,13 @@ else()
   set(CTEST_BUILD_NAME ${ctest_build_name_root}-${dashboard_svn_branch}-${CTEST_BUILD_CONFIGURATION})
   if("${dashboard_model}" MATCHES "^[N|n]ightly$")
     set(TRACK_NAME "Nightly Expected")
-  elseif("${dashboard_model}" MATCHES "^[E|e]xperimental$")
-    set(TRACK_NAME "Experimental")
   else()
     message(FATAL_ERROR "${dashboard_svn_branch} / ${dashboard_model} unhandled")
   endif()
+endif()
+# Experimental in last:
+if("${dashboard_model}" MATCHES "^[E|e]xperimental$")
+  set(TRACK_NAME "Experimental")
 endif()
 
 # compute full URL:
