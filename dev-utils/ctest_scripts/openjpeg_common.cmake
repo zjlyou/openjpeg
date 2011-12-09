@@ -177,6 +177,9 @@ elseif("${dashboard_model}" MATCHES "^[C|c]ontinuous$")
   set(TRACK_NAME "Continuous")
 endif()
 
+# Let's put source in different dir to avoir conflicts (Nightly vs Continous)
+set(dashboard_source_name ${dashboard_source_name}-${dashboard_model})
+
 # compute full URL:
 set(dashboard_svn_url "${dashboard_svn_root_url}/${dashboard_svn_branch}")
 
