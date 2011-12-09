@@ -170,11 +170,14 @@ else()
     message(FATAL_ERROR "${dashboard_svn_branch} / ${dashboard_model} unhandled")
   endif()
 endif()
+
+set(dashboard_continuous 0)
 # Experimental in last:
 if("${dashboard_model}" MATCHES "^[E|e]xperimental$")
   set(TRACK_NAME "Experimental")
 elseif("${dashboard_model}" MATCHES "^[C|c]ontinuous$")
   set(TRACK_NAME "Continuous")
+  set(dashboard_continuous 1)
 endif()
 
 # Let's put source in different dir to avoir conflicts (Nightly vs Continous)
@@ -299,10 +302,6 @@ if(NOT "${CTEST_SOURCE_DIRECTORY}" STREQUAL "${CTEST_BINARY_DIRECTORY}"
   ctest_empty_binary_directory(${CTEST_BINARY_DIRECTORY})
 endif()
 
-set(dashboard_continuous 0)
-if("${dashboard_model}" STREQUAL "Continuous")
-  set(dashboard_continuous 1)
-endif()
 if(NOT DEFINED dashboard_loop)
   if(dashboard_continuous)
     set(dashboard_loop 43200)
