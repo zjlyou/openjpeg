@@ -101,7 +101,7 @@ endif()
 if(NOT DEFINED dashboard_model)
   set(dashboard_model Nightly)
 endif()
-if(NOT "${dashboard_model}" MATCHES "^([N|n]ightly|[E|e]xperimental|Continuous)$")
+if(NOT "${dashboard_model}" MATCHES "^([N|n]ightly|[E|e]xperimental|[C|c]ontinuous)$")
   message(FATAL_ERROR "dashboard_model must be Nightly, Experimental, or Continuous")
 endif()
 
