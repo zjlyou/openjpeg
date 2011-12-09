@@ -173,6 +173,8 @@ endif()
 # Experimental in last:
 if("${dashboard_model}" MATCHES "^[E|e]xperimental$")
   set(TRACK_NAME "Experimental")
+elseif("${dashboard_model}" MATCHES "^[C|c]ontinuous$")
+  set(TRACK_NAME "Continuous")
 endif()
 
 # compute full URL:
