@@ -15,47 +15,97 @@ For the trunk, we have a strong problem with p0_07.j2k file described in issue 8
 
 For the branch 1.5 which will be the next release, the list of tests with problems not linked to C0P0 or C0P1 files are listed here http://my.cdash.org/viewTest.php?onlyfailed&buildid=264729&filtercount=3&showfilters=1&filtercombine=and&field1=testname/string&compare1=64&value1=C0P0&field2=testname/string&compare2=64&value2=C0P1&field3=testname/string&compare3=64&value3=broken <http://my.cdash.org/viewTest.php?onlyfailed&buildid=264729&filtercount=3&showfilters=1&filtercombine=and&field1=testname/string&compare1=64&value1=C0P0&field2=testname/string&compare2=64&value2=C0P1&field3=testname/string&compare3=64&value3=broken>
 
+= Script =
+
+See [http://code.google.com/p/openjpeg/source/browse/dev-utils/scripts/script.sh script] to generate the page:
+
 = Details =
 
 Quite a few tests are still failings:
 
-According to: http://my.cdash.org/viewTest.php?onlyfailed&buildid=265876
+* http://my.cdash.org/viewTest.php?onlyfailed&buildid=269771
 
-We have:
-
-||ETS-C0P1-p1_04.j2k-r0-compare2ref||Failed||Passed||0.06||Completed (Failed)||
+||ETS-C0P1-p1_04.j2k-r0-compare2ref||Failed||Passed||0.08||Completed (Failed)||
 ||ETS-C0P1-p1_04.j2k-r3-compare2ref||Failed||Passed||0.00||Completed (Failed)||
-||ETS-C1P0-p0_07.j2k-compare2ref||Failed||Passed||0.71||Completed (Failed)||
-||ETS-C1P0-p0_07.j2k-decode||Failed||Passed||0.14||Completed (Failed)||
-||NR-C0P1-p1_04.j2k-r0-compare2base||Failed||Passed||0.06||Completed (Failed)||
+||ETS-C1P0-p0_07.j2k-compare2ref||Failed||Passed||0.92||Completed (Failed)||
+||ETS-C1P0-p0_07.j2k-decode||Failed||Passed||0.10||Completed (Failed)||
+||NR-C0P1-p1_04.j2k-r0-compare2base||Failed||Passed||0.00||Completed (Failed)||
 ||NR-C0P1-p1_04.j2k-r3-compare2base||Failed||Passed||0.00||Completed (Failed)||
-||NR-C1P0-p0_07.j2k-compare2base||Failed||Passed||0.20||Completed (Failed)||
+||NR-C1P0-p0_07.j2k-compare2base||Failed||Passed||0.00||Completed (Failed)||
 ||NR-DEC-123.j2c-3-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
-||NR-DEC-broken.jp2-4-compare_dump2base||Failed||Passed||0.07||Completed (Failed)||
+||NR-DEC-broken.jp2-4-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
 ||NR-DEC-broken.jp2-4-decode||Failed||Passed||0.00||Completed (Failed)||
 ||NR-DEC-broken.jp2-4-dump||Failed||Passed||0.00||Completed (Failed)||
-||NR-DEC-broken2.jp2-5-compare_dump2base||Failed||Passed||0.07||Completed (Failed)||
-||NR-DEC-broken2.jp2-5-decode||Failed||Passed||0.10||Completed (Failed)||
-||NR-DEC-broken2.jp2-5-dump||Failed||Passed||0.10||Completed (Failed)||
-||NR-DEC-broken3.jp2-6-compare_dump2base||Failed||Passed||0.10||Completed (Failed)||
-||NR-DEC-broken3.jp2-6-decode||Failed||Passed||0.10||Completed (Failed)||
-||NR-DEC-broken3.jp2-6-dump||Failed||Passed||0.10||Completed (Failed)||
-||NR-DEC-broken4.jp2-7-compare_dump2base||Failed||Passed||0.20||Completed (Failed)||
-||NR-DEC-broken4.jp2-7-decode||Failed||Passed||0.15||Completed (Failed)||
+||NR-DEC-broken2.jp2-5-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken2.jp2-5-decode||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken2.jp2-5-dump||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken3.jp2-6-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken3.jp2-6-decode||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken3.jp2-6-dump||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken4.jp2-7-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken4.jp2-7-decode||Failed||Passed||0.00||Completed (Failed)||
 ||NR-DEC-broken4.jp2-7-dump||Failed||Passed||0.00||Completed (Failed)||
-||NR-DEC-bug.j2c-8-compare_dump2base||Failed||Passed||0.10||Completed (Failed)||
-||NR-DEC-text_GBR.jp2-29-compare_dump2base||Failed||Passed||0.10||Completed (Failed)||
-||NR-DEC-text_GBR.jp2-29-decode||Failed||Passed||0.10||Completed (Failed)||
-||NR-DEC-text_GBR.jp2-29-dump||Failed||Passed||0.10||Completed (Failed)||
+||NR-DEC-bug.j2c-8-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-text_GBR.jp2-29-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-text_GBR.jp2-29-decode||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-text_GBR.jp2-29-dump||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-Bretagne2.ppm-4-compare_dec-ref-out2base||Failed||Passed||0.00||Completed (Failed)||
 ||NR-ENC-Bretagne2.ppm-4-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-Bretagne2.ppm-4-decode-ref||Failed||Passed||0.00||Completed (Failed)||
 ||NR-ENC-Bretagne2.ppm-4-dump||Failed||Passed||0.00||Completed (Failed)||
-||NR-ENC-Bretagne2.ppm-4-encode||Failed||Passed||3.15||Completed (SEGFAULT)||
-||NR-ENC-Bretagne2.ppm-6-compare_dump2base||Failed||Passed||0.10||Completed (Failed)||
+||NR-ENC-Bretagne2.ppm-4-encode||Failed||Passed||2.85||Completed (SEGFAULT)||
+||NR-ENC-Bretagne2.ppm-6-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-X_4_2K_24_185_CBR_WB_000.tif-12-compare_dec-ref-out2base||Failed||Passed||0.00||Completed (Failed)||
 ||NR-ENC-X_4_2K_24_185_CBR_WB_000.tif-12-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-X_5_2K_24_235_CBR_STEM24_000.tif-13-compare_dec-ref-out2base||Failed||Passed||0.00||Completed (Failed)||
 ||NR-ENC-X_5_2K_24_235_CBR_STEM24_000.tif-13-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
-||NR-ENC-X_6_2K_24_FULL_CBR_CIRCLE_000.tif-14-compare_dump2base||Failed||Passed||0.10||Completed (Failed)||
-||NR-file9.jp2-compare_dump2base||Failed||Passed||0.10||Completed (Failed)||
+||NR-ENC-X_6_2K_24_FULL_CBR_CIRCLE_000.tif-14-compare_dec-ref-out2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-X_6_2K_24_FULL_CBR_CIRCLE_000.tif-14-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-file9.jp2-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
 ||NR-p0_07.j2k-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
-||NR-p0_07.j2k-dump||Failed||Passed||0.20||Completed (Failed)||
+||NR-p0_07.j2k-dump||Failed||Passed||0.10||Completed (Failed)||
 
-See [http://code.google.com/p/openjpeg/source/browse/dev-utils/scripts/script.sh script] to generate the page:
+while with -m32 flag:
+
+||ETS-C0P1-p1_04.j2k-r0-compare2ref||Failed||Passed||0.16||Completed (Failed)||
+||ETS-C0P1-p1_04.j2k-r3-compare2ref||Failed||Passed||0.01||Completed (Failed)||
+||ETS-C1P0-p0_07.j2k-compare2ref||Failed||Passed||1.84||Completed (Failed)||
+||ETS-C1P0-p0_07.j2k-decode||Failed||Passed||0.15||Completed (Failed)||
+||NR-C0P1-p1_04.j2k-r0-compare2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-C0P1-p1_04.j2k-r3-compare2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-C1P0-p0_04.j2k-compare2base||Failed||Passed||2.04||Completed (Failed)||
+||NR-C1P0-p0_05.j2k-compare2base||Failed||Passed||4.01||Completed (Failed)||
+||NR-C1P0-p0_06.j2k-compare2base||Failed||Passed||0.29||Completed (Failed)||
+||NR-C1P0-p0_07.j2k-compare2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-C1P1-p1_02.j2k-compare2base||Failed||Passed||2.04||Completed (Failed)||
+||NR-C1P1-p1_03.j2k-compare2base||Failed||Passed||3.97||Completed (Failed)||
+||NR-C1P1-p1_04.j2k-compare2base||Failed||Passed||5.14||Completed (Failed)||
+||NR-C1P1-p1_05.j2k-compare2base||Failed||Passed||1.62||Completed (Failed)||
+||NR-DEC-123.j2c-3-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken.jp2-4-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken.jp2-4-decode||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken.jp2-4-dump||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken2.jp2-5-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken2.jp2-5-decode||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken2.jp2-5-dump||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken3.jp2-6-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken3.jp2-6-decode||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken3.jp2-6-dump||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken4.jp2-7-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken4.jp2-7-decode||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-broken4.jp2-7-dump||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-bug.j2c-8-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-text_GBR.jp2-29-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-text_GBR.jp2-29-decode||Failed||Passed||0.00||Completed (Failed)||
+||NR-DEC-text_GBR.jp2-29-dump||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-Bretagne2.ppm-4-compare_dec-ref-out2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-Bretagne2.ppm-6-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-X_4_2K_24_185_CBR_WB_000.tif-12-compare_dec-ref-out2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-X_4_2K_24_185_CBR_WB_000.tif-12-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-X_5_2K_24_235_CBR_STEM24_000.tif-13-compare_dec-ref-out2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-X_5_2K_24_235_CBR_STEM24_000.tif-13-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-X_6_2K_24_FULL_CBR_CIRCLE_000.tif-14-compare_dec-ref-out2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-X_6_2K_24_FULL_CBR_CIRCLE_000.tif-14-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-file9.jp2-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-p0_07.j2k-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-p0_07.j2k-dump||Failed||Passed||0.15||Completed (Failed)||
