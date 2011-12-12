@@ -109,3 +109,23 @@ while with -m32 flag:
 ||NR-file9.jp2-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
 ||NR-p0_07.j2k-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
 ||NR-p0_07.j2k-dump||Failed||Passed||0.15||Completed (Failed)||
+
+= Summary =
+
+This means on 64bits the following tests are failing:
+
+||NR-ENC-Bretagne2.ppm-4-compare_dump2base||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-Bretagne2.ppm-4-decode-ref||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-Bretagne2.ppm-4-dump||Failed||Passed||0.00||Completed (Failed)||
+||NR-ENC-Bretagne2.ppm-4-encode||Failed||Passed||2.85||Completed (SEGFAULT)||
+
+while on 32bits:
+
+
+||NR-C1P0-p0_04.j2k-compare2base||Failed||Passed||2.04||Completed (Failed)||
+||NR-C1P0-p0_05.j2k-compare2base||Failed||Passed||4.01||Completed (Failed)||
+||NR-C1P0-p0_06.j2k-compare2base||Failed||Passed||0.29||Completed (Failed)||
+||NR-C1P1-p1_02.j2k-compare2base||Failed||Passed||2.04||Completed (Failed)||
+||NR-C1P1-p1_03.j2k-compare2base||Failed||Passed||3.97||Completed (Failed)||
+||NR-C1P1-p1_04.j2k-compare2base||Failed||Passed||5.14||Completed (Failed)||
+||NR-C1P1-p1_05.j2k-compare2base||Failed||Passed||1.62||Completed (Failed)||
