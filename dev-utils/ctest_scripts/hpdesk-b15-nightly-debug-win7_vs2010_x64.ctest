@@ -5,6 +5,7 @@ set(CTEST_CMAKE_GENERATOR "NMake Makefiles")
 macro(dashboard_hook_init)
   set( dashboard_cache "
   BUILD_TESTING:BOOL=ON
+  BUILD_THIRDPARTY:BOOL=ON
     "
     )
 endmacro(dashboard_hook_init)
