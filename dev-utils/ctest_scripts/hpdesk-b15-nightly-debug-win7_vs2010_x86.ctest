@@ -1,0 +1,15 @@
+# Client maintainer: mathieu . malaterre  gmail . com
+
+set(CTEST_CMAKE_GENERATOR "NMake Makefiles")
+
+macro(dashboard_hook_init)
+  set( dashboard_cache "
+  BUILD_TESTING:BOOL=ON
+    "
+    )
+endmacro(dashboard_hook_init)
+
+# Filename convention is:
+# ctestsite-branchname-model-configuration-buildname.ctest
+get_filename_component(OPJ_CTEST_NAME ${CMAKE_CURRENT_LIST_FILE} NAME_WE)
+include(${CTEST_SCRIPT_DIRECTORY}/openjpeg_common.cmake)
