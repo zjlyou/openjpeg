@@ -1,4 +1,4 @@
-@update ourself:
+@rem update ourself:
 cd C:/Dashboards/ctest_scripts && svn up
 
 setlocal
@@ -7,7 +7,7 @@ call "%VS100COMNTOOLS%vsvars32.bat"
 
 @rem loop over all hpdesk-*x86.ctest files:
 set ctestlist=
-for %%a in ("hpdesk-*x86.ctest") do call :concat "%%a"
+for %%a in ("hpdesk-*nightly*x86.ctest") do call :concat "%%a"
 ctest -S %ctestlist% -V -O %ctestlist%.log
 endlocal
 
@@ -17,7 +17,7 @@ call "c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\vcvarsall.bat" amd6
 
 @rem loop over all hpdesk-*x64.ctest files:
 set ctestlist=
-for %%a in ("hpdesk-*x64.ctest") do call :concat "%%a"
+for %%a in ("hpdesk-*nightly*x64.ctest") do call :concat "%%a"
 ctest -S %ctestlist% -V -O %ctestlist%.log
 endlocal
 
