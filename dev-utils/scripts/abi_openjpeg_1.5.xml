@@ -1,6 +1,6 @@
 <version>1.5.0</version>
 <headers>
-/tmp/install/opj15/usr/local/include/openjpeg-1.4
+/tmp/install/opj15/usr/local/include/openjpeg-1.5
 </headers>
 <libs>
 /tmp/install/opj15/usr/local/lib/
