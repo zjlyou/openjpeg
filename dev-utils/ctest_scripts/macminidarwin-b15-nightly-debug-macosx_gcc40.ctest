@@ -4,6 +4,7 @@ set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 
 macro(dashboard_hook_init)
   set( dashboard_cache "
+  CMAKE_OSX_ARCHITECTURES:STRING=ppc;i386
   BUILD_TESTING:BOOL=ON
   BUILD_JPIP:BOOL=ON
   BUILD_THIRDPARTY:BOOL=OFF
