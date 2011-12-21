@@ -5,8 +5,6 @@ set(ENV{CC} /usr/bin/gcc-3.3)
 
 macro(dashboard_hook_init)
   set( dashboard_cache "
-  CMAKE_OSX_ARCHITECTURES:STRING=ppc;i386
-  CMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.4
   BUILD_TESTING:BOOL=ON
   BUILD_JPIP:BOOL=OFF
   BUILD_THIRDPARTY:BOOL=OFF
