@@ -2,7 +2,7 @@
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/bin/gcc-4.4)
-set(ENV{CFLAGS} "-mcpu=G4 -O2 -pipe -maltivec -mabi=altivec -fno-strict-aliasing")
+set(ENV{CFLAGS} "-Wall -Wextra -pedantic -Wno-long-long")
 
 macro(dashboard_hook_init)
   set( dashboard_cache "
