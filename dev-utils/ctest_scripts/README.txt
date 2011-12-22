@@ -11,3 +11,6 @@ gcc -c -Q -march=native --help=target
 and also,
 
 gcc -### -march=native -E /usr/include/stdlib.h 2>&1 | grep "/usr/lib.*cc1" 
+
+See:
+http://gcc.gnu.org/onlinedocs/gcc-4.4.4/gcc/Submodel-Options.html
