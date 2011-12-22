@@ -1,0 +1,23 @@
+# Client maintainer: mathieu . malaterre  gmail . com
+
+set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
+set(ENV{CC} /usr/bin/gcc-4.4)
+set(ENV{CFLAGS} "-march=core2 -mfpmath=sse")
+
+set(dashboard_do_memcheck FALSE)
+set(CTEST_MEMORYCHECK_COMMAND           "/usr/bin/valgrind")
+set(CTEST_MEMORYCHECK_COMMAND_OPTIONS   "-q --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=10")
+
+macro(dashboard_hook_init)
+  set( dashboard_cache "
+  BUILD_TESTING:BOOL=ON
+  BUILD_JPIP:BOOL=ON
+  BUILD_THIRDPARTY:BOOL=OFF
+    "
+    )
+endmacro(dashboard_hook_init)
+
+# Filename convention is:
+# ctestsite-branchname-model-configuration-buildname.ctest
+get_filename_component(OPJ_CTEST_NAME ${CMAKE_CURRENT_LIST_FILE} NAME_WE)
+include(${CTEST_SCRIPT_DIRECTORY}/openjpeg_common.cmake)
