@@ -3,7 +3,7 @@
 = TEST SUITE openjpeg =
 
 = Conformance testing =
-These tests are hardcoded in http://openjpeg.googlecode.com/svn/trunk/tests/conformance/CMakeLists.txt and they return to the logic described in Standard (Part 4). The data is stored in http://openjpeg.googlecode.com/svn/data/input/conformance/.
+These tests are hardcoded in [http://openjpeg.googlecode.com/svn/trunk/tests/conformance/CMakeLists.txt tests/conformance/CMakeLists.txt] and they return to the logic described in Standard (Part 4). The data is stored in [http://openjpeg.googlecode.com/svn/data/input/conformance/ OPJ_DATA_ROOT/input/conformance].
 
 == Decoding ==
 
