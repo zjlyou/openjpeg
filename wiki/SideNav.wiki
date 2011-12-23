@@ -6,6 +6,7 @@
     * [DocMJ2K Motion JPEG 2000]
     * [JPIP JPIP]
   * [ConformanceTesting Conformance Testing]
+    * [TestSuiteDocumentation Test Suite Documentation]
   * [DevelopmentProcess Development Process]
     * [Release15 Release 1.5]
     * [CDash]
