@@ -6,7 +6,7 @@ set -x
 cd $HOME/Dashboards/MyTests/openjpeg-b15-nightly-linux_gcc44-v1.5-debug
 DESTDIR=/tmp/jpip-install make install
 cd /tmp/jpip-install/usr/local/bin/
-spawn-fcgi -f ./opj_server -p 3000 -n
+spawn-fcgi -f ./opj_server -p 3000
 
 cd $HOME/Dashboards/ctest_scripts && svn up
 
