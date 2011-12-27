@@ -7,7 +7,7 @@ cd $HOME/Dashboards/MyTests/openjpeg-b15-nightly-linux_gcc44-v1.5-debug
 DESTDIR=/tmp/jpip-install make install
 cd /tmp/jpip-install/usr/local/bin/
 # get some data
-wget http://www.openjpeg.org/jpip/data/16.jp2
+wget -c http://www.openjpeg.org/jpip/data/16.jp2
 # start server:
 spawn-fcgi -f ./opj_server -p 3000
 
