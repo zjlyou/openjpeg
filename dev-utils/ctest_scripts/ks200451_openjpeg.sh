@@ -23,5 +23,7 @@ for i in `ls ks200451-*experimental*.ctest`; do
   ctest -S $i -V -O $i.log 
 done
 
+# GET -e "http://localhost/myFCGI?target=copenhague1.jp2&fsiz=170,170&cnew=http&type=jpp-stream" > response.dat
+
 # close server
 GET http://localhost/myFCGI?quitJPIP

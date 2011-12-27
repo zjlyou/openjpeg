@@ -13,6 +13,7 @@ macro(dashboard_hook_init)
   BUILD_TESTING:BOOL=ON
   BUILD_JPIP:BOOL=ON
   BUILD_THIRDPARTY:BOOL=OFF
+  JPIP_SERVER:STRING=http://localhost/myFCGI
     "
     )
 endmacro(dashboard_hook_init)
