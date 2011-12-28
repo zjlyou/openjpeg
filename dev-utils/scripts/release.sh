@@ -10,7 +10,7 @@ svn checkout http://openjpeg.googlecode.com/svn/branches/openjpeg-1.5 openjpeg
 
 mkdir $TMPDIR/openjpeg-build
 cd $TMPDIR/openjpeg-build
-cmake -G "Unix Makefiles" ../openjpeg > config.log 2>&1
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo ../openjpeg > config.log 2>&1
 
 # build openjpeg
 make -j2 > make.log 2>&1
