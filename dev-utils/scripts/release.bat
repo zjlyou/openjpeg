@@ -1,13 +1,13 @@
 @rem generate OpenJPEG release on Windows
 
 @rem get tmpdir:
-TMPDIR=%TMP%\openjpeg_release
+set TMPDIR=%TMP%\openjpeg_release
 
 @rem use VCExpress 2005 for portability
 call "%VS80COMNTOOLS%vsvars32.bat"
 
-SET LIB=C:\Program Files\Microsoft SDKs\Windows\v7.0\Lib;%LIB%
-SET INCLUDE=C:\Program Files\Microsoft SDKs\Windows\v7.0\Include;%INCLUDE%
+SET LIB=C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib;%LIB%
+SET INCLUDE=C:\Program Files\Microsoft SDKs\Windows\v7.1\Include;%INCLUDE%
 
 mkdir %TMPDIR%
 cd %TMPDIR%
