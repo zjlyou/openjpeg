@@ -15,7 +15,9 @@ svn checkout http://openjpeg.googlecode.com/svn/branches/openjpeg-1.5 openjpeg
 
 mkdir %TMPDIR%\openjpeg-build
 cd %TMPDIR%\openjpeg-build
-cmake -G "NMake Makefiles" ..\openjpeg > config.log 2>&1
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+  -DBUILD_THIRDPARTY:BOOL=ON \
+  ..\openjpeg > config.log 2>&1
 
 @rem build gdcm
 nmake > nmake.log 2>&1
