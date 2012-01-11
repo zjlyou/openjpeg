@@ -2,16 +2,20 @@
 
 @rem get tmpdir:
 set TMPDIR=%TMP%\openjpeg_release
+@rem set TMPDIR=Z:\tmp\openjpeg_release
 
 @rem use VCExpress 2005 for portability
 call "%VS80COMNTOOLS%vsvars32.bat"
 
 SET LIB=C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib;%LIB%
+SET LIB=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Lib;%LIB%
 SET INCLUDE=C:\Program Files\Microsoft SDKs\Windows\v7.1\Include;%INCLUDE%
+SET INCLUDE=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include;%INCLUDE%
+SET PATH=%PATH%;C:\Program Files/TortoiseSVN/bin/
 
 mkdir %TMPDIR%
 cd %TMPDIR%
-svn checkout http://openjpeg.googlecode.com/svn/branches/openjpeg-1.5 openjpeg
+svn checkout http://openjpeg.googlecode.com/svn/branches/openjpeg-1.5 openjpeg > svn.log 2>&1
 
 mkdir %TMPDIR%\openjpeg-build
 cd %TMPDIR%\openjpeg-build
