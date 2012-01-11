@@ -44,6 +44,10 @@ cpack -G TGZ > tgz.log 2>&1
 if [ "$isOSX" != "" ]; then
 # create Bundle (MacOSX) installer
 cpack -G Bundle > bundle.log 2>&1
+# DragNDrop
+cpack -G DragNDrop > dragndrop.log 2>&1
+# PackageMaker
+cpack -G PackageMaker > packagemaker.log 2>&1
 fi
 
 # create source zip
