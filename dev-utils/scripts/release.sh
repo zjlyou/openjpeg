@@ -19,7 +19,7 @@ cmake_options="\
  "
 # CMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.5
 if [ "$isOSX" != "" ]; then
-cmake_options=$cmake_options -DCMAKE_OSX_ARCHITECTURES:STRING=ppc;ppc64;i386;x86_64
+cmake_options="$cmake_options -DCMAKE_OSX_ARCHITECTURES:STRING=ppc;ppc64;i386;x86_64"
 fi
 
 mkdir $TMPDIR/openjpeg-build
