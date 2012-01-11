@@ -1,5 +1,6 @@
 #!/bin/sh
 #generate OpenJPEG release on *NIX
+set -x
 
 # get tmpdir:
 TMPDIR=/tmp/openjpeg_release
@@ -8,9 +9,17 @@ mkdir -p $TMPDIR
 cd $TMPDIR
 svn checkout http://openjpeg.googlecode.com/svn/branches/openjpeg-1.5 openjpeg
 
+cmake_options="\
+ -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+ -DBUILD_JPWL:BOOL=ON \
+ -DBUILD_MJ2:BOOL=ON \
+ -DBUILD_JPIP:BOOL=OFF \
+ -DBUILD_THIRDPARTY:BOOL=ON \
+ "
+
 mkdir $TMPDIR/openjpeg-build
 cd $TMPDIR/openjpeg-build
-cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DBUILD_JPWL:bool=on -DBUILD_MJ2:bool=on -DBUILD_JPIP:bool=on ../openjpeg > config.log 2>&1
+cmake -G"Unix Makefiles" $cmake_options ../openjpeg > config.log 2>&1
 
 # build openjpeg
 make -j2 > make.log 2>&1
