@@ -15,8 +15,14 @@ cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo ../openjpeg >
 # build openjpeg
 make -j2 > make.log 2>&1
 
-# create NSIS installer
+# create TGZ installer
+cpack -G TGZ > tgz.log 2>&1
+
+isOSX="`uname -s | grep -i Darwin`"
+if [ "$isOSX" != "" ]; then
+# create Bundle (MacOSX) installer
 cpack -G Bundle > bundle.log 2>&1
+fi
 
 # create source zip
 cpack -G TGZ --config CPackSourceConfig.cmake > s-tgz.log 2>&1
