@@ -10,6 +10,7 @@ cd $TMPDIR
 svn checkout http://openjpeg.googlecode.com/svn/branches/openjpeg-1.5 openjpeg
 
 isOSX="`uname -s | grep -i Darwin`"
+osxVerFul=`system_profiler |grep 'System Version'| sed -e"s/^.*Mac OS X \([0-9.]*\) .*$/\1/"`
 cmake_options="\
  -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
  -DBUILD_JPWL:BOOL=ON \
