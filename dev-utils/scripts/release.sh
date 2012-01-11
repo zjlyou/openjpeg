@@ -16,7 +16,7 @@ cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo ../openjpeg >
 make -j2 > make.log 2>&1
 
 # create NSIS installer
-cpack -G TGZ > tgz.log 2>&1
+cpack -G Bundle > bundle.log 2>&1
 
 # create source zip
 cpack -G TGZ --config CPackSourceConfig.cmake > s-tgz.log 2>&1
