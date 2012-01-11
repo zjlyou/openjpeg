@@ -9,6 +9,7 @@ mkdir -p $TMPDIR
 cd $TMPDIR
 svn checkout http://openjpeg.googlecode.com/svn/branches/openjpeg-1.5 openjpeg
 
+isOSX="`uname -s | grep -i Darwin`"
 cmake_options="\
  -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
  -DBUILD_JPWL:BOOL=ON \
@@ -16,6 +17,10 @@ cmake_options="\
  -DBUILD_JPIP:BOOL=OFF \
  -DBUILD_THIRDPARTY:BOOL=ON \
  "
+# CMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.5
+if [ "$isOSX" != "" ]; then
+cmake_options=$cmake_options -DCMAKE_OSX_ARCHITECTURES:STRING=ppc;ppc64;i386;x86_64
+fi
 
 mkdir $TMPDIR/openjpeg-build
 cd $TMPDIR/openjpeg-build
@@ -27,7 +32,6 @@ make -j2 > make.log 2>&1
 # create TGZ installer
 cpack -G TGZ > tgz.log 2>&1
 
-isOSX="`uname -s | grep -i Darwin`"
 if [ "$isOSX" != "" ]; then
 # create Bundle (MacOSX) installer
 cpack -G Bundle > bundle.log 2>&1
