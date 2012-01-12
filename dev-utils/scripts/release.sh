@@ -14,6 +14,9 @@ fi
 mkdir -p $TMPDIR
 cd $TMPDIR
 svn checkout http://openjpeg.googlecode.com/svn/branches/openjpeg-1.5 openjpeg
+cd openjpeg
+./bootstrap.sh
+cd ..
 
 cmake_options="\
  -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
