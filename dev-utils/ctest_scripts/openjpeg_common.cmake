@@ -33,7 +33,6 @@
 #   dashboard_do_coverage     = True to enable coverage (ex: gcov)
 #   dashboard_do_memcheck     = True to enable memcheck (ex: valgrind)
 #   dashboard_no_clean        = True to skip build tree wipeout
-#   dashboard_no_checkoutdata = True to skip checkout out data
 #   CTEST_UPDATE_COMMAND      = path to svn command-line client
 #   CTEST_BUILD_FLAGS         = build tool arguments (ex: -j2)
 #   CTEST_DASHBOARD_ROOT      = Where to put source and build trees
@@ -91,7 +90,6 @@ endif()
 if(NOT DEFINED CTEST_DASHBOARD_ROOT)
   get_filename_component(CTEST_DASHBOARD_ROOT "${CTEST_SCRIPT_DIRECTORY}/../${dashboard_root_name}" ABSOLUTE)
 endif()
-message("dur: ${CTEST_DASHBOARD_ROOT}")
 
 # Make sure directory exist:
 file(MAKE_DIRECTORY ${CTEST_DASHBOARD_ROOT})
@@ -224,8 +222,6 @@ set(CTEST_CHECKOUT_COMMAND "${CTEST_SVN_COMMAND} co ${dashboard_svn_url} \"${CTE
 #set(CTEST_EXTRA_UPDATES_1 "--non-interactive" "${CTEST_DASHBOARD_ROOT}/data")
 # cant get the above to work at all. instead manually update data dir:
 
-message("${dashboard_no_checkoutdata}")
-if(NOT dashboard_no_checkoutdata)
 # need to call the directory data so that it is automatically found during openjpeg conf:
 if(NOT EXISTS "${CTEST_DASHBOARD_ROOT}/data")
   message("pulling data from scratch")
@@ -239,7 +235,6 @@ else()
     COMMAND ${CTEST_SVN_COMMAND} "update"
     WORKING_DIRECTORY ${CTEST_DASHBOARD_ROOT}/data
     )
-endif()
 endif()
 
 #-----------------------------------------------------------------------------
@@ -322,9 +317,7 @@ if(COMMAND dashboard_hook_init)
   dashboard_hook_init()
 endif()
 
-if(NOT DEFINED dashboard_done)
-  set(dashboard_done 0)
-endif()
+set(dashboard_done 0)
 while(NOT dashboard_done)
   if(dashboard_loop)
     set(START_TIME ${CTEST_ELAPSED_TIME})
