@@ -1,0 +1,22 @@
+To produce a new openjpeg release:
+
+1. Generate the CHANGES for the release:
+
+$ ./genchange.sh
+
+copy the branch
+
+$ svn copy https://openjpeg.googlecode.com/svn/branches/openjpeg-1.5 https://openjpeg.googlecode.com/svn/tags/version.1.5
+$ svn add CHANGES https://openjpeg.googlecode.com/svn/tags/version.1.5
+
+2. Generates the source tarball + binary tarball:
+
+$ ./release.sh
+
+If you have a windows box, from a CMD console:
+
+> release.bat
+
+You can use googlecode_upload.py to upload your files directly:
+
+$ googlecode-upload.py -s "source tarball 1.5" -p openjpeg /tmp/openjpeg_release/openjpeg-build/openjpeg-1.5.0.tar.gz

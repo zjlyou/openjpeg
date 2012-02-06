@@ -1,6 +1,8 @@
 #!/bin/sh
 #generate OpenJPEG release on *NIX (both Linux and MacOSX)
-set -x
+
+# control verbosity
+#set -x
 
 # get tmpdir:
 TMPDIR=/tmp/openjpeg_release
@@ -13,7 +15,7 @@ fi
 
 mkdir -p $TMPDIR
 cd $TMPDIR
-svn checkout http://openjpeg.googlecode.com/svn/branches/openjpeg-1.5 openjpeg
+svn checkout http://openjpeg.googlecode.com/svn/tags/version.1.5 openjpeg
 cd openjpeg
 ./bootstrap.sh
 cd ..
