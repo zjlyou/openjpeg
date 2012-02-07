@@ -3,7 +3,7 @@
 
 ==Latest revisions==
 
-<wiki:gadget url="http://google-code-project-hosting-gadgets.googlecode.com/svn/build/prod/changes/gcChanges.xml" up_projectName="openjpeg" width="500" border="1" />
+<wiki:gadget url="http://openjpeg.googlecode.com/svn/dev-utils/scripts/gcChanges.xml" up_projectName="openjpeg" width="500" border="1" />
 
 ==April 2011: OpenJPIP 1.0 released==
 
