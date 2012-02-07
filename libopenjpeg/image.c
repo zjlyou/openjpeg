@@ -71,127 +71,19 @@ opj_image_t* OPJ_CALLCONV opj_image_create(int numcmpts, opj_image_cmptparm_t *c
 }
 
 void OPJ_CALLCONV opj_image_destroy(opj_image_t *image) {
+	int i;
 	if(image) {
 		if(image->comps) {
-			OPJ_UINT32 compno;
-
 			/* image components */
-			for(compno = 0; compno < image->numcomps; compno++) {
-				opj_image_comp_t *image_comp = &(image->comps[compno]);
+			for(i = 0; i < image->numcomps; i++) {
+				opj_image_comp_t *image_comp = &image->comps[i];
 				if(image_comp->data) {
 					opj_free(image_comp->data);
 				}
 			}
 			opj_free(image->comps);
 		}
-
-		if(image->icc_profile_buf) {
-			opj_free(image->icc_profile_buf);
-		}
-
 		opj_free(image);
 	}
 }
 
-/**
- * Updates the components characteristics of the image from the coding parameters.
- *
- * @param p_image_header	the image header to update.
- * @param p_cp				the coding parameters from which to update the image.
- */
-void opj_image_comp_header_update(opj_image_t * p_image_header, const struct opj_cp_v2 * p_cp)
-{
-	OPJ_UINT32 i, l_width, l_height;
-	OPJ_INT32 l_x0, l_y0, l_x1, l_y1;
-	OPJ_INT32 l_comp_x0, l_comp_y0, l_comp_x1, l_comp_y1;
-	opj_image_comp_t* l_img_comp = NULL;
-
-	l_x0 = int_max(p_cp->tx0 , p_image_header->x0);
-	l_y0 = int_max(p_cp->ty0 , p_image_header->y0);
-	l_x1 = int_min(p_cp->tx0 + p_cp->tw * p_cp->tdx, p_image_header->x1);
-	l_y1 = int_min(p_cp->ty0 + p_cp->th * p_cp->tdy, p_image_header->y1);
-
-	l_img_comp = p_image_header->comps;
-	for	(i = 0; i < p_image_header->numcomps; ++i) {
-		l_comp_x0 = int_ceildiv(l_x0, l_img_comp->dx);
-		l_comp_y0 = int_ceildiv(l_y0, l_img_comp->dy);
-		l_comp_x1 = int_ceildiv(l_x1, l_img_comp->dx);
-		l_comp_y1 = int_ceildiv(l_y1, l_img_comp->dy);
-		l_width = int_ceildivpow2(l_comp_x1 - l_comp_x0, l_img_comp->factor);
-		l_height = int_ceildivpow2(l_comp_y1 - l_comp_y0, l_img_comp->factor);
-		l_img_comp->w = l_width;
-		l_img_comp->h = l_height;
-		l_img_comp->x0 = l_comp_x0/*l_x0*/;
-		l_img_comp->y0 = l_comp_y0/*l_y0*/;
-		++l_img_comp;
-	}
-}
-
-
-/**
- * Copy only header of image and its component header (no data are copied)
- * if dest image have data, they will be freed
- *
- * @param	p_image_src		the src image
- * @param	p_image_dest	the dest image
- *
- */
-void opj_copy_image_header(const opj_image_t* p_image_src, opj_image_t* p_image_dest)
-{
-	OPJ_UINT32 compno;
-
-	/* preconditions */
-	assert(p_image_src != 00);
-	assert(p_image_dest != 00);
-
-	p_image_dest->x0 = p_image_src->x0;
-	p_image_dest->y0 = p_image_src->y0;
-	p_image_dest->x1 = p_image_src->x1;
-	p_image_dest->y1 = p_image_src->y1;
-
-	if (p_image_dest->comps){
-		for(compno = 0; compno < p_image_dest->numcomps; compno++) {
-			opj_image_comp_t *image_comp = &(p_image_dest->comps[compno]);
-			if(image_comp->data) {
-				opj_free(image_comp->data);
-			}
-		}
-		opj_free(p_image_dest->comps);
-		p_image_dest->comps = NULL;
-	}
-
-	p_image_dest->numcomps = p_image_src->numcomps;
-
-	p_image_dest->comps = (opj_image_comp_t*) opj_malloc(p_image_dest->numcomps * sizeof(opj_image_comp_t));
-	if (!p_image_dest->comps){
-		p_image_dest->comps = NULL;
-		p_image_dest->numcomps = 0;
-		return;
-	}
-
-	for (compno=0; compno < p_image_dest->numcomps; compno++){
-		memcpy( &(p_image_dest->comps[compno]),
-				&(p_image_src->comps[compno]),
-				sizeof(opj_image_comp_t));
-		p_image_dest->comps[compno].data = NULL;
-	}
-
-	p_image_dest->color_space = p_image_src->color_space;
-	p_image_dest->icc_profile_len = p_image_src->icc_profile_len;
-
-	if (p_image_dest->icc_profile_len) {
-		p_image_dest->icc_profile_buf = (OPJ_BYTE*)opj_malloc(p_image_dest->icc_profile_len);
-		if (!p_image_dest->icc_profile_buf){
-			p_image_dest->icc_profile_buf = NULL;
-			p_image_dest->icc_profile_len = 0;
-			return;
-		}
-		memcpy( p_image_dest->icc_profile_buf,
-				p_image_src->icc_profile_buf,
-				p_image_src->icc_profile_len);
-		}
-		else
-			p_image_dest->icc_profile_buf = NULL;
-
-	return;
-}

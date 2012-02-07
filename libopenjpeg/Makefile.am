@@ -44,7 +44,6 @@ phix_manager.c \
 ppix_manager.c \
 thix_manager.c \
 tpix_manager.c \
-function_list.c \
 bio.h \
 cio.h \
 dwt.h \
@@ -68,8 +67,7 @@ t1_luts.h \
 t2.h \
 tcd.h \
 tgt.h \
-cidx_manager.h \
-function_list.h
+cidx_manager.h
 
 EXTRA_DIST = \
 CMakeLists.txt

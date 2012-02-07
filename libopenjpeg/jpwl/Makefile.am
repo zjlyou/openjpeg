@@ -26,8 +26,7 @@ OPJ_SRC = \
 ../phix_manager.c \
 ../ppix_manager.c \
 ../thix_manager.c \
-../tpix_manager.c \
-../function_list.c
+../tpix_manager.c
 
 libopenjpeg_JPWL_la_CPPFLAGS = \
 -I. \

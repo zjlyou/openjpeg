@@ -54,11 +54,23 @@
 #define QUIT_SIGNAL "quitJPIP"
 #endif
 
+#ifdef _WIN32
+WSADATA initialisation_win32;
+#endif //_WIN32
+
 int main(void)
 { 
   server_record_t *server_record;
 
-  server_record = init_JPIPserver();
+#ifdef _WIN32
+  int erreur = WSAStartup(MAKEWORD(2,2),&initialisation_win32);
+  if( erreur!=0)
+    fprintf( stderr, "Erreur initialisation Winsock error : %d %d\n",erreur,WSAGetLastError());
+  else
+    fprintf( stderr, "Initialisation Winsock\n");
+#endif //_WIN32
+
+  server_record = init_JPIPserver( 60000, 0);
 
 #ifdef SERVER
 
@@ -83,23 +95,31 @@ int main(void)
       
       qr = parse_querystring( query_string);
       
-      if( !(parse_status = process_JPIPrequest( server_record, qr)))
-	fprintf( FCGI_stderr, "Error: JPIP request failed\n");
-
+      parse_status = process_JPIPrequest( server_record, qr);
+      
 #ifndef SERVER
       local_log( true, true, parse_status, false, qr, server_record);
 #endif
             
-      fprintf( FCGI_stdout, "\r\n");
-
-      send_responsedata( qr);
-
+      if( parse_status)
+	send_responsedata( server_record, qr);
+      else
+	fprintf( FCGI_stderr, "Error: JPIP request failed\n");
+      
       end_QRprocess( server_record, &qr);
     }
   
   fprintf( FCGI_stderr, "JPIP server terminated by a client request\n");
 
   terminate_JPIPserver( &server_record);
+
+#ifdef _WIN32
+  if( WSACleanup() != 0){
+    fprintf( stderr, "\nError in WSACleanup : %d %d",erreur,WSAGetLastError());
+  }else{
+    fprintf( stderr, "\nWSACleanup OK\n");
+  }
+#endif
 
   return 0;
 }

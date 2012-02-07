@@ -31,7 +31,6 @@
 #include <string.h>
 
 #include "openjpeg.h"
-#include "cio.h"
 #include "j2k.h"
 #include "jp2.h"
 #include "mj2.h"

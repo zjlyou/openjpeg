@@ -1096,10 +1096,10 @@ int mj2_read_smj2(opj_image_t * img, mj2_tk_t * tk, opj_cio_t *cio)
 {
   mj2_box_t box;
   mj2_box_t box2;
-  opj_jp2_color_t color;
   int i;
+  opj_jp2_color_t color;
   opj_bool ok;
-	
+
   mj2_read_boxhdr(&box, cio);
 	
   if (MJ2_MJ2 != box.type) {
@@ -1156,13 +1156,12 @@ int mj2_read_smj2(opj_image_t * img, mj2_tk_t * tk, opj_cio_t *cio)
   tk->or_fieldorder = 0;
 	
   cio_skip(cio,2);			/* Pre-defined = -1 */
-
   memset(&color, 0, sizeof(opj_jp2_color_t));
   tk->jp2_struct.cinfo = tk->cinfo;
 
   ok = jp2_read_jp2h(&tk->jp2_struct, cio, &color);
 
-  tk->jp2_struct.cinfo = NULL; 
+  tk->jp2_struct.cinfo = NULL;
 
   if(ok == OPJ_FALSE)
  {
@@ -2767,9 +2766,9 @@ void mj2_destroy_decompress(opj_mj2_t *movie) {
 			if (tk->name_size != 0)
 				opj_free(tk->name);
 			if (tk->track_type == 0)  {// Video track
-				if (tk->jp2_struct.comps != NULL)
+				if (tk->jp2_struct.comps != 0)
 					opj_free(tk->jp2_struct.comps);
-				if (tk->jp2_struct.cl != NULL)
+				if (tk->jp2_struct.cl != 0)
 					opj_free(tk->jp2_struct.cl);
 				if (tk->num_jp2x != 0)
 					opj_free(tk->jp2xdata);
@@ -2886,9 +2885,9 @@ void mj2_destroy_compress(opj_mj2_t *movie) {
 			if (tk->name_size != 0)
 				opj_free(tk->name);
 			if (tk->track_type == 0)  {// Video track
-				if (tk->jp2_struct.comps != NULL)
+				if (tk->jp2_struct.comps != 0)
 					opj_free(tk->jp2_struct.comps);
-				if (tk->jp2_struct.cl != NULL)
+				if (tk->jp2_struct.cl != 0)
 					opj_free(tk->jp2_struct.cl);
 				if (tk->num_jp2x != 0)
 					opj_free(tk->jp2xdata);

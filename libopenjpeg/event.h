@@ -46,46 +46,12 @@ The functions in EVENT.C have for goal to send output messages (errors, warnings
 Write formatted data to a string and send the string to a user callback. 
 @param cinfo Codec context info
 @param event_type Event type or callback to use to send the message
-@param fmt Format-control string (plus optional arguments)
+@param fmt Format-control string (plus optionnal arguments)
 @return Returns true if successful, returns false otherwise
-* FIXME Change by its v2 version this function after ended the merge 
 */
 opj_bool opj_event_msg(opj_common_ptr cinfo, int event_type, const char *fmt, ...);
-
 /* ----------------------------------------------------------------------- */
 /*@}*/
-
-/**
- * Write formatted data to a string and send the string to a user callback.
- *
- * @param event_mgr			Event handler
- * @param event_type 		Event type or callback to use to send the message
- * @param fmt 				Format-control string (plus optional arguments)
- *
- * @return Returns true if successful, returns false otherwise
- */
-opj_bool opj_event_msg_v2(opj_event_mgr_t* event_mgr, int event_type, const char *fmt, ...);
-
-/**
- * Default callback function. No message sent to output.
- */
-void opj_default_callback (const char *msg, void *client_data);
-
-/**
- * Default info callback function, message is sent to the stdout output.
- */
-void opj_info_default_callback (const char *msg, void *client_data);
-
-/**
- * Default warning callback function, message is sent to stderr output.
- */
-void opj_warning_default_callback (const char *msg, void *client_data);
-
-/**
- * Default error callback function, message is sent to stderr output.
- */
-void opj_error_default_callback (const char *msg, void *client_data);
-
 
 /*@}*/
 

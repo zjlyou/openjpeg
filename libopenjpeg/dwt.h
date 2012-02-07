@@ -59,21 +59,13 @@ Apply a reversible inverse DWT transform to a component of an image.
 @param tilec Tile component information (current tile)
 @param numres Number of resolution levels to decode
 */
-#ifdef OPJ_V1
 void dwt_decode(opj_tcd_tilecomp_t* tilec, int numres);
-#endif
-opj_bool dwt_decode(opj_tcd_tilecomp_t* tilec, OPJ_UINT32 numres);
-
-opj_bool dwt_decode_v2(opj_tcd_tilecomp_v2_t* tilec, OPJ_UINT32 numres);
-
 /**
 Get the gain of a subband for the reversible 5-3 DWT.
 @param orient Number that identifies the subband (0->LL, 1->HL, 2->LH, 3->HH)
 @return Returns 0 if orient = 0, returns 1 if orient = 1 or 2, returns 2 otherwise
 */
 int dwt_getgain(int orient);
-
-OPJ_UINT32 dwt_getgain_v2(OPJ_UINT32 orient) ;
 /**
 Get the norm of a wavelet function of a subband at a specified level for the reversible 5-3 DWT.
 @param level Level of the wavelet function
@@ -88,24 +80,18 @@ Apply an irreversible DWT transform to a component of an image.
 */
 void dwt_encode_real(opj_tcd_tilecomp_t * tilec);
 /**
-KEEP TRUNK VERSION + return type of v2 because rev557
 Inverse 9-7 wavelet transform in 2-D. 
 Apply an irreversible inverse DWT transform to a component of an image.
 @param tilec Tile component information (current tile)
 @param numres Number of resolution levels to decode
 */
-// V1 void dwt_decode_real(opj_tcd_tilecomp_t* tilec, int numres);
-opj_bool dwt_decode_real(opj_tcd_tilecomp_t* tilec, int numres);
-
-opj_bool dwt_decode_real_v2(opj_tcd_tilecomp_v2_t* restrict tilec, OPJ_UINT32 numres);
-
+void dwt_decode_real(opj_tcd_tilecomp_t* tilec, int numres);
 /**
 Get the gain of a subband for the irreversible 9-7 DWT.
 @param orient Number that identifies the subband (0->LL, 1->HL, 2->LH, 3->HH)
 @return Returns the gain of the 9-7 wavelet transform
 */
 int dwt_getgain_real(int orient);
-OPJ_UINT32 dwt_getgain_real_v2(OPJ_UINT32 orient);
 /**
 Get the norm of a wavelet function of a subband at a specified level for the irreversible 9-7 DWT
 @param level Level of the wavelet function

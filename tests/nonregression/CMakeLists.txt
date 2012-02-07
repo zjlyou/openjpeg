@@ -6,66 +6,14 @@ SET(TEMP ${CMAKE_CURRENT_BINARY_DIR}/Temporary)
 SET(BASELINE_NR ${OPJ_DATA_ROOT}/baseline/nonregression)
 SET(INPUT_NR ${OPJ_DATA_ROOT}/input/nonregression)
 
-
 SET(INPUT_NR_PATH ${INPUT_NR})
 SET(TEMP_PATH ${TEMP})
-SET(INPUT_CONF_PATH ${OPJ_DATA_ROOT}/input/conformance)
 
 # need kdu_expand if possible
 find_package(KAKADU)
 
 #########################################################################
-# GENERATION OF THE TEST SUITE (DUMP)
-# Dump all files with the selected extension inside the input directory
-
-# Define a list of file which should be gracefully rejected:
-SET(BLACKLIST_JPEG2000 
-    empty
-   )
-
-FILE(GLOB_RECURSE OPJ_DATA_NR_LIST
-     "${INPUT_NR}/*.j2k"
-     "${INPUT_NR}/*.j2c"
-     "${INPUT_NR}/*.jp2"
-     #"${INPUT_NR}/*.jpx"
-     )
- 
-FOREACH(INPUT_FILENAME ${OPJ_DATA_NR_LIST})
-  GET_FILENAME_COMPONENT(INPUT_FILENAME_NAME ${INPUT_FILENAME} NAME)
-  GET_FILENAME_COMPONENT(INPUT_FILENAME_NAME_WE ${INPUT_FILENAME_NAME} NAME_WE)
-  STRING(REGEX MATCH ${INPUT_FILENAME_NAME} bad_jpeg2000 ${BLACKLIST_JPEG2000})
-  
-  # Dump the input image
-  ADD_TEST(NR-${INPUT_FILENAME_NAME}-dump
-           ${EXECUTABLE_OUTPUT_PATH}/j2k_dump
-  	       -i ${INPUT_FILENAME}
-  	       -o ${TEMP}/${INPUT_FILENAME_NAME}.txt
-  	       -v
-  	       )
-  	       
-  IF(bad_jpeg2000)
-    SET_TESTS_PROPERTIES(NR-${INPUT_FILENAME_NAME}-dump
-                         PROPERTIES WILL_FAIL TRUE)
-  
-  ELSE(bad_jpeg2000)
-  	       
-    # Compare the dump output with the baseline
-    ADD_TEST(NR-${INPUT_FILENAME_NAME}-compare_dump2base
-  	        ${EXECUTABLE_OUTPUT_PATH}/compare_dump_files
-            -b ${BASELINE_NR}/opj_v2_${INPUT_FILENAME_NAME_WE}.txt 
-            -t ${TEMP}/${INPUT_FILENAME_NAME}.txt
-            )
-          
-    SET_TESTS_PROPERTIES(NR-${INPUT_FILENAME_NAME}-compare_dump2base
-                         PROPERTIES DEPENDS
-                         NR-${INPUT_FILENAME_NAME}-dump)
-  ENDIF(bad_jpeg2000)
-
-ENDFOREACH(INPUT_FILENAME)
-
-
-#########################################################################
-# GENERATION OF THE TEST SUITE (DECODE AND ENCODE)
+# GENERATION OF THE TEST SUITE
 # Read one and more input file(s) (located in ${OPJ_DATA_ROOT}/input/nonregression) 
 # to know which files processed and with which options.
 
@@ -84,8 +32,7 @@ IF (TEST_SUITE_FILES)
     
     # Avoid to process the official test suite
     SET(FILE_ALREADY_READ 0)
-    GET_FILENAME_COMPONENT(TEST_SUITE_FILENAME ${TEST_SUITE_FILE} NAME)
-    STRING(REGEX MATCH "^test_suite.ctest.in$" FILE_ALREADY_READ ${TEST_SUITE_FILENAME})
+    STRING(REGEX MATCH "test_suite.ctest.in$" FILE_ALREADY_READ ${TEST_SUITE_FILE})
    
     IF(NOT FILE_ALREADY_READ) 
       # Configure the additional test suite file:
@@ -113,24 +60,21 @@ ENDIF(TEST_SUITE_FILES)
 SET(IT_TEST_ENC 0)
 SET(IT_TEST_DEC 0)
 FOREACH(OPJ_TEST_CMD_LINE ${OPJ_TEST_CMD_LINE_LIST})
-
+  
   SET(IGNORE_LINE_FOUND 0)
 
   # Replace space by ; to generate a list
   STRING(REPLACE " " ";" CMD_ARG_LIST ${OPJ_TEST_CMD_LINE})
-
+  
   # Check if the first argument begin by the comment sign
   LIST(GET CMD_ARG_LIST 0 EXE_NAME)
-  
-  IF(EXE_NAME)
-    STRING(REGEX MATCH "^#" IGNORE_LINE_FOUND ${EXE_NAME})
-  ENDIF(EXE_NAME)
-
-  IF(IGNORE_LINE_FOUND OR NOT EXE_NAME) 
+  STRING(REGEX MATCH "^#" IGNORE_LINE_FOUND ${EXE_NAME})
+ 
+  IF(IGNORE_LINE_FOUND) 
     
     #MESSAGE( STATUS "Current line is ignored: ${OPJ_TEST_CMD_LINE}")
    
-  ELSE(IGNORE_LINE_FOUND OR NOT EXE_NAME)
+  ELSE(IGNORE_LINE_FOUND)
   
     # Check if the first argument begin by the failed sign
     SET(FAILED_TEST_FOUND 0)
@@ -308,12 +252,31 @@ FOREACH(OPJ_TEST_CMD_LINE ${OPJ_TEST_CMD_LINE_LIST})
 #  SET_TESTS_PROPERTIES(NR-${filename}-compare2base  
 #                       PROPERTIES DEPENDS 
 #                       NR-${filename}-decode)  
+    
+        # Dump the input image
+        ADD_TEST(NR-DEC-${INPUT_FILENAME_NAME}-${IT_TEST_DEC}-dump
+          ${EXECUTABLE_OUTPUT_PATH}/j2k_dump
+          -i ${INPUT_FILENAME}
+          -o ${TEMP}/${INPUT_FILENAME_NAME}.txt
+        )
+     
+        # Compare the dump output with the baseline
+        ADD_TEST(NR-DEC-${INPUT_FILENAME_NAME}-${IT_TEST_DEC}-compare_dump2base
+          ${EXECUTABLE_OUTPUT_PATH}/compare_dump_files
+         -b ${BASELINE_NR}/opj_${INPUT_FILENAME_NAME_WE}.txt
+         -t ${TEMP}/${INPUT_FILENAME_NAME}.txt
+        )
+     
+        SET_TESTS_PROPERTIES(NR-DEC-${INPUT_FILENAME_NAME}-${IT_TEST_DEC}-compare_dump2base  
+                             PROPERTIES DEPENDS 
+                             NR-DEC-${INPUT_FILENAME_NAME}-${IT_TEST_DEC}-dump)     
+  
 
       ENDIF(FAILED_TEST_FOUND)    
   
     ENDIF(ENC_TEST_FOUND)
    
-  ENDIF(IGNORE_LINE_FOUND OR NOT EXE_NAME)
+  ENDIF(IGNORE_LINE_FOUND)
 
 ENDFOREACH(OPJ_TEST_CMD_LINE)
 

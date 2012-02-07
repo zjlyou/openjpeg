@@ -59,18 +59,6 @@ static void t1_enc_sigpass_step(
 		int *nmsedec,
 		char type,
 		int vsc);
-
-/**
-Decode significant pass
-*/
-static void t1_dec_sigpass_step(
-		opj_t1_t *t1,
-		flag_t *flagsp,
-		OPJ_INT32 *datap,
-		OPJ_UINT32 orient,
-		OPJ_INT32 oneplushalf,
-		OPJ_BYTE type,
-		OPJ_UINT32 vsc);
 /**
 Decode significant pass
 */
@@ -104,17 +92,6 @@ static void t1_enc_sigpass(
 		int *nmsedec,
 		char type,
 		int cblksty);
-
-/**
-Decode significant pass
-*/
-static void t1_dec_sigpass(
-		opj_t1_t *t1,
-		OPJ_INT32 bpno,
-		OPJ_UINT32 orient,
-		OPJ_BYTE type,
-		OPJ_UINT32 cblksty);
-
 /**
 Decode significant pass
 */
@@ -146,20 +123,20 @@ static void t1_enc_refpass_step(
 /**
 Decode refinement pass
 */
-static void INLINE t1_dec_refpass_step_raw(
+static INLINE void t1_dec_refpass_step_raw(
 		opj_t1_t *t1,
 		flag_t *flagsp,
 		int *datap,
 		int poshalf,
 		int neghalf,
 		int vsc);
-static void INLINE t1_dec_refpass_step_mqc(
+static INLINE void t1_dec_refpass_step_mqc(
 		opj_t1_t *t1,
 		flag_t *flagsp,
 		int *datap,
 		int poshalf,
 		int neghalf);
-static void INLINE t1_dec_refpass_step_mqc_vsc(
+static INLINE void t1_dec_refpass_step_mqc_vsc(
 		opj_t1_t *t1,
 		flag_t *flagsp,
 		int *datap,
@@ -176,28 +153,6 @@ static void t1_enc_refpass(
 		int *nmsedec,
 		char type,
 		int cblksty);
-
-/**
-Decode refinement pass
-*/
-static void t1_dec_refpass(
-		opj_t1_t *t1,
-		OPJ_INT32 bpno,
-		OPJ_BYTE type,
-		OPJ_UINT32 cblksty);
-
-/**
-Decode refinement pass
-*/
-static void t1_dec_refpass_step(
-		opj_t1_t *t1,
-		flag_t *flagsp,
-		OPJ_INT32 *datap,
-		OPJ_INT32 poshalf,
-		OPJ_INT32 neghalf,
-		OPJ_BYTE type,
-		OPJ_UINT32 vsc);
-
 /**
 Decode refinement pass
 */
@@ -314,21 +269,6 @@ static void t1_decode_cblk(
 		int orient,
 		int roishift,
 		int cblksty);
-
-/**
-Decode 1 code-block
-@param t1 T1 handle
-@param cblk Code-block coding parameters
-@param orient
-@param roishift Region of interest shifting value
-@param cblksty Code-block style
-*/
-static void t1_decode_cblk_v2(
-		opj_t1_t *t1,
-		opj_tcd_cblk_dec_v2_t* cblk,
-		OPJ_UINT32 orient,
-		OPJ_UINT32 roishift,
-		OPJ_UINT32 cblksty);
 
 /*@}*/
 
@@ -1641,358 +1581,4 @@ void t1_decode_cblks(
 		} /* bandno */
 	} /* resno */
 }
-
-
-
-/* ----------------------------------------------------------------------- */
-/**
- * Creates a new Tier 1 handle
- * and initializes the look-up tables of the Tier-1 coder/decoder
- * @return a new T1 handle if successful, returns NULL otherwise
-*/
-opj_t1_t* t1_create_v2()
-{
-	opj_t1_t *l_t1 = 00;
-
-	l_t1 = (opj_t1_t*) opj_malloc(sizeof(opj_t1_t));
-	if
-		(!l_t1)
-	{
-		return 00;
-	}
-	memset(l_t1,0,sizeof(opj_t1_t));
-
-	/* create MQC and RAW handles */
-	l_t1->mqc = mqc_create();
-	if
-		(! l_t1->mqc)
-	{
-		t1_destroy(l_t1);
-		return 00;
-	}
-	l_t1->raw = raw_create();
-	if
-		(! l_t1->raw)
-	{
-		t1_destroy(l_t1);
-		return 00;
-	}
-	return l_t1;
-}
-
-
-/**
- * Destroys a previously created T1 handle
- *
- * @param p_t1 Tier 1 handle to destroy
-*/
-void t1_destroy_v2(opj_t1_t *p_t1)
-{
-	if
-		(! p_t1)
-	{
-		return;
-	}
-
-	/* destroy MQC and RAW handles */
-	mqc_destroy(p_t1->mqc);
-	p_t1->mqc = 00;
-	raw_destroy(p_t1->raw);
-	p_t1->raw = 00;
-	if
-		(p_t1->data)
-	{
-		opj_aligned_free(p_t1->data);
-		p_t1->data = 00;
-	}
-	if
-		(p_t1->flags)
-	{
-		opj_aligned_free(p_t1->flags);
-		p_t1->flags = 00;
-	}
-	opj_free(p_t1);
-}
-
-void t1_decode_cblks_v2(
-		opj_t1_t* t1,
-		opj_tcd_tilecomp_v2_t* tilec,
-		opj_tccp_t* tccp)
-{
-	OPJ_UINT32 resno, bandno, precno, cblkno;
-	OPJ_UINT32 tile_w = tilec->x1 - tilec->x0;
-
-	for (resno = 0; resno < tilec->minimum_num_resolutions; ++resno) {
-		opj_tcd_resolution_v2_t* res = &tilec->resolutions[resno];
-
-		for (bandno = 0; bandno < res->numbands; ++bandno) {
-			opj_tcd_band_v2_t* restrict band = &res->bands[bandno];
-
-			for (precno = 0; precno < res->pw * res->ph; ++precno) {
-				opj_tcd_precinct_v2_t* precinct = &band->precincts[precno];
-
-				for (cblkno = 0; cblkno < precinct->cw * precinct->ch; ++cblkno) {
-					opj_tcd_cblk_dec_v2_t* cblk = &precinct->cblks.dec[cblkno];
-					OPJ_INT32* restrict datap;
-					void* restrict tiledp;
-					OPJ_UINT32 cblk_w, cblk_h;
-					OPJ_INT32 x, y;
-					OPJ_UINT32 i, j;
-
-					t1_decode_cblk_v2(
-							t1,
-							cblk,
-							band->bandno,
-							tccp->roishift,
-							tccp->cblksty);
-
-					x = cblk->x0 - band->x0;
-					y = cblk->y0 - band->y0;
-					if (band->bandno & 1) {
-						opj_tcd_resolution_v2_t* pres = &tilec->resolutions[resno - 1];
-						x += pres->x1 - pres->x0;
-					}
-					if (band->bandno & 2) {
-						opj_tcd_resolution_v2_t* pres = &tilec->resolutions[resno - 1];
-						y += pres->y1 - pres->y0;
-					}
-
-					datap=t1->data;
-					cblk_w = t1->w;
-					cblk_h = t1->h;
-
-					if (tccp->roishift) {
-						OPJ_INT32 thresh = 1 << tccp->roishift;
-						for (j = 0; j < cblk_h; ++j) {
-							for (i = 0; i < cblk_w; ++i) {
-								OPJ_INT32 val = datap[(j * cblk_w) + i];
-								OPJ_INT32 mag = abs(val);
-								if (mag >= thresh) {
-									mag >>= tccp->roishift;
-									datap[(j * cblk_w) + i] = val < 0 ? -mag : mag;
-								}
-							}
-						}
-					}
-
-					tiledp=(void*)&tilec->data[(y * tile_w) + x];
-					if (tccp->qmfbid == 1) {
-						for (j = 0; j < cblk_h; ++j) {
-							for (i = 0; i < cblk_w; ++i) {
-								OPJ_INT32 tmp = datap[(j * cblk_w) + i];
-								((OPJ_INT32*)tiledp)[(j * tile_w) + i] = tmp / 2;
-							}
-						}
-					} else {		/* if (tccp->qmfbid == 0) */
-						for (j = 0; j < cblk_h; ++j) {
-							for (i = 0; i < cblk_w; ++i) {
-								float tmp = datap[(j * cblk_w) + i] * band->stepsize;
-								((float*)tiledp)[(j * tile_w) + i] = tmp;
-							}
-						}
-					}
-					//opj_free(cblk->segs);
-					//cblk->segs = 00;
-				} /* cblkno */
-			} /* precno */
-		} /* bandno */
-	} /* resno */
-}
-
-
-static void t1_decode_cblk_v2(
-		opj_t1_t *t1,
-		opj_tcd_cblk_dec_v2_t* cblk,
-		OPJ_UINT32 orient,
-		OPJ_UINT32 roishift,
-		OPJ_UINT32 cblksty)
-{
-	opj_raw_t *raw = t1->raw;	/* RAW component */
-	opj_mqc_t *mqc = t1->mqc;	/* MQC component */
-
-	OPJ_INT32 bpno;
-	OPJ_UINT32 passtype;
-	OPJ_UINT32 segno, passno;
-	OPJ_BYTE type = T1_TYPE_MQ; /* BYPASS mode */
-
-	if(!allocate_buffers(
-				t1,
-				cblk->x1 - cblk->x0,
-				cblk->y1 - cblk->y0))
-	{
-		return;
-	}
-
-	bpno = roishift + cblk->numbps - 1;
-	passtype = 2;
-
-	mqc_resetstates(mqc);
-	mqc_setstate(mqc, T1_CTXNO_UNI, 0, 46);
-	mqc_setstate(mqc, T1_CTXNO_AGG, 0, 3);
-	mqc_setstate(mqc, T1_CTXNO_ZC, 0, 4);
-
-	for (segno = 0; segno < cblk->real_num_segs; ++segno) {
-		opj_tcd_seg_t *seg = &cblk->segs[segno];
-
-		/* BYPASS mode */
-		type = ((bpno <= ((OPJ_INT32) (cblk->numbps) - 1) - 4) && (passtype < 2) && (cblksty & J2K_CCP_CBLKSTY_LAZY)) ? T1_TYPE_RAW : T1_TYPE_MQ;
-		/* FIXME: slviewer gets here with a null pointer. Why? Partially downloaded and/or corrupt textures? */
-		if(seg->data == 00){
-			continue;
-		}
-		if (type == T1_TYPE_RAW) {
-			raw_init_dec(raw, (*seg->data) + seg->dataindex, seg->len);
-		} else {
-			mqc_init_dec(mqc, (*seg->data) + seg->dataindex, seg->len);
-		}
-
-		for (passno = 0; passno < seg->real_num_passes; ++passno) {
-			switch (passtype) {
-				case 0:
-					t1_dec_sigpass(t1, bpno+1, orient, type, cblksty);
-					break;
-				case 1:
-					t1_dec_refpass(t1, bpno+1, type, cblksty);
-					break;
-				case 2:
-					t1_dec_clnpass(t1, bpno+1, orient, cblksty);
-					break;
-			}
-
-			if ((cblksty & J2K_CCP_CBLKSTY_RESET) && type == T1_TYPE_MQ) {
-				mqc_resetstates(mqc);
-				mqc_setstate(mqc, T1_CTXNO_UNI, 0, 46);
-				mqc_setstate(mqc, T1_CTXNO_AGG, 0, 3);
-				mqc_setstate(mqc, T1_CTXNO_ZC, 0, 4);
-			}
-			if (++passtype == 3) {
-				passtype = 0;
-				bpno--;
-			}
-		}
-	}
-}
-
-static void t1_dec_refpass(
-		opj_t1_t *t1,
-		OPJ_INT32 bpno,
-		OPJ_BYTE type,
-		OPJ_UINT32 cblksty)
-{
-	OPJ_UINT32 i, j, k;
-	OPJ_INT32 one, poshalf, neghalf;
-	OPJ_UINT32 vsc;
-	one = 1 << bpno;
-	poshalf = one >> 1;
-	neghalf = bpno > 0 ? -poshalf : -1;
-	for (k = 0; k < t1->h; k += 4) {
-		for (i = 0; i < t1->w; ++i) {
-			for (j = k; j < k + 4 && j < t1->h; ++j) {
-				vsc = ((cblksty & J2K_CCP_CBLKSTY_VSC) && (j == k + 3 || j == t1->h - 1)) ? 1 : 0;
-				t1_dec_refpass_step(
-						t1,
-						&t1->flags[((j+1) * t1->flags_stride) + i + 1],
-						&t1->data[(j * t1->w) + i],
-						poshalf,
-						neghalf,
-						type,
-						vsc);
-			}
-		}
-	}
-}				/* VSC and  BYPASS by Antonin */
-
-
-static void t1_dec_refpass_step(
-		opj_t1_t *t1,
-		flag_t *flagsp,
-		OPJ_INT32 *datap,
-		OPJ_INT32 poshalf,
-		OPJ_INT32 neghalf,
-		OPJ_BYTE type,
-		OPJ_UINT32 vsc)
-{
-	OPJ_INT32  t;
-	OPJ_UINT32 v,flag;
-
-	opj_mqc_t *mqc = t1->mqc;	/* MQC component */
-	opj_raw_t *raw = t1->raw;	/* RAW component */
-
-	flag = vsc ? ((*flagsp) & (~(T1_SIG_S | T1_SIG_SE | T1_SIG_SW | T1_SGN_S))) : (*flagsp);
-	if ((flag & (T1_SIG | T1_VISIT)) == T1_SIG) {
-		mqc_setcurctx(mqc, t1_getctxno_mag(flag));	/* ESSAI */
-		if (type == T1_TYPE_RAW) {
-			v = raw_decode(raw);
-		} else {
-			v = mqc_decode(mqc);
-		}
-		t = v ? poshalf : neghalf;
-		*datap += *datap < 0 ? -t : t;
-		*flagsp |= T1_REFINE;
-	}
-}				/* VSC and  BYPASS by Antonin  */
-
-static void t1_dec_sigpass(
-		opj_t1_t *t1,
-		OPJ_INT32 bpno,
-		OPJ_UINT32 orient,
-		OPJ_BYTE type,
-		OPJ_UINT32 cblksty)
-{
-	OPJ_UINT32 i, j, k, vsc;
-	OPJ_INT32 one, half, oneplushalf;
-	one = 1 << bpno;
-	half = one >> 1;
-	oneplushalf = one | half;
-	for (k = 0; k < t1->h; k += 4) {
-		for (i = 0; i < t1->w; ++i) {
-			for (j = k; j < k + 4 && j < t1->h; ++j) {
-				vsc = ((cblksty & J2K_CCP_CBLKSTY_VSC) && (j == k + 3 || j == t1->h - 1)) ? 1 : 0;
-				t1_dec_sigpass_step(
-						t1,
-						&t1->flags[((j+1) * t1->flags_stride) + i + 1],
-						&t1->data[(j * t1->w) + i],
-						orient,
-						oneplushalf,
-						type,
-						vsc);
-			}
-		}
-	}
-}				/* VSC and  BYPASS by Antonin */
-
-static void t1_dec_sigpass_step(
-		opj_t1_t *t1,
-		flag_t *flagsp,
-		OPJ_INT32 *datap,
-		OPJ_UINT32 orient,
-		OPJ_INT32 oneplushalf,
-		OPJ_BYTE type,
-		OPJ_UINT32 vsc)
-{
-	OPJ_UINT32 v, flag;
-
-	opj_raw_t *raw = t1->raw;	/* RAW component */
-	opj_mqc_t *mqc = t1->mqc;	/* MQC component */
-
-	flag = vsc ? ((*flagsp) & (~(T1_SIG_S | T1_SIG_SE | T1_SIG_SW | T1_SGN_S))) : (*flagsp);
-	if ((flag & T1_SIG_OTH) && !(flag & (T1_SIG | T1_VISIT))) {
-		if (type == T1_TYPE_RAW) {
-			if (raw_decode(raw)) {
-				v = raw_decode(raw);	/* ESSAI */
-				*datap = v ? -oneplushalf : oneplushalf;
-				t1_updateflags(flagsp, v, t1->flags_stride);
-			}
-		} else {
-			mqc_setcurctx(mqc, t1_getctxno_zc(flag, orient));
-			if (mqc_decode(mqc)) {
-				mqc_setcurctx(mqc, t1_getctxno_sc(flag));
-				v = mqc_decode(mqc) ^ t1_getspb(flag);
-				*datap = v ? -oneplushalf : oneplushalf;
-				t1_updateflags(flagsp, v, t1->flags_stride);
-			}
-		}
-		*flagsp |= T1_VISIT;
-	}
-}				/* VSC and  BYPASS by Antonin */
 

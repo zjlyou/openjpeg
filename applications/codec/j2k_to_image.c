@@ -29,7 +29,6 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include "opj_config.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -50,6 +49,7 @@
 #define _strnicmp strncasecmp
 #endif /* _WIN32 */
 
+#include "opj_config.h"
 #include "openjpeg.h"
 #include "opj_getopt.h"
 #include "convert.h"
@@ -85,18 +85,6 @@ typedef struct img_folder{
 
 }img_fol_t;
 
-/* -------------------------------------------------------------------------- */
-/* Declarations                                                               */
-int get_num_images(char *imgdirpath);
-int load_images(dircnt_t *dirptr, char *imgdirpath);
-int get_file_format(const char *filename);
-char get_next_file(int imageno,dircnt_t *dirptr,img_fol_t *img_fol, opj_dparameters_t *parameters);
-static int infile_format(const char *fname);
-
-int parse_cmdline_decoder(int argc, char **argv, opj_dparameters_t *parameters,img_fol_t *img_fol, char *indexfilename);
-int parse_DA_values( char* inArg, unsigned int *DA_x0, unsigned int *DA_y0, unsigned int *DA_x1, unsigned int *DA_y1);
-
-/* -------------------------------------------------------------------------- */
 void decode_help_display(void) {
 	fprintf(stdout,"HELP for j2k_to_image\n----\n\n");
 	fprintf(stdout,"- the -h option displays this help information on screen\n\n");
@@ -140,14 +128,6 @@ void decode_help_display(void) {
 	fprintf(stdout,"    are decoded.\n");
 	fprintf(stdout,"  -x  \n"); 
 	fprintf(stdout,"    Create an index file *.Idx (-x index_name.Idx) \n");
-	fprintf(stdout,"  -d <x0,y0,x1,y1>\n");
-	fprintf(stdout,"    OPTIONAL\n");
-	fprintf(stdout,"    Decoding area\n");
-	fprintf(stdout,"    By default all the image is decoded.\n");
-	fprintf(stdout,"  -t <tile_number>\n");
-	fprintf(stdout,"    OPTIONAL\n");
-	fprintf(stdout,"    Set the tile number of the decoded tile. Follow the JPEG2000 convention from left-up to bottom-up\n");
-	fprintf(stdout,"    By default all tiles are decoded.\n");
 	fprintf(stdout,"\n");
 /* UniPG>> */
 #ifdef USE_JPWL
@@ -185,7 +165,6 @@ int get_num_images(char *imgdirpath){
 	return num_images;
 }
 
-/* -------------------------------------------------------------------------- */
 int load_images(dircnt_t *dirptr, char *imgdirpath){
 	DIR *dir;
 	struct dirent* content;	
@@ -211,8 +190,7 @@ int load_images(dircnt_t *dirptr, char *imgdirpath){
 	return 0;	
 }
 
-/* -------------------------------------------------------------------------- */
-int get_file_format(const char *filename) {
+int get_file_format(char *filename) {
 	unsigned int i;
 	static const char *extension[] = {"pgx", "pnm", "pgm", "ppm", "bmp","tif", "raw", "tga", "png", "j2k", "jp2", "jpt", "j2c", "jpc" };
 	static const int format[] = { PGX_DFMT, PXM_DFMT, PXM_DFMT, PXM_DFMT, BMP_DFMT, TIF_DFMT, RAW_DFMT, TGA_DFMT, PNG_DFMT, J2K_CFMT, JP2_CFMT, JPT_CFMT, J2K_CFMT, J2K_CFMT };
@@ -231,20 +209,19 @@ int get_file_format(const char *filename) {
 	return -1;
 }
 
-/* -------------------------------------------------------------------------- */
 char get_next_file(int imageno,dircnt_t *dirptr,img_fol_t *img_fol, opj_dparameters_t *parameters){
 	char image_filename[OPJ_PATH_LEN], infilename[OPJ_PATH_LEN],outfilename[OPJ_PATH_LEN],temp_ofname[OPJ_PATH_LEN];
 	char *temp_p, temp1[OPJ_PATH_LEN]="";
 
 	strcpy(image_filename,dirptr->filename[imageno]);
 	fprintf(stderr,"File Number %d \"%s\"\n",imageno,image_filename);
-	parameters->decod_format = infile_format(image_filename);
+	parameters->decod_format = get_file_format(image_filename);
 	if (parameters->decod_format == -1)
 		return 1;
 	sprintf(infilename,"%s/%s",img_fol->imgdirpath,image_filename);
 	strncpy(parameters->infile, infilename, sizeof(infilename));
 
-	//Set output file
+	/*Set output file*/
 	strcpy(temp_ofname,strtok(image_filename,"."));
 	while((temp_p = strtok(NULL,".")) != NULL){
 		strcat(temp_ofname,temp1);
@@ -258,66 +235,6 @@ char get_next_file(int imageno,dircnt_t *dirptr,img_fol_t *img_fol, opj_dparamet
 }
 
 /* -------------------------------------------------------------------------- */
-#define JP2_RFC3745_MAGIC "\x00\x00\x00\x0c\x6a\x50\x20\x20\x0d\x0a\x87\x0a"
-#define JP2_MAGIC "\x0d\x0a\x87\x0a"
-/* position 45: "\xff\x52" */
-#define J2K_CODESTREAM_MAGIC "\xff\x4f\xff\x51"
-
-static int infile_format(const char *fname)
-{
-	FILE *reader;
-	const char *s, *magic_s;
-	int ext_format, magic_format;
-	unsigned char buf[12];
-	unsigned int l_nb_read;
-
-	reader = fopen(fname, "rb");
-
-	if (reader == NULL)
-		return -1;
-
-	memset(buf, 0, 12);
-	l_nb_read = fread(buf, 1, 12, reader);
-	fclose(reader);
-	if (l_nb_read != 12)
-		return -1;
-
-
-
-	ext_format = get_file_format(fname);
-
-	if (ext_format == JPT_CFMT)
-		return JPT_CFMT;
-
-	if (memcmp(buf, JP2_RFC3745_MAGIC, 12) == 0 || memcmp(buf, JP2_MAGIC, 4) == 0) {
-		magic_format = JP2_CFMT;
-		magic_s = ".jp2";
-	}
-	else if (memcmp(buf, J2K_CODESTREAM_MAGIC, 4) == 0) {
-		magic_format = J2K_CFMT;
-		magic_s = ".j2k or .jpc or .j2c";
-	}
-	else
-		return -1;
-
-	if (magic_format == ext_format)
-		return ext_format;
-
-	s = fname + strlen(fname) - 4;
-
-	fputs("\n===========================================\n", stderr);
-	fprintf(stderr, "The extension of this file is incorrect.\n"
-					"FOUND %s. SHOULD BE %s\n", s, magic_s);
-	fputs("===========================================\n", stderr);
-
-	return magic_format;
-}
-
-/* -------------------------------------------------------------------------- */
-/**
- * Parse the command line
- */
-/* -------------------------------------------------------------------------- */
 int parse_cmdline_decoder(int argc, char **argv, opj_dparameters_t *parameters,img_fol_t *img_fol, char *indexfilename) {
 	/* parse the command line */
 	int totlen, c;
@@ -326,7 +243,7 @@ int parse_cmdline_decoder(int argc, char **argv, opj_dparameters_t *parameters,i
 		{"OutFor",REQ_ARG, NULL ,'O'},
 	};
 
-	const char optlist[] = "i:o:r:l:x:d:t:"
+	const char optlist[] = "i:o:r:l:x:"
 
 /* UniPG>> */
 #ifdef USE_JPWL
@@ -344,12 +261,10 @@ int parse_cmdline_decoder(int argc, char **argv, opj_dparameters_t *parameters,i
 			case 'i':			/* input file */
 			{
 				char *infile = opj_optarg;
-				parameters->decod_format = infile_format(infile);
+				parameters->decod_format = get_file_format(infile);
 				switch(parameters->decod_format) {
 					case J2K_CFMT:
-						break;
 					case JP2_CFMT:
-						break;
 					case JPT_CFMT:
 						break;
 					default:
@@ -370,17 +285,11 @@ int parse_cmdline_decoder(int argc, char **argv, opj_dparameters_t *parameters,i
 				parameters->cod_format = get_file_format(outfile);
 				switch(parameters->cod_format) {
 					case PGX_DFMT:
-						break;
 					case PXM_DFMT:
-						break;
 					case BMP_DFMT:
-						break;
 					case TIF_DFMT:
-						break;
 					case RAW_DFMT:
-						break;
 					case TGA_DFMT:
-						break;
 					case PNG_DFMT:
 						break;
 					default:
@@ -463,34 +372,7 @@ int parse_cmdline_decoder(int argc, char **argv, opj_dparameters_t *parameters,i
 					img_fol->set_imgdir=1;
 				}
 				break;
-
-				/* ----------------------------------------------------- */
-
-			case 'd':     		/* Input decode ROI */
-			{
-				int size_optarg = (int)strlen(opj_optarg) + 1;
-				char *ROI_values = (char*) malloc(size_optarg);
-				ROI_values[0] = '\0';
-				strncpy(ROI_values, opj_optarg, strlen(opj_optarg));
-				ROI_values[strlen(opj_optarg)] = '\0';
-				/*printf("ROI_values = %s [%d / %d]\n", ROI_values, strlen(ROI_values), size_optarg ); */
-				parse_DA_values( ROI_values, &parameters->DA_x0, &parameters->DA_y0, &parameters->DA_x1, &parameters->DA_y1);
-
-				free(ROI_values);
-			}
-			break;
-
-			/* ----------------------------------------------------- */
-
-			case 't':     		/* Input tile index */
-			{
-				sscanf(opj_optarg, "%d", &parameters->tile_index);
-				parameters->nb_tile_to_decode = 1;
-			}
-			break;
-
 				/* ----------------------------------------------------- */								
-
 			case 'x':			/* Creation of index file */
 				{
 					char *index = opj_optarg;
@@ -604,36 +486,6 @@ int parse_cmdline_decoder(int argc, char **argv, opj_dparameters_t *parameters,i
 }
 
 /* -------------------------------------------------------------------------- */
-/**
- * Parse decoding area input values
- * separator = ","
- */
-/* -------------------------------------------------------------------------- */
-int parse_DA_values( char* inArg, unsigned int *DA_x0, unsigned int *DA_y0, unsigned int *DA_x1, unsigned int *DA_y1)
-{
-	int it = 0;
-	int values[4];
-	char delims[] = ",";
-	char *result = NULL;
-	result = strtok( inArg, delims );
-
-	while( (result != NULL) && (it < 4 ) ) {
-		values[it] = atoi(result);
-		result = strtok( NULL, delims );
-		it++;
-	}
-
-	if (it != 4) {
-		return EXIT_FAILURE;
-	}
-	else{
-		*DA_x0 = values[0]; *DA_y0 = values[1];
-		*DA_x1 = values[2]; *DA_y1 = values[3];
-		return EXIT_SUCCESS;
-	}
-}
-
-/* -------------------------------------------------------------------------- */
 
 /**
 sample error callback expecting a FILE* client object
@@ -658,26 +510,22 @@ void info_callback(const char *msg, void *client_data) {
 }
 
 /* -------------------------------------------------------------------------- */
-/**
- * J2K_TO_IMAGE MAIN
- */
-/* -------------------------------------------------------------------------- */
-int main(int argc, char **argv)
-{
-	FILE *fsrc = NULL;
 
-	opj_dparameters_t parameters;			/* decompression parameters */
-	opj_event_mgr_t event_mgr;				/* event manager */
-	opj_image_t* image = NULL;
-	opj_stream_t *cio = NULL;				/* Stream */
-	opj_codec_t* dinfo = NULL;				/* Handle to a decompressor */
-	opj_codestream_index_t* cstr_index = NULL;
-
-	char indexfilename[OPJ_PATH_LEN];	/* index file name */
-
-	OPJ_INT32 num_images, imageno;
+int main(int argc, char **argv) {
+	opj_dparameters_t parameters;	/* decompression parameters */
 	img_fol_t img_fol;
+	opj_event_mgr_t event_mgr;		/* event manager */
+	opj_image_t *image = NULL;
+	FILE *fsrc = NULL;
+	unsigned char *src = NULL;
+	int file_length;
+	int num_images;
+	int i,imageno;
 	dircnt_t *dirptr = NULL;
+	opj_dinfo_t* dinfo = NULL;	/* handle to a decompressor */
+	opj_cio_t *cio = NULL;
+	opj_codestream_info_t cstr_info;  /* Codestream information structure */
+	char indexfilename[OPJ_PATH_LEN];	/* index file name */
 
 	/* configure the event callbacks (not required) */
 	memset(&event_mgr, 0, sizeof(opj_event_mgr_t));
@@ -688,51 +536,45 @@ int main(int argc, char **argv)
 	/* set decoding parameters to default values */
 	opj_set_default_decoder_parameters(&parameters);
 
-	/* FIXME Initialize indexfilename and img_fol */
+	/* Initialize indexfilename and img_fol */
 	*indexfilename = 0;
-
-	/* Initialize img_fol */
 	memset(&img_fol,0,sizeof(img_fol_t));
 
 	/* parse input and get user encoding parameters */
 	if(parse_cmdline_decoder(argc, argv, &parameters,&img_fol, indexfilename) == 1) {
-		return EXIT_FAILURE;
+		return 1;
 	}
-
-	/* Set default event mgr */
-	opj_initialize_default_event_handler(&event_mgr, 1);
 
 	/* Initialize reading of directory */
 	if(img_fol.set_imgdir==1){	
-		int it_image;
 		num_images=get_num_images(img_fol.imgdirpath);
 
 		dirptr=(dircnt_t*)malloc(sizeof(dircnt_t));
 		if(dirptr){
-			dirptr->filename_buf = (char*)malloc(num_images*OPJ_PATH_LEN*sizeof(char));	/* Stores at max 10 image file names */
+			dirptr->filename_buf = (char*)malloc(num_images*OPJ_PATH_LEN*sizeof(char));	/* Stores at max 10 image file names*/
 			dirptr->filename = (char**) malloc(num_images*sizeof(char*));
 
 			if(!dirptr->filename_buf){
-				return EXIT_FAILURE;
+				return 1;
 			}
-			for(it_image=0;it_image<num_images;it_image++){
-				dirptr->filename[it_image] = dirptr->filename_buf + it_image*OPJ_PATH_LEN;
+			for(i=0;i<num_images;i++){
+				dirptr->filename[i] = dirptr->filename_buf + i*OPJ_PATH_LEN;
 			}
 		}
 		if(load_images(dirptr,img_fol.imgdirpath)==1){
-			return EXIT_FAILURE;
+			return 1;
 		}
 		if (num_images==0){
 			fprintf(stdout,"Folder is empty\n");
-			return EXIT_FAILURE;
+			return 1;
 		}
 	}else{
 		num_images=1;
 	}
 
-	/*Decoding image one by one*/
+	/*Encoding image one by one*/
 	for(imageno = 0; imageno < num_images ; imageno++)	{
-
+		image = NULL;
 		fprintf(stderr,"\n");
 
 		if(img_fol.set_imgdir==1){
@@ -747,124 +589,177 @@ int main(int argc, char **argv)
 		fsrc = fopen(parameters.infile, "rb");
 		if (!fsrc) {
 			fprintf(stderr, "ERROR -> failed to open %s for reading\n", parameters.infile);
-			return EXIT_FAILURE;
+			return 1;
 		}
-
-		cio = opj_stream_create_default_file_stream(fsrc,1);
-		if (!cio){
+		fseek(fsrc, 0, SEEK_END);
+		file_length = ftell(fsrc);
+		fseek(fsrc, 0, SEEK_SET);
+		src = (unsigned char *) malloc(file_length);
+		if (fread(src, 1, file_length, fsrc) != (size_t)file_length)
+		{
+			free(src);
 			fclose(fsrc);
-			fprintf(stderr, "ERROR -> failed to create the stream from the file\n");
-			return EXIT_FAILURE;
+			fprintf(stderr, "\nERROR: fread return a number of element different from the expected.\n");
+			return 1;
 		}
+		fclose(fsrc);
 
-		/* decode the JPEG2000 stream */
+		/* decode the code-stream */
 		/* ---------------------- */
 
 		switch(parameters.decod_format) {
-			case J2K_CFMT:	/* JPEG-2000 codestream */
-			{
-				/* Get a decoder handle */
-				dinfo = opj_create_decompress_v2(CODEC_J2K);
-				break;
-			}
-			case JP2_CFMT:	/* JPEG 2000 compressed image data */
-			{
-				/* Get a decoder handle */
-				dinfo = opj_create_decompress_v2(CODEC_JP2);
-				break;
-			}
-			case JPT_CFMT:	/* JPEG 2000, JPIP */
-			{
-				/* Get a decoder handle */
-				dinfo = opj_create_decompress_v2(CODEC_JPT);
-				break;
-			}
-			default:
-				fprintf(stderr, "skipping file..\n");
-				opj_stream_destroy(cio);
-				continue;
-		}
+		case J2K_CFMT:
+		{
+			/* JPEG-2000 codestream */
 
-		/* Setup the decoder decoding parameters using user parameters */
-		if ( !opj_setup_decoder_v2(dinfo, &parameters, &event_mgr) ){
-			fprintf(stderr, "ERROR -> j2k_dump: failed to setup the decoder\n");
-			opj_stream_destroy(cio);
-			fclose(fsrc);
-			opj_destroy_codec(dinfo);
-			return EXIT_FAILURE;
-		}
+			/* get a decoder handle */
+			dinfo = opj_create_decompress(CODEC_J2K);
 
+			/* catch events using our callbacks and give a local context */
+			opj_set_event_mgr((opj_common_ptr)dinfo, &event_mgr, stderr);
 
-		/* Read the main header of the codestream and if necessary the JP2 boxes*/
-		if(! opj_read_header(cio, dinfo, &image)){
-			fprintf(stderr, "ERROR -> j2k_to_image: failed to read the header\n");
-			opj_stream_destroy(cio);
-			fclose(fsrc);
-			opj_destroy_codec(dinfo);
-			opj_image_destroy(image);
-			return EXIT_FAILURE;
-		}
+			/* setup the decoder decoding parameters using user parameters */
+			opj_setup_decoder(dinfo, &parameters);
 
-		if (!parameters.nb_tile_to_decode) {
-			// Optional if you want decode the entire image
-			if (!opj_set_decode_area(dinfo, image, parameters.DA_x0,
-					parameters.DA_y0, parameters.DA_x1, parameters.DA_y1)){
-				fprintf(stderr,	"ERROR -> j2k_to_image: failed to set the decoded area\n");
-				opj_stream_destroy(cio);
-				opj_destroy_codec(dinfo);
-				opj_image_destroy(image);
-				fclose(fsrc);
-				return EXIT_FAILURE;
+			/* open a byte stream */
+			cio = opj_cio_open((opj_common_ptr)dinfo, src, file_length);
+
+			/* decode the stream and fill the image structure */
+			if (*indexfilename)				/* If need to extract codestream information*/
+				image = opj_decode_with_info(dinfo, cio, &cstr_info);
+			else
+				image = opj_decode(dinfo, cio);
+			if(!image) {
+				fprintf(stderr, "ERROR -> j2k_to_image: failed to decode image!\n");
+				opj_destroy_decompress(dinfo);
+				opj_cio_close(cio);
+				free(src);
+				return 1;
 			}
 
-			/* Get the decoded image */
-			if (!(opj_decode_v2(dinfo, cio, image) && opj_end_decompress(dinfo,	cio))) {
-				fprintf(stderr,"ERROR -> j2k_to_image: failed to decode image!\n");
-				opj_destroy_codec(dinfo);
-				opj_stream_destroy(cio);
-				opj_image_destroy(image);
-				fclose(fsrc);
-				return EXIT_FAILURE;
+			/* close the byte stream */
+			opj_cio_close(cio);
+
+			/* Write the index to disk */
+			if (*indexfilename) {
+				opj_bool bSuccess;
+				bSuccess = write_index_file(&cstr_info, indexfilename);
+				if (bSuccess) {
+					fprintf(stderr, "Failed to output index file\n");
+				}
 			}
 		}
-		else {
+		break;
 
-			// It is just here to illustrate how to use the resolution after set parameters
-			/*if (!opj_set_decoded_resolution_factor(dinfo, 5)) {
-				fprintf(stderr, "ERROR -> j2k_to_image: failed to set the resolution factor tile!\n");
-				opj_destroy_codec(dinfo);
-				opj_stream_destroy(cio);
-				opj_image_destroy(image);
-				fclose(fsrc);
-				return EXIT_FAILURE;
-			}*/
+		case JP2_CFMT:
+		{
+			/* JPEG 2000 compressed image data */
 
-			if (!opj_get_decoded_tile(dinfo, cio, image, parameters.tile_index)) {
-				fprintf(stderr, "ERROR -> j2k_to_image: failed to decode tile!\n");
-				opj_destroy_codec(dinfo);
-				opj_stream_destroy(cio);
-				opj_image_destroy(image);
-				fclose(fsrc);
-				return EXIT_FAILURE;
+			/* get a decoder handle */
+			dinfo = opj_create_decompress(CODEC_JP2);
+
+			/* catch events using our callbacks and give a local context */
+			opj_set_event_mgr((opj_common_ptr)dinfo, &event_mgr, stderr);
+
+			/* setup the decoder decoding parameters using the current image and user parameters */
+			opj_setup_decoder(dinfo, &parameters);
+
+			/* open a byte stream */
+			cio = opj_cio_open((opj_common_ptr)dinfo, src, file_length);
+
+			/* decode the stream and fill the image structure */
+			if (*indexfilename)				/* If need to extract codestream information*/
+				image = opj_decode_with_info(dinfo, cio, &cstr_info);
+			else
+				image = opj_decode(dinfo, cio);			
+			if(!image) {
+				fprintf(stderr, "ERROR -> j2k_to_image: failed to decode image!\n");
+				opj_destroy_decompress(dinfo);
+				opj_cio_close(cio);
+				free(src);
+				return 1;
 			}
-			fprintf(stdout, "tile %d is decoded!\n\n", parameters.tile_index);
+
+			/* close the byte stream */
+			opj_cio_close(cio);
+
+			/* Write the index to disk */
+			if (*indexfilename) {
+				opj_bool bSuccess;
+				bSuccess = write_index_file(&cstr_info, indexfilename);
+				if (bSuccess) {
+					fprintf(stderr, "Failed to output index file\n");
+				}
+			}
 		}
+		break;
 
-		/* Close the byte stream */
-		opj_stream_destroy(cio);
-		fclose(fsrc);
+		case JPT_CFMT:
+		{
+			/* JPEG 2000, JPIP */
 
-		if(image->color_space == CLRSPC_SYCC){
-			color_sycc_to_rgb(image); /* FIXME */
+			/* get a decoder handle */
+			dinfo = opj_create_decompress(CODEC_JPT);
+
+			/* catch events using our callbacks and give a local context */
+			opj_set_event_mgr((opj_common_ptr)dinfo, &event_mgr, stderr);
+
+			/* setup the decoder decoding parameters using user parameters */
+			opj_setup_decoder(dinfo, &parameters);
+
+			/* open a byte stream */
+			cio = opj_cio_open((opj_common_ptr)dinfo, src, file_length);
+
+			/* decode the stream and fill the image structure */
+			if (*indexfilename)				/* If need to extract codestream information*/
+				image = opj_decode_with_info(dinfo, cio, &cstr_info);
+			else
+				image = opj_decode(dinfo, cio);
+			if(!image) {
+				fprintf(stderr, "ERROR -> j2k_to_image: failed to decode image!\n");
+				opj_destroy_decompress(dinfo);
+				opj_cio_close(cio);
+				free(src);
+				return 1;
+			}
+
+			/* close the byte stream */
+			opj_cio_close(cio);
+
+			/* Write the index to disk */
+			if (*indexfilename) {
+				opj_bool bSuccess;
+				bSuccess = write_index_file(&cstr_info, indexfilename);
+				if (bSuccess) {
+					fprintf(stderr, "Failed to output index file\n");
+				}
+			}
 		}
+		break;
 
-		if(image->icc_profile_buf) {
+		default:
+			fprintf(stderr, "skipping file..\n");
+			continue;
+	}
+
+		/* free the memory containing the code-stream */
+		free(src);
+		src = NULL;
+
+	if(image->color_space == CLRSPC_SYCC)
+   {
+	color_sycc_to_rgb(image);
+   }
+
+	if(image->icc_profile_buf)
+   {
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-			color_apply_icc_profile(image); /* FIXME */
+	color_apply_icc_profile(image);
 #endif
-			free(image->icc_profile_buf);
-			image->icc_profile_buf = NULL; image->icc_profile_len = 0;
-		}
+
+	free(image->icc_profile_buf);
+	image->icc_profile_buf = NULL; image->icc_profile_len = 0;
+   }
 
 		/* create output image */
 		/* ------------------- */
@@ -940,21 +835,19 @@ int main(int argc, char **argv)
 		}
 
 		/* free remaining structures */
-		if (dinfo) {
-			opj_destroy_codec(dinfo);
+		if(dinfo) {
+			opj_destroy_decompress(dinfo);
 		}
-
-
+		/* free codestream information structure */
+		if (*indexfilename)	
+			opj_destroy_cstr_info(&cstr_info);
 		/* free image data structure */
 		opj_image_destroy(image);
 
-		/* destroy the codestream index */
-		opj_destroy_cstr_index(&cstr_index);
-
 	}
-	return EXIT_SUCCESS;
+	return 0;
 }
-//end main
+/*end main*/
 
 
 

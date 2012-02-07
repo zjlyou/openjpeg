@@ -33,6 +33,9 @@
  *  \brief Modification of jpip.c from 2KAN indexer
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "opj_includes.h"
 
 /* 
@@ -53,8 +56,9 @@ int write_ppix( int coff, opj_codestream_info_t cstr_info, opj_bool EPHused, int
   int len, lenp, compno, i;
   opj_jp2_box_t *box;
 
-  //  printf("cstr_info.packno %d\n", cstr_info.packno); //NMAX?
+  /*  printf("cstr_info.packno %d\n", cstr_info.packno); //NMAX? */
 
+  lenp = -1;
   box = (opj_jp2_box_t *)opj_calloc( cstr_info.numcomps, sizeof(opj_jp2_box_t));
   
   for (i=0;i<2;i++){
@@ -84,11 +88,13 @@ int write_ppix( int coff, opj_codestream_info_t cstr_info, opj_bool EPHused, int
 
 int write_ppixfaix( int coff, int compno, opj_codestream_info_t cstr_info, opj_bool EPHused, int j2klen, opj_cio_t *cio)
 {
-  int len, lenp, tileno, version, i, nmax, size_of_coding; // 4 or 8
+  int len, lenp, tileno, version, i, nmax, size_of_coding; /* 4 or 8*/
   opj_tile_info_t *tile_Idx;
   opj_packet_info_t packet;
   int resno, precno, layno, num_packet;
   int numOfres, numOfprec, numOflayers;
+  packet.end_pos = packet.end_ph_pos = packet.start_pos = -1;
+  (void)EPHused; /* unused ? */
 
   if( j2klen > pow( 2, 32)){
     size_of_coding =  8;

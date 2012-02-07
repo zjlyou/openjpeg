@@ -32,6 +32,16 @@
 #include "openjpip.h"
 #include "jpip_parser.h"
 #include "channel_manager.h"
+#include "byte_manager.h"
+#ifdef _WIN32
+#include <io.h>
+#else
+#include <unistd.h>
+#endif
+
+#ifdef SERVER
+#include "auxtrans_manager.h"
+#endif
 
 #include <stdio.h>
 #include "dec_clientmsg_handler.h"
@@ -41,24 +51,27 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <unistd.h>
 #include "jp2k_encoder.h"
 
-server_record_t * init_JPIPserver()
+#ifdef SERVER
+
+server_record_t * init_JPIPserver( int tcp_auxport, int udp_auxport)
 {
   server_record_t *record = (server_record_t *)malloc( sizeof(server_record_t));
   
   record->sessionlist = gene_sessionlist();
   record->targetlist  = gene_targetlist();
-  
+  record->auxtrans = init_aux_transport( tcp_auxport, udp_auxport);
+   
   return record;
 }
 
 void terminate_JPIPserver( server_record_t **rec)
 {
   delete_sessionlist( &(*rec)->sessionlist);
-  delete_targetlist( &(*rec)->targetlist);
-
+  delete_targetlist( &(*rec)->targetlist); 
+  close_aux_transport( (*rec)->auxtrans);
+   
   free( *rec);
 }
 
@@ -69,8 +82,8 @@ QR_t * parse_querystring( char *query_string)
   qr = (QR_t *)malloc( sizeof(QR_t));
     
   qr->query = parse_query( query_string);
-  
   qr->msgqueue = NULL;
+  qr->channel = NULL;
 
   return qr;
 }
@@ -81,45 +94,97 @@ bool process_JPIPrequest( server_record_t *rec, QR_t *qr)
   session_param_t *cursession = NULL;
   channel_param_t *curchannel = NULL;
 
-  if( qr->query->target[0] != '\0' || qr->query->tid[0] != '\0'){
+  if( qr->query->target || qr->query->tid){
     if( !identify_target( *(qr->query), rec->targetlist, &target))
       return false;
   }
 
-  if( qr->query->cid[0] != '\0'){
+  if( qr->query->cid){
     if( !associate_channel( *(qr->query), rec->sessionlist, &cursession, &curchannel))
       return false;
+    qr->channel = curchannel;
   }
-
-  if( qr->query->cnew){
-    if( !open_channel( *(qr->query), rec->sessionlist, target, &cursession, &curchannel))
+  
+  if( qr->query->cnew != non){
+    if( !open_channel( *(qr->query), rec->sessionlist, rec->auxtrans, target, &cursession, &curchannel))
       return false;
+    qr->channel = curchannel;
   }
-  if( qr->query->cclose[0][0] != '\0')
+  
+  if( qr->query->cclose)
     if( !close_channel( *(qr->query), rec->sessionlist, &cursession, &curchannel))
       return false;
   
   if( (qr->query->fx > 0 && qr->query->fy > 0) || qr->query->box_type[0][0] != 0)
     if( !gene_JPIPstream( *(qr->query), target, cursession, curchannel, &qr->msgqueue))
       return false;
-  
+
   return true;
 }
 
-void send_responsedata( QR_t *qr)
+void add_EORmsg( int fd, QR_t *qr);
+
+void send_responsedata( server_record_t *rec, QR_t *qr)
 {
-  // Currently HTTP support only, find a way for TCP, UDP case
-  emit_stream_from_msgqueue( qr->msgqueue);
+  int fd;
+  char tmpfname[] = "tmpjpipstream.jpp";
+  Byte_t *jpipstream;
+  Byte8_t len_of_jpipstream;
+
+  if( (fd = open( tmpfname, O_RDWR|O_CREAT|O_EXCL, S_IRWXU)) == -1){
+    fprintf( FCGI_stderr, "file open error %s", tmpfname);
+    fprintf( FCGI_stdout, "Status: 503\r\n");
+    fprintf( FCGI_stdout, "Reason: Implementation failed\r\n");
+    return;
+  }
+  
+  recons_stream_from_msgqueue( qr->msgqueue, fd);
+  
+  add_EORmsg( fd, qr); /* needed at least for tcp and udp */
+
+  len_of_jpipstream = get_filesize( fd);
+  jpipstream = fetch_bytes( fd, 0, len_of_jpipstream);
+
+  close( fd);
+  remove( tmpfname);
+
+  fprintf( FCGI_stdout, "\r\n");
+
+  if( qr->channel)
+    if( qr->channel->aux == tcp || qr->channel->aux == udp){
+      send_responsedata_on_aux( qr->channel->aux==tcp, rec->auxtrans, qr->channel->cid, jpipstream, len_of_jpipstream, 1000); /* 1KB per frame*/
+      return;
+    }
+  
+  if( fwrite( jpipstream, len_of_jpipstream, 1, FCGI_stdout) != 1)
+    fprintf( FCGI_stderr, "Error: failed to write jpipstream\n");
+
+  free( jpipstream);
+  return;
+}
+
+void add_EORmsg( int fd, QR_t *qr)
+{
+  unsigned char EOR[3];
+
+  if( qr->channel){
+    EOR[0] = 0x00;   
+    EOR[1] = is_allsent( *(qr->channel->cachemodel)) ? 0x01 : 0x02;
+    EOR[2] = 0x00;
+    if( write( fd, EOR, 3) != 3)
+      fprintf( FCGI_stderr, "Error: failed to write EOR message\n");
+  }
 }
 
 void end_QRprocess( server_record_t *rec, QR_t **qr)
 {
-  // TODO: record client preferences if necessary
+  /* TODO: record client preferences if necessary*/
   
   delete_query( &((*qr)->query));
   delete_msgqueue( &((*qr)->msgqueue));
   free( *qr);
 }
+
 
 void local_log( bool query, bool messages, bool sessions, bool targets, QR_t *qr, server_record_t *rec)
 {
@@ -136,9 +201,11 @@ void local_log( bool query, bool messages, bool sessions, bool targets, QR_t *qr
     print_alltarget( rec->targetlist);
 }
 
+#endif /*SERVER*/
+
 #ifndef SERVER
 
-dec_server_record_t * init_dec_server()
+dec_server_record_t * init_dec_server( int port)
 {
   dec_server_record_t *record = (dec_server_record_t *)malloc( sizeof(dec_server_record_t));
 
@@ -146,7 +213,7 @@ dec_server_record_t * init_dec_server()
   record->jpipstream = NULL;
   record->jpipstreamlen = 0;
   record->msgqueue = gene_msgqueue( true, NULL);
-  record->listening_socket = open_listeningsocket();
+  record->listening_socket = open_listeningsocket( port);
 
   return record;
 }
@@ -205,6 +272,10 @@ bool handle_clientreq( client_t client, dec_server_record_t *rec)
   case CIDDST:
     handle_dstCIDreqMSG( client, rec->cachelist);
     break;
+    
+  case SIZREQ:
+    handle_SIZreqMSG( client, rec->jpipstream, rec->msgqueue, rec->cachelist);
+    break;
 
   case JP2SAVE:
     handle_JP2saveMSG( client, rec->cachelist, rec->msgqueue, rec->jpipstream);
@@ -217,12 +288,13 @@ bool handle_clientreq( client_t client, dec_server_record_t *rec)
   case MSGERROR:
     break;
   }
-        
+
   fprintf( stderr, "\t end of the connection\n\n");
   if( close_socket(client) != 0){
     perror("close");
     return false;
   }
+
   if( quit)
     return false;
 
@@ -248,22 +320,18 @@ jpip_dec_param_t * init_jpipdecoder( bool jp2)
 bool fread_jpip( char fname[], jpip_dec_param_t *dec)
 {
   int infd;
-  struct stat sb;
 
   if(( infd = open( fname, O_RDONLY)) == -1){
     fprintf( stderr, "file %s not exist\n", fname);
     return false;
   }
   
-  if( fstat( infd, &sb) == -1){
-    fprintf( stderr, "input file stream is broken\n");
+  if(!(dec->jpiplen = get_filesize(infd)))
     return false;
-  }
-  dec->jpiplen = (Byte8_t)sb.st_size;
-
+  
   dec->jpipstream = (Byte_t *)malloc( dec->jpiplen);
 
-  if( read( infd, dec->jpipstream, dec->jpiplen) != dec->jpiplen){
+  if( read( infd, dec->jpipstream, dec->jpiplen) != (int)dec->jpiplen){
     fprintf( stderr, "file reading error\n");
     free( dec->jpipstream);
     return false;
@@ -278,14 +346,14 @@ void decode_jpip( jpip_dec_param_t *dec)
 {
   parse_JPIPstream( dec->jpipstream, dec->jpiplen, 0, dec->msgqueue);
 
-  if( dec->metadatalist){ // JP2 encoding
+  if( dec->metadatalist){ /* JP2 encoding*/
     parse_metamsg( dec->msgqueue, dec->jpipstream, dec->jpiplen, dec->metadatalist);
     dec->ihdrbox = gene_ihdrbox( dec->metadatalist, dec->jpipstream);
     
     dec->jp2kstream = recons_jp2( dec->msgqueue, dec->jpipstream, dec->msgqueue->first->csn, &dec->jp2klen);
   }
-  else // J2k encoding  
-    // Notice: arguments fw, fh need to be set for LRCP, PCRL, CPRL
+  else /* J2k encoding  */
+    /* Notice: arguments fw, fh need to be set for LRCP, PCRL, CPRL*/
     dec->jp2kstream = recons_j2k( dec->msgqueue, dec->jpipstream, dec->msgqueue->first->csn, 0, 0, &dec->jp2klen);  
 }
 
@@ -302,7 +370,7 @@ bool fwrite_jp2k( char fname[], jpip_dec_param_t *dec)
    return false;
  }
   
- if( write( outfd, dec->jp2kstream, dec->jp2klen) != dec->jp2klen)
+ if( write( outfd, dec->jp2kstream, dec->jp2klen) != (int)dec->jp2klen)
    fprintf( stderr, "j2k file write error\n");
 
  close(outfd);
@@ -341,13 +409,13 @@ index_t * get_index_from_JP2file( int fd)
 {
   char *data;
  
-  // Check resource is a JP family file.
+  /* Check resource is a JP family file.*/
   if( lseek( fd, 0, SEEK_SET)==-1){
     fprintf( stderr, "Error: File broken (lseek error)\n");
     return NULL;
   }
   
-  data = (char *)malloc( 12); // size of header
+  data = (char *)malloc( 12); /* size of header*/
   if( read( fd, data, 12) != 12){
     free( data);
     fprintf( stderr, "Error: File broken (read error)\n");
@@ -375,4 +443,4 @@ void output_index( index_t *index)
   print_index( *index);
 }
 
-#endif //SERVER
+#endif /*SERVER*/

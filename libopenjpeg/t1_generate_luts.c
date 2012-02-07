@@ -31,6 +31,7 @@
  */
 
 #include "opj_includes.h"
+#include <math.h>
 
 static int t1_init_ctxno_zc(int f, int orient) {
 	int h, v, d, n, t, hv;

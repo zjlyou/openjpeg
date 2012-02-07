@@ -34,21 +34,21 @@
 #include "bool.h"
 #include "target_manager.h"
 
-//! Cache model parameters
+/** Cache model parameters*/
 typedef struct cachemodel_param{
-  target_param_t *target;        //!< reference pointer to the target
-  bool jppstream;                //!< return type, true: JPP-stream, false: JPT-stream
-  bool mhead_model;              //!< main header model, if sent, 1, else 0
-  bool *tp_model;                //!< dynamic array pointer of tile part model, if sent, 1, else 0
-  bool *th_model;                //!< dynamic array pointer of tile header model
-  bool **pp_model;                //!< dynamic array pointer of precint packet model
-  struct cachemodel_param *next; //!< pointer to the next cache model
+  target_param_t *target;        /**< reference pointer to the target*/
+  bool jppstream;                /**< return type, true: JPP-stream, false: JPT-stream*/
+  bool mhead_model;              /**< main header model, if sent, 1, else 0*/
+  bool *tp_model;                /**< dynamic array pointer of tile part model, if sent, 1, else 0*/
+  bool *th_model;                /**< dynamic array pointer of tile header model*/
+  bool **pp_model;               /**< dynamic array pointer of precint packet model*/
+  struct cachemodel_param *next; /**< pointer to the next cache model*/
 } cachemodel_param_t;
 
-//! Cache model list parameters
+/** Cache model list parameters*/
 typedef struct cachemodellist_param{
-  cachemodel_param_t *first; //!< first cache model pointer of the list
-  cachemodel_param_t *last;  //!< last  cache model pointer of the list
+  cachemodel_param_t *first; /**< first cache model pointer of the list*/
+  cachemodel_param_t *last;  /**< last  cache model pointer of the list*/
 } cachemodellist_param_t;
 
 
@@ -86,6 +86,15 @@ void print_cachemodel( cachemodel_param_t cachemodel);
  * @return                   found cache model pointer
  */
 cachemodel_param_t * search_cachemodel( target_param_t *target, cachemodellist_param_t *cachemodellist);
+
+
+/**
+ * check if all data has been sent
+ *
+ * @param[in] cachemodel cache model
+ * @return               true if sent all, false otherwise
+ */
+bool is_allsent( cachemodel_param_t cachemodel);
 
 
 /**

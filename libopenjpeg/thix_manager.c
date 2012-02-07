@@ -33,6 +33,9 @@
  *  \brief Modification of jpip.c from 2KAN indexer
  */
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include "opj_includes.h"
 
 /* 
@@ -85,7 +88,6 @@ int write_tilemhix( int coff, opj_codestream_info_t cstr_info, int tileno, opj_c
   int i;
   opj_tile_info_t tile;
   opj_tp_info_t tp;
-  int marknum;
   int len, lenp;
   opj_marker_info_t *marker;
 
@@ -107,7 +109,7 @@ int write_tilemhix( int coff, opj_codestream_info_t cstr_info, int tileno, opj_c
     cio_write( cio, marker[i].len, 2);
   }
      
-  //  free( marker);
+  /*  free( marker);*/
 
   len = cio_tell( cio) - lenp;
   cio_seek( cio, lenp);
