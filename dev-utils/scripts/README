@@ -7,7 +7,8 @@ $ ./genchange.sh
 copy the branch
 
 $ svn copy https://openjpeg.googlecode.com/svn/branches/openjpeg-1.5 https://openjpeg.googlecode.com/svn/tags/version.1.5
-$ svn add CHANGES https://openjpeg.googlecode.com/svn/tags/version.1.5
+$ svn add CHANGES ../../tags/version.1.5
+$ svn commit
 
 2. Generates the source tarball + binary tarball (OSX package on Mac):
 
