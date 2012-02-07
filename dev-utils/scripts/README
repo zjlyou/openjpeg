@@ -1,4 +1,4 @@
-To produce a new openjpeg release:
+To produce a new openjpeg release (Linux or OSX):
 
 1. Generate the CHANGES for the release:
 
@@ -9,7 +9,7 @@ copy the branch
 $ svn copy https://openjpeg.googlecode.com/svn/branches/openjpeg-1.5 https://openjpeg.googlecode.com/svn/tags/version.1.5
 $ svn add CHANGES https://openjpeg.googlecode.com/svn/tags/version.1.5
 
-2. Generates the source tarball + binary tarball:
+2. Generates the source tarball + binary tarball (OSX package on Mac):
 
 $ ./release.sh
 
@@ -22,4 +22,3 @@ You can use googlecode_upload.py to upload your files directly:
 $ googlecode-upload.py -s "Version 1.5 source files of OpenJPEG library and codecs" -p openjpeg /tmp/openjpeg_release/openjpeg-build/openjpeg-1.5.0.tar.gz
 $ googlecode-upload.py -s "Version 1.5 Linux Binaries of OpenJPEG library and codecs" -p openjpeg /tmp/openjpeg_release/openjpeg-build/OPENJPEG-1.5.0-Linux.tar.gz
 
-### MAC ??? ###
