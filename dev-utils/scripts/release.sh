@@ -14,10 +14,11 @@ osxVerMajMin="`echo $osxVerFul | cut -d. -f1-2`"
 fi
 
 mkdir -p $TMPDIR
+mkdir $TMPDIR/openjpeg-build
 cd $TMPDIR
 svn checkout http://openjpeg.googlecode.com/svn/tags/version.1.5 openjpeg
 cd openjpeg
-./bootstrap.sh
+./bootstrap.sh > $TMPDIR/openjpeg-build/autotools.log 2>&1
 cd ..
 
 cmake_options="\
@@ -36,7 +37,6 @@ cmake_options="$cmake_options -DCMAKE_OSX_ARCHITECTURES:STRING=i386;x86_64 -DCMA
 fi
 fi
 
-mkdir $TMPDIR/openjpeg-build
 cd $TMPDIR/openjpeg-build
 cmake -G"Unix Makefiles" $cmake_options ../openjpeg > config.log 2>&1
 
