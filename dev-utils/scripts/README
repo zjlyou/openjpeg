@@ -1,4 +1,4 @@
-To produce a new openjpeg release (Linux or OSX):
+To produce a new openjpeg release (Win32, Linux or OSX):
 
 1. Generate the CHANGES for the release:
 
