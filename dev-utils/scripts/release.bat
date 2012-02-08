@@ -15,11 +15,11 @@ SET PATH=%PATH%;C:\Program Files/TortoiseSVN/bin/
 
 mkdir %TMPDIR%
 cd %TMPDIR%
-svn checkout http://openjpeg.googlecode.com/svn/tags/version.1.5 > svn.log 2>&1
+svn checkout http://openjpeg.googlecode.com/svn/tags/version.1.5 openjpeg > svn.log 2>&1
 
 mkdir %TMPDIR%\openjpeg-build
 cd %TMPDIR%\openjpeg-build
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DBUILD_THIRDPARTY:BOOL=ON ..\openjpeg > config.log 2>&1
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DBUILD_JPWL:BOOL=ON -DBUILD_MJ2:BOOL=ON -DBUILD_JPIP:BOOL=ON -DBUILD_THIRDPARTY:BOOL=ON ..\openjpeg > config.log 2>&1
 
 @rem build gdcm
 nmake > nmake.log 2>&1
