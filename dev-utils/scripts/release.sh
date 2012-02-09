@@ -1,5 +1,6 @@
 #!/bin/sh
-#generate OpenJPEG release on *NIX (both Linux and MacOSX)
+# generate OpenJPEG release on *NIX (both Linux and MacOSX)
+# There are two cases for MacOSX: 10.4 compat (PPC) and 10.6 and above (intel only 32 & 64 bits)
 
 # control verbosity
 #set -x

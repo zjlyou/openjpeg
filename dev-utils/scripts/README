@@ -27,3 +27,7 @@ $ ./googlecode_upload.py -s "Version 1.5 Linux Binaries of OpenJPEG library and 
 # MACOSX (10.4/ppc)
 $ ./googlecode_upload.py -s "Version 1.5 MacOSX (Tiger/10.4) Binaries of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-OSX,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-1.5.0-Darwin-powerpc.dmg
 
+# Windows (32bits)
+$ ./googlecode_upload.py -s "Version 1.5 Windows Installer of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-Windows,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-1.5.0-win32-x86.exe
+$ ./googlecode_upload.py -s "Version 1.5 Windows Binaries of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-Windows,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-1.5.0-win32-x86.zip 
+
