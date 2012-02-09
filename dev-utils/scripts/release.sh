@@ -32,10 +32,20 @@ cmake_options="\
 # On apple let's build universal binaries
 if [ "$isOSX" != "" ]; then
 if [ "$osxVerMajMin" = "10.4" ]; then
-cmake_options="$cmake_options -DCMAKE_OSX_ARCHITECTURES:STRING=ppc;i386 -DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.4"
+cmake_options="$cmake_options -DCMAKE_OSX_ARCHITECTURES:STRING=ppc;i386 -DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.4 -DCPACK_SYSTEM_NAME:STRING=Darwin-universal"
 elif [ "$osxVerMajMin" = "10.7" ]; then
-cmake_options="$cmake_options -DCMAKE_OSX_ARCHITECTURES:STRING=i386;x86_64 -DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.6"
+cmake_options="$cmake_options -DCMAKE_OSX_ARCHITECTURES:STRING=i386;x86_64 -DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.6 -DCPACK_SYSTEM_NAME:STRING=Darwin64-universal"
 fi
+fi
+
+# On linux 64 bits machines, build 32 bits version
+# (comment if needed)
+is64="`uname -m | grep -i x86_64`"
+if [ "$is64" != "" ]; then
+  isLinux="`uname -s | grep -i Linux`"
+  if [ "$isLinux" != "" ]; then
+    cmake_options="$cmake_options -DCMAKE_C_FLAGS:STRING=-m32 -DCPACK_SYSTEM_NAME:STRING=Linux-i386"
+  fi
 fi
 
 cd $TMPDIR/openjpeg-build
