@@ -1,0 +1,13 @@
+#summary OpenJPEG Coding Style
+
+= C =
+
+OpenJPEG is meant to be portable. OpenJPEG is using ANSI C.
+
+There is one exception to this rule: large file support, since it requires C99. The build system is checking for LFS in the C compiler. In this case you need a C99 compiler to have LFS support in OpenJPEG
+
+= Comment =
+
+Because OpenJPEG is written in C. One should use C style comment: /* and */
+
+For doxygen, one should use /** and */
