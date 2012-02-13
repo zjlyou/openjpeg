@@ -1,0 +1,12 @@
+#summary Guideline for Version Control System in OpenJPEG
+
+= Introduction =
+
+OpenJPEG is maintained using SVN
+
+
+= svn commit message =
+
+Commit message should contains the branch it is commited to. Eg, on branch openjpeg-1.5 the commit message should read:
+
+[1.5] fix invalid write access in j2k_foo
