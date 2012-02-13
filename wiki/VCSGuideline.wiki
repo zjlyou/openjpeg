@@ -14,6 +14,12 @@ Commit message should contains the branch it is commited to. Eg, on branch openj
 }}}
 svn commit message are very important. They will be used to generate automatically the CHANGES file. See [http://openjpeg.googlecode.com/svn/dev-utils/scripts/genchange.sh genchanges.sh].
 
+when doing a svn merge from say branch 1.5 onto trunk, svn will create a new message. It will not contains the original commit log, therefore you will still need to prefix your message with 
+
+{{{
+[trunk] merge from stable branch to fix invalid write access
+}}}
+
 == GIT-SVN ==
 
 Because DVCS are easier to work with when it comes to merging/branching. Some people might enjoy the benefits of GIT over the OpenJPEG SVN:
