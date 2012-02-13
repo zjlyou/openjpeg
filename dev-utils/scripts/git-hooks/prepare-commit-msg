@@ -1,0 +1,6 @@
+#!/bin/sh
+case "$2,$3" in
+  *)
+    value=$(git branch | grep "*" | sed -e 's/* //')
+    sed -i -e "1i\\[$value]" "$1"
+esac

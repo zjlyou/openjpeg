@@ -1,0 +1,5 @@
+#!/bin/sh
+test "" = "$(grep '^\[trunk\]' "$1")" && {
+	echo >&2 Need to indicate trunk
+	exit 1
+}
