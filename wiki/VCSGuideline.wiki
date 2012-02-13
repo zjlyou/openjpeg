@@ -23,3 +23,32 @@ Because DVCS are easier to work with when it comes to merging/branching. Some pe
 $ git svn clone https://openjpeg.googlecode.com/svn/ -T trunk -b branches -t tags
 $ git svn show-ignore >> .git/info/exclude
 }}}
+
+=== workflow ===
+
+As per documentation of git-svn one should avoir git merge. Some people have documented ways to use git merging still:
+* http://www.pauldeden.com/2009/09/merging-branch-with-git-svn-and-still.html?showComment=1313021208783#c3713765550508885198
+
+In our case we will use something simple. Let's pretend we want to merge some stuff from 1.5 branch onto master (trunk)
+
+Check what are the diff for say doc subir:
+
+$ git diff openjpeg1.5..master doc | less
+
+Create
+
+$ git checkout master
+$ git checkout -b my_merge_branch_doc
+$ git mv ...
+$ git commit
+HACK HACK
+$ git commit
+$ git checkout master
+$ git merge --squash my_merge_branch_doc
+# squash message will contains all your commit log. Simplify it to a single -future- svn commit log:
+$ git commit
+
+Make sure we are up to date with trunk
+
+$ git svn rebase
+$ git svn dcommit
