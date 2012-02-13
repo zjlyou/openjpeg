@@ -8,6 +8,13 @@ There is one exception to this rule: large file support, since it requires C99. 
 
 = Comment =
 
-Because OpenJPEG is written in C. One should use C style comment: /* and */
+Because OpenJPEG is written in C. One should use C style comment: {{{/*}}} and {{{*/}}}
 
-For doxygen, one should use /** and */
+For doxygen, one should use {{{/**}}} and {{{*/}}}
+
+= Open Questions =
+
+* What charset to use for unicode ? UTF-8 is a good contestant. Eg:
+"Università" in comment
+* tab spaces ? indent ? uncrutify rule ?
+* file type (UNIX eol would be nice)
