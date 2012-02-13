@@ -4,9 +4,22 @@
 
 OpenJPEG is maintained using SVN
 
+== SVN ==
 
-= svn commit message =
+=== svn commit message ===
 
 Commit message should contains the branch it is commited to. Eg, on branch openjpeg-1.5 the commit message should read:
 
 [1.5] fix invalid write access in j2k_foo
+
+
+== GIT-SVN ==
+
+Because DVCS are easier to work with when it comes to merging/branching. Some people might enjoy the benefits of GIT over the OpenJPEG SVN:
+
+=== cloning ===
+
+{{{
+$ git svn clone https://openjpeg.googlecode.com/svn/ -T trunk -b branches -t tags
+$ git svn show-ignore >> .git/info/exclude
+}}}
