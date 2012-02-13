@@ -9,6 +9,7 @@
     * [TestSuiteDocumentation Test Suite Documentation]
   * [DevelopmentProcess Development Process]
     * [Release15 Release 1.5]
+    * [VCSGuideline VCS Guideline]
     * [CDash]
     * [BuildSystems Build Systems]
   * [FolderReorgProposal New folder organization and naming convention]
