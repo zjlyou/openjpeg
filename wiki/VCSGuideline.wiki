@@ -12,6 +12,7 @@ Commit message should contains the branch it is commited to. Eg, on branch openj
 
 [1.5] fix invalid write access in j2k_foo
 
+svn commit message are very important. They will be used to generate automatically the CHANGES file. See [http://openjpeg.googlecode.com/svn/dev-utils/scripts/genchange.sh genchanges.sh].
 
 == GIT-SVN ==
 
