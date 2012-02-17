@@ -155,5 +155,6 @@ Input metadata file "copenhague1.xml" looks like:
   * Develop a transcoder utility that processes existing JPEG 2000 code-streams to make them comply with the required options of the JPIP server. If the JPIP server requires JPEG 2000 code-streams to be formatted in a certain way, provide a tool that can convert any JPEG 2000 code-stream to comply with these requirements.
   * JPIP implementation over UDP protocol (ISO/IEC 15444-9 Annex H, H.2 Reliable Requests with Unreliable Data)
 =Alternative implementations=
-* http://sourceforge.net/projects/cadi/
-* http://www.2kan.org/demonstrator.html
+ * http://sourceforge.net/projects/cadi/
+ * http://www.2kan.org/demonstrator.html
+ * http://dltj.org/article/gsoc-jpip/
