@@ -357,3 +357,8 @@ Following option is available only if the library has been compiled with the jpw
     * c,c=`<numcomps>`
     numcomps is the number of expected components in the codestream (search of first EPB rely upon this, default is 3).
  
+=Other implementations=
+Open Source:
+* http://sourceforge.net/projects/kipa/
+Other:
+* http://www.kakadusoftware.com
