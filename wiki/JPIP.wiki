@@ -160,3 +160,4 @@ Input metadata file "copenhague1.xml" looks like:
  * http://dltj.org/article/gsoc-jpip/
  * http://hirise.lpl.arizona.edu/jp2.php
  * http://sourceforge.net/apps/mediawiki/djatoka/index.php?title=Main_Page
+ * http://www.gdal.org/frmt_jpipkak.html
