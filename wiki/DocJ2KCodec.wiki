@@ -359,6 +359,8 @@ Following option is available only if the library has been compiled with the jpw
  
 =Other implementations=
 Open Source:
-* http://sourceforge.net/projects/kipa/
+ * http://sourceforge.net/projects/kipa/
+ * http://cuj2k.sourceforge.net/
+ * http://www.cse.cuhk.edu.hk/~ttwong/demo/dwtgpu/dwtgpu.html
 Other:
-* http://www.kakadusoftware.com
+ * http://www.kakadusoftware.com
