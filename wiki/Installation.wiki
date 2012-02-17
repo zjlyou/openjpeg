@@ -104,7 +104,8 @@ Main available cmake flags:
   * To build the CODEC executables: '-DBUILD_CODEC:bool=on' (default: 'ON')
   * To build the MJ2 executables: '-DBUILD_MJ2:bool=on' (default: 'OFF')
   * To build the JPWL executables and JPWL library: '-DBUILD_JPWL:bool=on' (default: 'OFF')
-  * To build the JPIP library and executables: '-DBUILD_JPIP:bool=on' (default: 'OFF')
+  * To build the JPIP client (java compiler recommended) library and executables: '-DBUILD_JPIP:bool=on' (default: 'OFF')
+  * To build the JPIP server (need fcgi) library and executables: '-DBUILD_JPIP_SERVER:bool=on' (default: 'OFF')
   * To enable testing (and automatic result upload to http://my.cdash.org/index.php?project=OPENJPEG):
 {{{
 cmake . -DBUILD_TESTING:BOOL=ON -DOPJ_DATA_ROOT:PATH='path/to/the/data/directory' -DBUILDNAME:STRING='name_of_the_build'
@@ -119,10 +120,7 @@ If '-DOPJ_DATA_ROOT:PATH' option is omitted, test files will be automatically se
 corresponding to the location of the data directory when compiling from the trunk (and assuming the data directory has
 been checked out of course).
 
-Note 2 : to execute the encoding test suite, kakadu binaries are needed to decode encoded image and compare it to the baseline. Kakadu binaries are freely available for non-commercial purposes at http://www.kakadusoftware.com. To specify the binary path, please add to the cmake command the following option 
-{{{
--DREF_DECODER_BIN_PATH:STRING='path/to/the/kakadu/binaries/directory'
-}}}
+Note 2 : to execute the encoding test suite, kakadu binaries are needed to decode encoded image and compare it to the baseline. Kakadu binaries are freely available for non-commercial purposes at http://www.kakadusoftware.com. kdu_expand will need to be in your PATH for cmake to find it.
 
 === Using ctest script to perform dashboard submission===
 You can used ctest command to build the openjepg lib and submit to the dashboard.
