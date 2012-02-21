@@ -4,6 +4,7 @@
     * [http://www.openjpeg.org/libdoc/index.html OpenJPEG library (Doxygen)]
     * [DocJ2KCodec JPEG 2000 codec]
     * [DocMJ2K Motion JPEG 2000]
+    * [DocStructOPJv2 Documentation about structures in OpenJPEGv2]
     * [JPIP JPIP]
   * [ConformanceTesting Conformance Testing]
     * [TestSuiteDocumentation Test Suite Documentation]
