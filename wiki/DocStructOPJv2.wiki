@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Add your content here.
+Based on the work done by Jerome Fines in 2008, the OpenJPEG team has decided in June 2011 to merge the V2 branch in the trunk. The goal of this operation is to release an official version of this work which will become the reference for the future development. Here we will describe and discuss about the evolution of structures in OpenJPEG.
 
 
 = Details =
