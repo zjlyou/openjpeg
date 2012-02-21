@@ -4,10 +4,70 @@
 
 Based on the work done by Jerome Fines in 2008, the OpenJPEG team has decided in June 2011 to merge the V2 branch in the trunk. The goal of this operation is to release an official version of this work which will become the reference for the future development. Here we will describe and discuss about the evolution of structures in OpenJPEG.
 
+= Main public structures =
+Structures found in openjpeg.h
 
-= Details =
+== opj_stream_t ==
+Abstract JPEG2000 stream:
+  * created from file or external stream
+  * linked to opj_stream_private_t structure inside the lib 
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== opj_codec_t ==
+Abstract JPEG2000 codec (handle on the compressor or decompressor):
+  * created from the codec format selected
+  * linked to opj_codec_private_t structure inside the lib
+
+== opj_dparameters_t / opj_cparameters_t ==
+Structure provide for the users to give respectively decompression and compression parameters to the lib.  
+
+== opj_image ==
+Structure where are stored image information and image component structure
+
+== opj_image_comp_t ==
+Structure where are stored image component information and data
+
+== opj_codestream_info_v2_t ==
+Structure which give to the user the main information about the codestream included in the JPEG2000 file/stream:
+   * Tile size and origin
+   * Number of tile
+   * Default information about tile compression -> opj_tile_info_v2_t structure
+   * For each tile the compression parameters (NOT USED for the moment) -> opj_tile_info_v2_t structure
+
+=== opj_tile_info_v2_t === 
+Structure which give visibility about the main tile compression parameters for one specific tile. The first part of this structure is common to all tile-component included in the tile: 
+   * tile index
+   * coding style
+   * progression order
+   * number of layers
+   * MCT identifier
+   * Structure which store compression parameters for one tile component -> opj_tccp_info_t
+
+==== opj_tccp_info_t ====
+Structure which give visibility about low-level compression parameters for one tile component
+
+== opj_codestream_index_t == 
+Structure which give to the user the main information about the position of main elements in the codestream included in the JPEG2000 file/stream:
+   * main header positions (start and end)
+   * codestream size
+   * structure which store the position of the main marker (SOC, SOT, SOD, EOC and main header markers) -> opj_marker_info_t
+   * structure which store the information about position of markers inside each tile independently -> opj_tile_index_t
+
+=== opj_marker_info_t ===
+Structure which store markers type and position and length in the codestream.
+
+=== opj_tile_index_t ===
+Structure which store the information about the index of elements in the tile:
+   * tile index
+   * structure which store the position of the markers in the tile header -> opj_marker_info_t
+   * structure which store information about tile part position of this tile -> opj_tp_index_t
+   * structure which store information about packet position of this tile -> opj_packet_info_t
+
+
+==== opj_tp_index_t ====
+Structure which store position of a tile-part and its header in the codestream
+
+==== opj_packet_info_t ====
+Structure which store information concerning a packet inside tile
+
+
+= Some private structures =
