@@ -60,3 +60,18 @@ Make sure we are up to date with trunk
 $ git svn rebase
 $ git svn dcommit
 }}}
+
+== Some experimental tips about Mercurial-SVN ==
+For the same main reason, some people might enjoy the benefits of Mercurial over the OpenJPEG SVN. A mercurial extension do the job perfectly : [http://mercurial.selenic.com/wiki/HgSubversion HgSubversion].
+
+You can clone trunk repository from the svn with:
+{{{
+$ hg clone svn+https://openjpeg.googlecode.com/svn/trunk
+}}}
+and enjoy the possibility the make local commit before push your modifications. Take care to use the following command before all push action:
+{{{
+$ hg pull --rebase
+}}}
+It will be rebase locally your local modifications on the top of the current server version. 
+
+An another interesting extension available with mercurial is the [http://mercurial.selenic.com/wiki/HisteditExtension Histedit] extension which enable to modify your local history after commit operation. It is useful when you don't want keep some commits in your local history before pushing to the svn repository.   
