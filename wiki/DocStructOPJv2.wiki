@@ -69,5 +69,42 @@ Structure which store position of a tile-part and its header in the codestream
 ==== opj_packet_info_t ====
 Structure which store information concerning a packet inside tile
 
-
 = Some private structures =
+We will described here the main structures used in openjpeg.c, cio.h, j2k.h and jp2.h
+
+== opj_stream_private_t == 
+It is the main internal structure to manage the byte input/output on the stream. It give access to the user data (file or external stream) and the main functions to handle the stream (read, write, move in the stream). Its give access to the buffer. 
+
+== opj_codec_private_t ==
+It is the main codec handler used for compression or decompression. Its contains: 
+  * an union which manage decompression and compression handlers -> opj_compression_t or opj_decompression_t 
+  * the flag which indicate if the codec is a decompressor or compressor 
+  * the event manager structure -> opj_event_mgr_t
+  * the internal codestream information structure -> opj_codestream_info_v2_t
+  * the internal codestream index structure -> opj_codestream_index_t
+  * the internal codec which depends the JPEG2000 codec used (J2K or JP2 or (JPT)) -> opj_j2k_v2_t / opj_jp2_v2_t
+
+=== opj_compression_t ===
+Move during the first part of merge but not used for the moment. It is the compression handlers generic to j2k or jp2 codec
+
+=== opj_decompression_t ===
+Structure which give access to all generic decompression handlers.
+
+== opj_event_mgr_t ==
+Message handler object used to manage the messages (error, warning and info) to the lib user.
+
+== opj_j2k_v2_t == 
+Internal J2K codestream reader/writer. It is the main place where we can find the elements used in the J2K compression/decompresion process. Here we will now describe the structures used in the decompression process :
+  * some parameters about decompression process -> opj_j2k_dec_t
+  * a private image structure which is used to store only the information about the whole output image (no data store in) -> opj_image_t
+  * an output image to store the decoded image or sub part. 
+  * the coding parameters which describe how the codestream is encoded -> opj_cp_v2_t 
+  * Two lists of procedure used to provide a more generic framework to the functions used in j2k codec
+  * the internal codestream index -> opj_codestream_index_t
+  * the internal structure which manage the tile coding/decoding operation  -> opj_tcd_v2
+ 
+== opj_jp2_v2_t == 
+Internal JP2 reader/writer structure. The JP2 codec must be considered as a set of boxes which enclose the J2K codestream. The goal of these boxes is to give clue to interpret the raw codestream. This structure follow this scheme and embedded a opj_j2k_v2_t structure. Moreover it is composed of:
+  * some parameters 
+  * a structure to handle the color interpretation -> opj_jp2_color_t
+  * Two lists of procedure used to provide a more generic framework to the functions used in jp2 codec
