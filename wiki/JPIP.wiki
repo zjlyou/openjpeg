@@ -121,15 +121,11 @@ An example to encode a TIF image "copenhague1.tif" at resolution 4780x4050, 8bit
   % ./image_to_j2k -i copenhague1.tif -o copenhague1.jp2 -p RPCL -c [64,64] -t 640,480 -jpip -TP R
 }}}
   Note:
-   *--jpip Embed index table box into the output JP2 file (obligation for JPIP)
-   *--TP R  Partition a tile into tile parts of different resolution levels (obligation for JPT-stream)
+   *--jpip Embed index table box into the output JP2 file (compulsory for JPIP)
+   *--TP R  Partition a tile into tile parts of different resolution levels (compulsory for JPT-stream)
 
-Alternatively you can use kakadu :
-{{{
-  % kdu_compress -i copenhague1.tif -o copenhague1.j2k Corder=RPCL  ORGtparts=R Stiles={256,256}
-}}}
 
-  (Optional) Embed metadata into JP2 file
+(Optional) Embed metadata into JP2 file
 {{{
   % ./addXMLinJP2 copenhague1.jp2 copenhague1.xml
 }}}
