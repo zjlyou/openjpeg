@@ -363,6 +363,11 @@ Open Source:
  * http://cuj2k.sourceforge.net/
  * http://www.cse.cuhk.edu.hk/~ttwong/demo/dwtgpu/dwtgpu.html
  * http://software.intel.com/en-us/articles/performance-tools-for-software-developers-application-notes-intel-ipp-jpeg2000-and-jasper-in-ksquirrel/
+ * http://pirlwww.lpl.arizona.edu/software/PIRL_Java_Packages.shtml
+
+PIRL contains an excellent JP2_info cmd line tool
+
+
 Other:
  * http://www.kakadusoftware.com
  * http://dsplab.diei.unipg.it/software/c_quick_jpeg_2000_cqj2k
