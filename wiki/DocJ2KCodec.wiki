@@ -365,3 +365,4 @@ Open Source:
  * http://software.intel.com/en-us/articles/performance-tools-for-software-developers-application-notes-intel-ipp-jpeg2000-and-jasper-in-ksquirrel/
 Other:
  * http://www.kakadusoftware.com
+ * http://dsplab.diei.unipg.it/software/c_quick_jpeg_2000_cqj2k
