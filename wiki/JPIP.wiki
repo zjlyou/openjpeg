@@ -124,6 +124,10 @@ An example to encode a TIF image "copenhague1.tif" at resolution 4780x4050, 8bit
    *--jpip Embed index table box into the output JP2 file (compulsory for JPIP)
    *--TP R  Partition a tile into tile parts of different resolution levels (compulsory for JPT-stream)
 
+*Warning*: -jpip option is really important it adds the cidx/fidx superbox to the file. Without this information, openjpip server will simply crash on your input file. Make sure all file accessible from within openjpip server have cidx/fidx superbox. At the time of writing, kakadu does not support generating cidx/fidx superbox 
+
+  * [http://www.jpeg.org/public/fcd15444-9v2.pdf Annex I Indexing JPEG 2000 files for JPIP, p90]
+
 
 (Optional) Embed metadata into JP2 file
 {{{
