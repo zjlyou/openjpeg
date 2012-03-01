@@ -40,3 +40,17 @@
   * Support for JPEG 2000 part 2
   * Plugin Firefox
   * JPSec implementation
+
+==JPWL==
+  * Workload: current JPWL code loads a whole codestream and operates on it in RAM, so it needs a reasonable amount of work to make it compatible with v2.
+  * Current status: JPWL specifications have remained stable for several years, but there has not been a recent activity in the ISO group to improve its standardization status.
+  * Time: we are interested in keeping a collaboration with openjpeg.
+Currently, I have not enough time to comply with the June deadline. We
+have a Ph.D. student who could be interested, but I think he is not ready
+to produce stable code in few months, and needs more time.
+
+So, my idea is not dropping at all JPWL, but working again on it, maybe
+starting right from version 2 when it's final. I didn't dig recently in
+the v2 branch, but I remember that it was easily extensible via sort of
+plugins or personalized actions, so this could be the easy way to re-add
+JPWL.
