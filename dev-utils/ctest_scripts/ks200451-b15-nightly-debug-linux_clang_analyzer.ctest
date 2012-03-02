@@ -5,6 +5,7 @@
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/share/clang/scan-build/ccc-analyzer)
+set(ENV{JFLAGS} "-Xlint:deprecation")
 set(ENV{MAKE} "scan-build -o . make")
 # skip test, only interested in static analysis (save time)
 set(dashboard_do_test FALSE)

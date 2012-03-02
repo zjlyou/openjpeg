@@ -3,6 +3,7 @@
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/bin/gcc-4.4)
 set(ENV{CFLAGS} "-Wall -Wextra -pedantic -Wno-long-long")
+set(ENV{JFLAGS} "-Xlint:deprecation")
 
 set(dashboard_do_memcheck TRUE)
 set(CTEST_MEMORYCHECK_COMMAND           "/usr/bin/valgrind")

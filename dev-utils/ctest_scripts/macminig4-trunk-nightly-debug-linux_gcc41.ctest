@@ -2,6 +2,7 @@
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/bin/gcc-4.1)
+set(ENV{JFLAGS} "-Xlint:deprecation")
 
 macro(dashboard_hook_init)
   set( dashboard_cache "

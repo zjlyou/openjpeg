@@ -2,6 +2,8 @@
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/bin/gcc-4.4)
+set(ENV{CFLAGS} "-g -O2 -fstack-protector --param=ssp-buffer-size=4 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security")
+set(ENV{JFLAGS} "-Xlint:deprecation")
 
 set(dashboard_do_memcheck TRUE)
 set(CTEST_MEMORYCHECK_COMMAND           "/usr/bin/valgrind")
@@ -10,6 +12,10 @@ set(CTEST_MEMORYCHECK_COMMAND_OPTIONS   "-q --tool=memcheck --leak-check=yes --s
 macro(dashboard_hook_init)
   set( dashboard_cache "
   BUILD_TESTING:BOOL=ON
+  BUILD_JPIP:BOOL=ON
+  BUILD_JPIP_SERVER:BOOL=ON
+  BUILD_THIRDPARTY:BOOL=OFF
+  JPIP_SERVER:STRING=http://localhost/myFCGI
     "
     )
 endmacro(dashboard_hook_init)
