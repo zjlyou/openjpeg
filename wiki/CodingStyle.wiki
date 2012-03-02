@@ -1,5 +1,9 @@
 #summary OpenJPEG Coding Style
 
+= Portability =
+
+File should be pushed to server with UNIX eol
+
 = C =
 
 OpenJPEG is meant to be portable. OpenJPEG is using ANSI C.
