@@ -25,7 +25,6 @@
     * Update Doxygen
     * Update MAN pages
     * Update --help option
-  * Move to Mercurial/Git for Version Control (option available in GCode)
   * Solve problems detected by Valgrind
   * Add OpenJPEG to the coverity scan and fix problems detected by the scan
   * Integrate OpenCinemaTools to the OpenJPEG project (http://code.google.com/p/opencinematools/). Marc Vandenbosch is ok with that.
@@ -38,6 +37,7 @@
   * Plugin Firefox
   * JPSec implementation
   * jasper binding ? prepare a jasper compatible API which calls openjpeg
+  * Move to Mercurial/Git for Version Control (option available in GCode)
 
 ==JPWL==
   * Workload: current JPWL code loads a whole codestream and operates on it in RAM, so it needs a reasonable amount of work to make it compatible with v2.
