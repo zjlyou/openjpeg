@@ -1,26 +1,23 @@
 =Roadmap for OpenJPEG=
 
-==Very Short Term (within  2 weeks)==
-
-  * Release 1.5
-
 ==Short Term (within next 6-12 months)==
 
+  * Reintegrate branch 1.5 + fixed current issues:
+    * malloc() / free() used in jpip code
+    * openjpeg is not fixed-type safe (assumes int is 32bits)
   * Release 2.0
     * Merge of the v2-branch with the trunk
     * New folder organization and naming convention (see FolderReorgProposal)
-    * code reformatting
+    * code reformatting (see [http://openjpeg.googlecode.com/svn/dev-utils/scripts/opj.cfg])
   * MJ2
     * make it compliant with v2 API
   * More tests for JPIP, MJ2 et JPWL
   * Large file compression (chunk by chunk) ?
     * testing ?
   * Large file decompression
-    * testing ? -> kakadu provide a tool to merge different codestream into one big mosaïc. so it should be easy to generate at least a fake giant file by assembling several times the same small file.
-  * Java bindings ?
+    * testing ? -> kakadu provide a tool to merge different codestream into one big mosaic. so it should be easy to generate at least a fake giant file by assembling several times the same small file.
   * optimization ? which platform/OS ?
     * Win 7 32/64
-  * jasper binding ? prepare a jasper compatible API which calls openjpeg
   * bugs ? needs priority ?
   * fuzzing ?
     * only core for now
@@ -40,6 +37,7 @@
   * Support for JPEG 2000 part 2
   * Plugin Firefox
   * JPSec implementation
+  * jasper binding ? prepare a jasper compatible API which calls openjpeg
 
 ==JPWL==
   * Workload: current JPWL code loads a whole codestream and operates on it in RAM, so it needs a reasonable amount of work to make it compatible with v2.
