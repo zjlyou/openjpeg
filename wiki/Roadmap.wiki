@@ -19,6 +19,7 @@
   * optimization ? which platform/OS ?
     * Win 7 32/64
   * bugs ? needs priority ?
+    * See: [http://code.google.com/p/openjpeg/issues/list?q=label:Milestone-Release2.0]
   * fuzzing ?
     * only core for now
   * Documentation
