@@ -9,7 +9,7 @@
   A: No
 }}}
 {{{
-  Q: Are you sure OpenJPEG does not requires C99 compiler, because I stdint.h in the source code
+  Q: Are you sure OpenJPEG does not requires C99 compiler, because I see stdint.h in the source code
   A: Yes !
 }}}
 == Description ==
@@ -18,12 +18,12 @@ OpenJPEG is meant to be portable. OpenJPEG should only requires ANSI C (C89) com
 == Exceptions ==
 
 Instead of re-inventing the wheel, OpenJPEG will use C99 notations in two occasions:
-* fixed-type notation
-* large file support
+ * fixed-type notation
+ * large file support
 
 OpenJPEG uses two build-system: cmake & autotools. Both support system inspection and compiler detection. What happen in that:
-* iff compiler provide a stdint.h we will use it
-* iff compiler provide large file support we will use it
+ * iff compiler provide a stdint.h we will use it
+ * iff compiler provide large file support we will use it
 
 = Code Formating =
 
