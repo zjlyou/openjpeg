@@ -24,6 +24,12 @@ Configuration possibilities:
 || Continuous || ?? || Compilation during the day on fixed time interval ||
 || Experimental || ?? || eg. new compiler, new arch, new OS ||
 
+== Current configuration tested ==
+
+=== 1.5 ===
+
+=== trunk ===
+
 = Target Systems =
 
 == OS ==
