@@ -25,6 +25,10 @@ OpenJPEG uses two build-system: cmake & autotools. Both support system inspectio
  * iff compiler provide a stdint.h we will use it
  * iff compiler provide large file support we will use it
 
+So in summary:
+ * if your compiler does not provide a stdint.h we will emulate it using compiler private extension
+ * if your compiler does not support Large File Support, you will not have support for LFS in OpenJPEG
+
 = Code Formating =
 
 == Portability ==
