@@ -1,16 +1,37 @@
 #summary OpenJPEG Coding Style
 
-= Portability =
+= C =
+
+== FAQ ==
+
+{{{
+  Q: Does OpenJPEG requires C99 compiler ?
+  A: No
+}}}
+{{{
+  Q: Are you sure OpenJPEG does not requires C99 compiler, because I stdint.h in the source code
+  A: Yes !
+}}}
+== Description ==
+OpenJPEG is meant to be portable. OpenJPEG should only requires ANSI C (C89) compilers.
+
+== Exceptions ==
+
+Instead of re-inventing the wheel, OpenJPEG will use C99 notations in two occasions:
+* fixed-type notation
+* large file support
+
+OpenJPEG uses two build-system: cmake & autotools. Both support system inspection and compiler detection. What happen in that:
+* iff compiler provide a stdint.h we will use it
+* iff compiler provide large file support we will use it
+
+= Code Formating =
+
+== Portability ==
 
 File should be pushed to server with UNIX eol
 
-= C =
-
-OpenJPEG is meant to be portable. OpenJPEG is using ANSI C.
-
-There is one exception to this rule: large file support, since it requires C99. The build system is checking for LFS in the C compiler. In this case you need a C99 compiler to have LFS support in OpenJPEG
-
-= Comment =
+== Comment ==
 
 Because OpenJPEG is written in C. One should use C style comment: {{{/*}}} and {{{*/}}}
 
