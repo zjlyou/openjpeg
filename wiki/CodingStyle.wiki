@@ -29,6 +29,8 @@ So in summary:
  * if your compiler does not provide a stdint.h we will emulate it using compiler private extension
  * if your compiler does not support Large File Support, you will not have support for LFS in OpenJPEG
 
+Note: since we use type from stdint.h we will use the C99 notation PRIi64, PRIu64 & PRIx64 for printing the fixed 64 bits type. Again this is not a requirement on your compiler, we will use your compiler private extension as replacement if PRI?64 is not present.
+
 = Code Formating =
 
 == Portability ==
