@@ -1,0 +1,22 @@
+# Client maintainer: mathieu . malaterre  gmail . com
+
+set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
+set(CTEST_CONFIGURE_OPTIONS "-DCMAKE_TOOLCHAIN_FILE=${CTEST_SCRIPT_DIRECTORY}/toolchain-mingw32.cmake")
+set(ENV{JFLAGS} "-Xlint:deprecation")
+
+set(dashboard_do_test FALSE)
+
+macro(dashboard_hook_init)
+  set( dashboard_cache "
+  BUILD_TESTING:BOOL=ON
+  BUILD_JPIP:BOOL=ON
+  BUILD_JPIP_SERVER:BOOL=OFF
+  BUILD_THIRDPARTY:BOOL=ON
+    "
+    )
+endmacro(dashboard_hook_init)
+
+# Filename convention is:
+# ctestsite-branchname-model-configuration-buildname.ctest
+get_filename_component(OPJ_CTEST_NAME ${CMAKE_CURRENT_LIST_FILE} NAME_WE)
+include(${CTEST_SCRIPT_DIRECTORY}/openjpeg_common.cmake)
