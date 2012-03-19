@@ -2,7 +2,7 @@
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/bin/clang)
-set(ENV{CFLAGS} "-pedantic")
+set(ENV{CFLAGS} "-pedantic -Wconversion")
 set(ENV{JFLAGS} "-Xlint:deprecation")
 
 macro(dashboard_hook_init)
