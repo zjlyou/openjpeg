@@ -364,6 +364,8 @@ Open Source:
  * http://www.cse.cuhk.edu.hk/~ttwong/demo/dwtgpu/dwtgpu.html
  * http://software.intel.com/en-us/articles/performance-tools-for-software-developers-application-notes-intel-ipp-jpeg2000-and-jasper-in-ksquirrel/
  * http://pirlwww.lpl.arizona.edu/software/PIRL_Java_Packages.shtml
+ * http://homepage.mac.com/tmattox/publications/JP2K_OpenCL_full_DistA.pdf
+* http://www.sitola.cz/wordpress/projects/multimedia-distribution-and-processing/gpu-acceleration-of-jpeg2000/en/
 
 PIRL contains an excellent JP2_info cmd line tool
 
