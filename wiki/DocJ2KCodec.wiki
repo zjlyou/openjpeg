@@ -372,4 +372,5 @@ PIRL contains an excellent JP2_info cmd line tool
 
 Other:
  * http://www.kakadusoftware.com
+ * http://extras.springer.com/2002/978-0-7923-7519-7/ (kakadu 2.2.3 + test images)
  * http://dsplab.diei.unipg.it/software/c_quick_jpeg_2000_cqj2k
