@@ -20,6 +20,10 @@ when doing a svn merge from say branch 1.5 onto trunk, svn will create a new mes
 [trunk] merge from stable branch to fix invalid write access
 }}}
 
+=== Integration with version control ===
+
+ * http://code.google.com/p/support/wiki/IssueTracker#Integration_with_version_control
+
 == GIT-SVN ==
 
 Because DVCS are easier to work with when it comes to merging/branching. Some people might enjoy the benefits of GIT over the OpenJPEG SVN:
