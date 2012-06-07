@@ -10,7 +10,7 @@ Team:
  * Julien Michel
  * Nicolas BERTRAND
  * Manuel Grizonnet
- * Mathieu Malaterre
+ * Mathieu Malaterre. Avail.: July / ~4days
 
 Equipement
  * emacs or vi
