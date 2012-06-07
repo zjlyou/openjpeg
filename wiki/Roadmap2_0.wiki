@@ -25,5 +25,5 @@ Equipement
  # add ABI handling (gcc hidden stuff, dllexport for win32).
  # remove tabs (emacs/vi/sed)
  # remove old v1 symbols
- # rename symbols (remove _v2 is any), preprend opj_ to *everything*
+ # rename symbols (remove `_v2` if any), preprend `opj_` to *everything*
  # release v2.0.0 !
