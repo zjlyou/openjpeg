@@ -8,7 +8,7 @@ Team:
  * Mickael Savinaud
  * Julien Malik
  * Julien Michel
- * Nicolas BERTRAND
+ * Nicolas BERTRAND Avail june( end of ) / July
  * Manuel Grizonnet
  * Mathieu Malaterre. Avail.: July / ~4days
  * Antonin Descampe
