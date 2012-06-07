@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Operation Commando.
+Operation Commando: ceinture & bretelle
 
 Team:
  * Mickael Savinaud
@@ -18,8 +18,11 @@ Equipement
 
 = Mission =
 
- * Fix remaining test tile decoders (ctest -R ttd)
- * incorporate diff into convert.c (j2k codecs)
- * reorder libs/directory
- * rename symbols preprend opj_ to *everything*
- * add ABI handling (gcc hidden stuff). aka "objectif ceinture & bretelle"
+ # Fix remaining test tile decoders (ctest -R ttd)
+ # incorporate diff into convert.c (j2k codecs)
+ # fix cinema test with extra byte
+ # reorder libs/directory. cmake reorder/cleanup.
+ # add ABI handling (gcc hidden stuff, dllexport for win32).
+ # remove old v1 symbols
+ # rename symbols (remove _v2 is any), preprend opj_ to *everything*
+ # release v2.0.0 !
