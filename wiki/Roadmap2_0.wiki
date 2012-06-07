@@ -5,21 +5,21 @@
 Operation Commando.
 
 Team:
-* Mickael Savinaud
-* Julien Malik
-* Julien Michel
-* Nicolas BERTRAND
-* Manuel Grizonnet
-* Mathieu Malaterre
+ * Mickael Savinaud
+ * Julien Malik
+ * Julien Michel
+ * Nicolas BERTRAND
+ * Manuel Grizonnet
+ * Mathieu Malaterre
 
 Equipement
-* emacs or vi
-* night vision google (optional)
+ * emacs or vi
+ * night vision google (optional)
 
 = Mission =
 
-* Fix remaining test tile decoders (ctest -R ttd*)
-* incorporate diff into convert.c (j2k codecs)
-* reorder libs/directory
-* rename symbols preprend opj_ to *everything*
-* add ABI handling (gcc hidden stuff). aka "objectif ceinture & bretelle"
+ * Fix remaining test tile decoders (ctest -R ttd)
+ * incorporate diff into convert.c (j2k codecs)
+ * reorder libs/directory
+ * rename symbols preprend opj_ to *everything*
+ * add ABI handling (gcc hidden stuff). aka "objectif ceinture & bretelle"
