@@ -16,4 +16,5 @@
     * [BuildSystems Build Systems]
   * [FolderReorgProposal New folder organization and naming convention]
   * [Roadmap OpenJPEG Roadmap]
+    * [Roadmap2_0]
   * [GSoC2012 Google Summer of Code 2012]
