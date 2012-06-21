@@ -18,3 +18,4 @@
   * [Roadmap OpenJPEG Roadmap]
     * [Roadmap2_0]
   * [GSoC2012 Google Summer of Code 2012]
+  * [socis2012 ESA Summer of Code 2012]
