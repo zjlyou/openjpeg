@@ -92,12 +92,13 @@ But we should take note that this 0.05s is a one time overhead for CUDA and it i
 
 If we implement the complete pipeline as follows : 
 
-1. Transfer image data to GPU 
+1. Transfer image data to GPU. 
 
 2. Apply all compute steps (t1/t2, inverse dwt, inverse dc level shift) through GPU kernels.
 
-3. Transfer output image data back to CPU
+3. Transfer output image data back to CPU.
  
+<br />
 The actual 0.05s overhead is only incurred once in step(1) above and the time for inverse dwt is only the compute time 0.01s which is 5x faster than the CPU time. 
 
 Also the time for tier2 decode phase is very high and if are able to achieve speed up on GPU for this phase, then the resulting speed up even with the 0.05s initial overhead will still be significant.
