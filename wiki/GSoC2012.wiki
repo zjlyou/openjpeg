@@ -38,7 +38,7 @@ The [https://gitorious.org/~aditya12agd5/openjpeg-optimization/aditya12agd5s-ope
 
 4. Note that processing the entire wavelet array of size _rw_ in a single block gives us a chance to use the block synchronization primitive [ __ ]synchthreads. Thus we can club the v4dwt[ _ ]interleave[ _ ](h/v) and v4dwt[ _ ]decode[ _ ]step1 and v4dwt[ _ ]decode[ _ ]step2 in a single kernel. Such kernel fusion as and when possible results in optimal performance of the code.
 
-= Performance Results =
+= Performance/Results =
 
 == Inverse DWT ==
 
