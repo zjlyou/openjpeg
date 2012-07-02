@@ -20,23 +20,85 @@ The file gpu.cu, contains all the CUDA kernels and also the kernel wrappers. The
 
 == Inverse DC Level Shift ==
 
-In [https://gitorious.org/~aditya12agd5/openjpeg-optimization/aditya12agd5s-openjpeg-optimization/commit/e73b93602d9af9d9bb9cd02bbe5241072fe5a6e5 commit], the function for inverse dc level shift was implemented on the GPU (gpu[ _ ]dc[ _ ]level[ _ ]shift[ _ ]decode). The data is copied component by component to the GPU.
+In [https://gitorious.org/~aditya12agd5/openjpeg-optimization/aditya12agd5s-openjpeg-optimization/commit/e73b93602d9af9d9bb9cd02bbe5241072fe5a6e5 commit], the function for inverse dc level shift Parameter 2 was implemented on the GPU (gpu[ _ ]dc[ _ ]level[ _ ]shift[ _ ]decode). The data is copied component by component to the GPU.
 The number of threads is equal to the image size and each thread adds the dc level shift value to the corresponding pixel. 
 
-Once, the entire pipeline has been implemented, we can remove the memory transfer
+Once, the entire pipeline has been implemented,Memory Setup we can remove the memory transfer
 overhead for this stage. Ideally before the first stage the image data is transferred to the GPU. It then continues to reside and also gets modified as the decoding stages t1/t2, inverse dwt and inverse dc level shift are performed. Finally after all stages, the output image is ready in the GPU memory and it is transferred back to the CPU output array.
 
 == Inverse Discrete Wavelet Transform ==
 
 The [https://gitorious.org/~aditya12agd5/openjpeg-optimization/aditya12agd5s-openjpeg-optimization/commit/84f53565c0a5578ad55dc95652a40c335f864e75 commit] has the version#1 of the complete implementation of the inverse DWT stage. The cuda implementation is as follows : 
 
-1. Similar to the CPU code, processing of four values is done together using the float4 data type. Though a single cuda core does not have the vector computation capability (like MMX instructions on CPU), there is still benefit in using float4 because GPUs provide higher FLOPS/s and  and memory access is faster i.e. loading a float4 is quicker than individually loading the 4 floats.
+1. Similar to the CPU code, processing of four Memory Setupvalues is done together using the float4 data type. Though a single cuda core does not have the vector computation capability (like MMX instructions on CPU), there is still benefit in using float4 because GPUs provide higher FLOPS/s and  and memory access is faster i.e. loading a float4 is quicker than individually loading the 4 floats.
 
-2. For processing a rh x rw image in say decode[ _ ]h stage, the number of blocks is equal to rh/4 and each block has rw threads. A simpler way to understand is j^th thread of i^th block process four values : (4*i,j); (4*i+1,j); (4*i+2.j); (4*i+3;j). If rw is less than a threshold (currently 512), then the entire wavelet array of size rw per thread can be stored in the shared memory. Thus provided that the size of current resolution is less than a threshold we use the kernel with optimization of shared memory.
+2. For processing a rh x rw image in say decode[ _ ]h stage, the number of blocks is equal to rh/4 and each block has rw threads. A simpler way to understand is j^th^ thread of i^th^ block process four values : (4*i,j); (4*i+1,j); (4*i+2.j); (4*i+3;j). If rw is less than a threshold (currently 512), then the entire wavelet array of size rw per thread can be stored in the shared memory. Thus provided that the size of current resolution is less than a threshold we use the kernel with optimization of shared memory.
 
-3. If the size exceeds the threshold, then we can no longer use shared memory and a global memory array is used for the wavelet. The kernels which handle this case of overflow of shared memory have the [ _ ]global[ _ ] in their function names.
+3. If the size exceeds the threshold, then we can no longer use shared memory and a global memory array is used for the wavelet. The kernels which handle this case of overflow of shared memory have theParameter 2  [ _ ]global[ _ ] in their function names.
 
-4. Note that processing the entire wavelet array of size _rw_ in a single block gives us a chance to use the block synchronization primitive [ __ ]synchthreads. Thus we can club the v4dwt[ _ ]interleave[ _ ](h/v) and v4dwt[ _ ]decode[ _ ]step1 and v4dwt[ _ ]decode[ _ ]step2 in a single kernel. Suck kernel fusion as and when possible results in optimal performance of the code.
+4. Note that processing the entire wavelet array of size _rw_ in a single block gives us a chance to use the block synchronization primitive [ __ ]synchthreads. Thus we can club the v4dwt[ _ ]interleave[ _ ](h/v) and v4dwt[ _ ]decode[ _ ]step1 and v4dwt[ _ ]decode[ _ ]step2 in a single kernel. Such kernel fusion as and when possible results in optimal performance of the code.
 
+= Performance Results =
+
+== Inverse DWT ==
+
+These are performance results for the [https://gitorious.org/~aditya12agd5/openjpeg-optimization/aditya12agd5s-openjpeg-optimization/commit/84f53565c0a5578ad55dc95652a40c335f864e75 commit84f53565]
+
+The timing measurements are performed using clock_gettime(CLOCK_MONOTONIC, ...), this is a monotonically increasing timer without drift adjustments and it is a standard for measuring the time execution in case of asynchronous events like cuda memory transfer or kernel calls.
+
+The platform is Nvidia GeForce GTX 580 GPU and Intel Core i7 920, 2.67GHz CPU.
+
+<table border="1">
+<tr>
+<td> Test Images (Right) <br /> Parameters (Down) </td>
+<td> sintel_2k.j2k </td>
+<td> oldtowncross.j2k </td>
+<td> crowdrun.j2k </td>
+<td> duckstakeoff.j2k </td>
+</tr>
+<tr>
+<td> Memory Setup Time (secs)</td>
+<td> 0.054404 + 0.001611 + 0.001551 = 0.057566 </td>
+<td> 0.055298 + 0.002517 + 0.001976 = 0.059791 </td>
+<td> 0.054851 + 0.001928 + 0.001972 = 0.058751 </td>
+<td> 0.055063 + 0.001997 + 0.001954 = 0.059014 </td>
+</tr>
+<tr>
+<td> Computation Time (secs)</td>
+<td> 0.002360 + 0.002307 + 0.002309 = 0.006976 </td>
+<td> 0.003153 + 0.003737 + 0.003089 = 0.009979 </td>
+<td> 0.003108 + 0.003283 + 0.003057 = 0.009448 </td>
+<td> 0.003099 + 0.004512 + 0.003135 = 0.010746 </td>
+</tr>
+<tr>
+<td> Output Memory Transfer Time (secs)</td>
+<td> 0.002965 + 0.002913 + 0.002833 = 0.008711 </td>
+<td> 0.003318 + 0.003231 + 0.003295 = 0.009844 </td>
+<td> 0.003315 + 0.003684 + 0.003278 = 0.010277 </td>
+<td> 0.003285 + 0.003222 + 0.003304 = 0.009811 </td>
+</tr>
+</table> 
+
+As per the readings above, the overall execution time is on average 0.05 secs for the memory setup phase, 0.01 secs for the compute phase and again 0.01 secs for the
+output memory transfer phase. Thus the overall inverse dwt time is time is about 0.07secs per image. 
+
+The above are component wise timings and note that in all cases, the time for the first component is very high for the memory setup phase as compared to the other components. It is a known fact that the first cuda call performs some bus initialization and is known to have a 50ms = 0.05secs overhead. [http://forums.nvidia.com/index.php?showtopic=158779 Refer Slow Cuda Setup],  [http://codinggorilla.domemtech.com/?p=1135 Refer]
+
+Unfortunately, previous CPU benchmark by @nicolas [https://groups.google.com/forum/?fromgroups#!searchin/openjpeg/nicolas$20DCMAKE_BUILD_TYPE/openjpeg/2c0vqIcn-Qc/adY4_KVRTVIJ mailing list] report 0.05s time for the inverse dwt phase. 
+
+But we should take note that this 0.05s is a one time overhead for CUDA and it is dominant because we are looking only at the dwt inverse phase.
+
+If we implement the complete pipeline as follows : 
+
+1. Transfer image data to GPU 
+
+2. Apply all compute steps (t1/t2, inverse dwt, inverse dc level shift) through GPU kernels.
+
+3. Transfer output image data back to CPU
  
+The actual 0.05s overhead is only incurred once in step(1) above and the time for inverse dwt is only the compute time 0.01s which is 5x faster than the CPU time. 
+
+Also the time for tier2 decode phase is very high and if are able to achieve speed up on GPU for this phase, then the resulting speed up even with the 0.05s initial overhead will still be significant.
+
+
 ...more to come...
