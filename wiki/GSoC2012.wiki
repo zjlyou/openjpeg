@@ -1,9 +1,21 @@
 #summary Improve OpenJPEG2000 Encoding Decoding Time
 
-= Introduction =
 
-For full details see:
-http://sourceforge.net/apps/mediawiki/gdcm/index.php?title=User:Aditya12agd5
+= Improve openjpeg2000 encoding/decoding time =
 
+Jpeg2000 provides superior compression and advanced features like optionally lossless compression, region of interest coding, stream decoding etc. As a result of this complex feature set, the encoding and decoding process for jpeg2000 is computationally expensive. It has already been demonstrated that a significant speed up is achieved in many image processing applications by using the massively parallel GPU architecture. In fact there is previous literature that reports speed up on the GPUs for various components of jpeg2000 like DWT, EBCOT etc.
 
+As a part of this project we plan to develop a parallel implementation for jpeg2000 encoding/decoding using the CUDA programming platform available for Nvidia GPUs. The decompression is more challenging than the compression and we plan to focus on the lossy decoding. At the end of this project, we hope to have a parallel implementation for tier 1/2 decoding, inverse dwt and inverse dc level shift which comprise the decoding pipeline.
+
+= Code Repository =
+
+The code for this project is pushed into [https://gitorious.org/~aditya12agd5/openjpeg-optimization/aditya12agd5s-openjpeg-optimization openjpeg optimization branch]
+
+= Progress =
+
+== Compilation ==
+
+== Inverse DC Level Shift ==
+
+== Inverse Discrete Wavelet Transform ==
 ...more to come...
