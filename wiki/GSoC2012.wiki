@@ -103,5 +103,39 @@ The actual 0.05s overhead is only incurred once in step(1) above and the time fo
 
 Also the time for tier2 decode phase is very high and if are able to achieve speed up on GPU for this phase, then the resulting speed up even with the 0.05s initial overhead will still be significant.
 
+== Inverse t1 decoding ==
 
-...more to come...
+=== Procedure ===
+
+t1_decode_cblks_v2 performs decoding across all code blocks for every component. Decoding of each code block is done by calling t1_decode_cblk_v2, which internally calls the three decoding passes t1_dec_sigpass, t1_dec_refpass etc. The data filling for each decoded code block is done as follows : 
+
+for j = 0 to cblk_h
+       for i =  0 to cblk_w
+                 tmp = datap[(j*cblk_w) + i]
+                 tiledp[(j*tile_w) + i] = tmpæ/2
+        end
+end
+
+cblk_w and cblk_h unless otherwise specified have a max initialization of 64 x 64 in openjpeg.c
+
+=== Coarse Parallelization ===
+
+All code blocks ( of all compno/precno) are decoded in parallel. The actual decoding passes of each code block are performed sequentially.
+
+One Cuda Block is used per code block, based on the following rationale :
+
+1. 64x64 = 4096 values per code block, and usual CUDA configurations allow 512 threads per cuda block. Thus if we develop a fully parallel approach at later stage, we will incur computation of 8 values per thread which is reasonable.
+
+2. For extension to fully parallel approach for EBCOT we will require synchronisation which is available in the CUDA block (__synchthreads())
+
+threadID = 0 for each code block will do the heavy computation i.e. call t1_decode_cblk_v2 and other subsequent functions t1_dec_(sig/ref)pass etc.
+
+The code for t1_decode_cblk_v2 and some of the mqc functions apart from those called in / * for (passno = 0; passno < seg->real_num_passes; ++passno) */ loop 
+has been re-factored into device functions that are callable from the GPU code.
+Refer [https://gitorious.org/openjpeg-optimization/aditya12agd5s-openjpeg-optimization/commit/4fe348a64bb8ce7160363ca49ee32ef619692173/diffs/601a4503f018fa8bfea1e68f9d11003309a977d0 commit] 
+
+The major challenge in implementing t1 decoding on GPU is to ensure memory transfer of the dynamic arrays that are part of the OPJ structs. 
+
+e.g. opj_tcd_cblk_dec_v2 has a OPJ_BYTE* data array and opj_tcd_seg_t* seg array and opj_tcd_seg_t has internally a OPJ_BYTE** data array.
+
+The method devised in [https://gitorious.org/openjpeg-optimization/aditya12agd5s-openjpeg-optimization/commit/4fe348a64bb8ce7160363ca49ee32ef619692173/diffs/601a4503f018fa8bfea1e68f9d11003309a977d0 commit] was to copy the structs to a device structure and additionally copy the dynamic array part separately to another flat array on the device.
