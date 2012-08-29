@@ -37,6 +37,11 @@ Note: since we use type from stdint.h we will use the C99 notation PRIi64, PRIu6
 
 File should be pushed to server with UNIX eol
 
+== Tabs ==
+
+You should not use tab char, but instead use two white space. See uncrustify example:
+ * http://code.google.com/p/openjpeg/source/browse/dev-utils/scripts/opj.cfg
+
 == Comment ==
 
 Because OpenJPEG is written in C. One should use C style comment: {{{/*}}} and {{{*/}}}
