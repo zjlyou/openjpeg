@@ -53,3 +53,19 @@ For doxygen, one should use {{{/**}}} and {{{*/}}}
  * What charset to use for unicode ? UTF-8 is a good contestant. Eg: "Università" in comment
  * tab spaces ? indent ? uncrutify rule ?
  * file type (UNIX eol would be nice)
+
+
+= Useful commands to clean style of cmake part =
+== Convert CMake-language commands to lower case (Thanks to Hans Johnson)==
+NOTE: MUST USE GNU compliant version of sed
+Run the following shell code (Modified from Brad King, and used on CMake source code):
+\#!/bin/bash
+cmake --help-command-list \
+| grep -v "cmake version" \
+| while read c; do
+    echo 's/\b'"$(echo $c | tr '[:lower:]' '[:upper:]')"'\(\s*\)(/'"$c"'\1(/g'
+  done >convert.sed \
+&& git ls-files -z -- bootstrap '*.cmake' '*.cmake.in' '*CMakeLists.txt' \
+   | fgrep -v thirdparty \
+   | xargs -0 gsed -i -f convert.sed \
+&& rm convert.sed
