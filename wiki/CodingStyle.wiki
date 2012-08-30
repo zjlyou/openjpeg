@@ -69,3 +69,14 @@ cmake --help-command-list \
    | fgrep -v thirdparty \
    | xargs -0 gsed -i -f convert.sed \
 && rm convert.sed
+
+== Remove CMake-language block-end command arguments  (Thanks to Hans Johnson)==
+NOTE: MUST USE GNU compliant version of sed
+Run the following shell code:
+
+for c in else endif endforeach endfunction endmacro endwhile; do
+    echo 's/\b'"$c"'\(\s*\)(.\+)/'"$c"'\1()/'
+done >convert.sed \
+&& git ls-files -z -- bootstrap '*.cmake' '*.cmake.in' '*CMakeLists.txt' \
+   | xargs -0 gsed -i -f convert.sed \
+&& rm convert.sed
