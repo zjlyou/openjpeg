@@ -1,0 +1,15 @@
+#summary Page to discuss optimization in OpenJPEG
+
+= Introduction =
+
+When it comes to optimization in OpenJPEG, several paths are possible.
+
+= CPU =
+
+== ARM ==
+
+== x86 / x86-64 ==
+
+= GPU =
+
+See also GSoC/2012 page here [[GSoC2012]]
