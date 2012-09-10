@@ -36,22 +36,21 @@ In order to make the openjpeg project libraries and executables more consistent,
 A new directory structure is also proposed for the svn repository. Based on Vincent Torri suggestion+Addition from Mathieu Malaterre, here is the current proposal : 
 
   * openjpeg
-    * src/
-      * lib/  (where the code for the libraries are located)
-        * openjpeg/
-        * openjpip/
-        * openjpwl/
-        * openjp3d/
-      * apps/ (where the code of binaries are located)
-        * common/ [opj_dump, ...]
-        * jp2/ [opj_compress, opj_decompress]
-        * jpwl [opj_jpwl_compress, opj_jpwl_decompress]
-        * mj2 [opj_mj2_compress, opj_mj2_decompress, opj_mj2_extract, opj_mj2_wrap]
-        * jpip [opj_server, opj_dec_server]
-          * java/ [opj_jpip_viewer]
-        * wx
-          * opj_viewer/ [will need C++ compiler]
-        * jp3d [??? ]
+    * src/  (where the code for the libraries are located)
+      * openjpeg/
+      * openjpip/
+      * openjpwl/
+      * openjp3d/
+    * apps/ (where the code of binaries are located)
+      * common/ [opj_dump, ...]
+      * jp2/ [opj_compress, opj_decompress]
+      * jpwl [opj_jpwl_compress, opj_jpwl_decompress]
+      * mj2 [opj_mj2_compress, opj_mj2_decompress, opj_mj2_extract, opj_mj2_wrap]
+      * jpip [opj_server, opj_dec_server]
+        * java/ [opj_jpip_viewer]
+      * wx
+        * opj_viewer/ [will need C++ compiler]
+      * jp3d [??? ]
     * cmake/
     * m4/
     * doc/
