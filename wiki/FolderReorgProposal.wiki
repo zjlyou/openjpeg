@@ -21,8 +21,8 @@ In order to make the openjpeg project libraries and executables more consistent,
 || opj_compress || was: image_to_j2k || libopenjpeg, _libtiff_, _libpng_, _liblcms_ || ||
 || opj_decompress || was: j2k_to_image || libopenjpeg, _libtiff_, _libpng_, _liblcms_ || ||
 || opj_dump || was: j2k_dump || libopenjpeg, _libtiff_, _libpng_, _liblcms_ || ||
-|| opj_jpwl_compress || was: image_to_j2k_JPWL || libopenjpwl, _libtiff_, _libpng_, _liblcms_ || ||
-|| opj_jpwl_decompress || was: j2k_to_image_JPWL || libopenjpwl, _libtiff_, _libpng_, _liblcms_ || ||
+|| opj_jpwl_compress || was: JPWL_image_to_j2k || libopenjpwl, _libtiff_, _libpng_, _liblcms_ || ||
+|| opj_jpwl_decompress || was: JPWL_j2k_to_image || libopenjpwl, _libtiff_, _libpng_, _liblcms_ || ||
 || opj_server || JPIP server || libopenjpeg, libopenjpip_server, libfastcgi || ||
 || opj_dec_server || JPIP decoding server || libopenjpeg, libopenjpip_local || ||
 || opj_jpip_viewer || was: opj_viewer ; JAVA JPIP viewer || none || ||
