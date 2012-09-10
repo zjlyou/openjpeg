@@ -8,6 +8,8 @@ set(ENV{JFLAGS} "-Xlint:deprecation")
 macro(dashboard_hook_init)
   set( dashboard_cache "
   BUILD_TESTING:BOOL=ON
+  BUILD_JPWL:BOOL=ON
+  BUILD_MJ2:BOOL=ON
   BUILD_JPIP:BOOL=ON
   BUILD_JPIP_SERVER:BOOL=ON
   BUILD_THIRDPARTY:BOOL=OFF
