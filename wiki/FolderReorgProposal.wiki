@@ -33,7 +33,7 @@ In order to make the openjpeg project libraries and executables more consistent,
 
 = New directory structure =
 
-A new directory structure is also proposed for the svn repository. Based on Vincent Torri suggestion, here is the current proposal : 
+A new directory structure is also proposed for the svn repository. Based on Vincent Torri suggestion+Addition from Mathieu Malaterre, here is the current proposal : 
 
   * openjpeg
     * src/
@@ -43,20 +43,12 @@ A new directory structure is also proposed for the svn repository. Based on Vinc
         * openjpwl/
         * openjp3d/
       * apps/ (where the code of binaries are located)
-        * common/
-        * opj_compress/
-        * opj_decompress/
-        * opj_dump/
-        * opj_jpwl_compress/
-        * opj_jpwl_decompress/
-        * opj_server/
-        * opj_dec_server/
-        * opj_jpip_viewer/
+        * common/ [opj_dump]
+        * jp2/ [opj_compress, opj_decompress]
+        * jpwl [opj_jpwl_compress, opj_jpwl_decompress]
+        * jpip [opj_server, opj_dec_server, opj_jpip_viewer]
         * opj_viewer/
-        * opj_mj2_compress/
-        * opj_mj2_decompress/
-        * opj_mj2_extract/
-        * opj_mj2_wrap/
+        * mj2 [opj_mj2_compress, opj_mj2_decompress, opj_mj2_extract, opj_mj2_wrap]
     * cmake/
     * m4/
     * doc/
