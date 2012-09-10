@@ -14,6 +14,7 @@ luis.ibanez:Luis Ibáñez
 mathieu.malaterre:Mathieu Malaterre
 mathieu.malaterre@gmail.com:Mathieu Malaterre
 rdieter:Rex Dieter 
+rdieter@gmail.com:Rex Dieter 
 savmickael:Mickaël Savinaud
 savmickael@gmail.com:Mickaël Savinaud
 szukw000@arcor.de:Winfried Szukalski
