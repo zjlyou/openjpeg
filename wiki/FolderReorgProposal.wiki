@@ -25,7 +25,7 @@ In order to make the openjpeg project libraries and executables more consistent,
 || opj_jpwl_decompress || was: JPWL_j2k_to_image || libopenjpwl, _libtiff_, _libpng_, _liblcms_ || ||
 || opj_server || JPIP server || libopenjpeg, libopenjpip_server, libfastcgi || ||
 || opj_dec_server || JPIP decoding server || libopenjpeg, libopenjpip_local || ||
-|| opj_jpip_viewer || was: opj_viewer ; JAVA JPIP viewer || none || ||
+|| opj_jpip_viewer || was: opj_viewer ; JAVA JPIP viewer || none || technically there are actually two viewers: opj_viewer and opj_xerces_viewer, this is confusing for user, we should build one and only one depending whether or not user wants xerces (and found on system). ||
 || opj_viewer || was: OPJviewer ; JAVA viewer || libopenjpeg || should be merged with opj_jpip_viewer||
 || opj_mj2_compress || was: frames_to_mj2 || libopenjpeg || currently, it does not use the openjpeg API correctly ||
 || opj_mj2_decompress || was: mj2_to_frames || libopenjpeg || currently, it does not use the openjpeg API correctly ||
