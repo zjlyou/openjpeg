@@ -42,7 +42,7 @@ A new directory structure is also proposed for the svn repository. Based on Vinc
         * openjpip/
         * openjpwl/
         * openjp3d/
-      * bin/ (where the code of binaries are located)
+      * apps/ (where the code of binaries are located)
         * common/
         * opj_compress/
         * opj_decompress/
@@ -57,10 +57,11 @@ A new directory structure is also proposed for the svn repository. Based on Vinc
         * opj_mj2_decompress/
         * opj_mj2_extract/
         * opj_mj2_wrap/
-      * include/  (the location of exported headers)
-    * data/
+    * cmake/
+    * m4/
     * doc/
     * tests/
+    * thirdparty/
 
 Remaining questions : 
   * Where do we put the code of thirdparty libraries, as only executables depend on them ?
