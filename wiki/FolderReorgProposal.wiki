@@ -60,6 +60,8 @@ A new directory structure is also proposed for the svn repository. Based on Vinc
     * m4/
     * doc/
     * tests/
+      * apps/
+      * src/
     * thirdparty/
 
 Remaining questions : 
