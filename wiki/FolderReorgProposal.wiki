@@ -13,6 +13,7 @@ In order to make the openjpeg project libraries and executables more consistent,
 || libopenjpwl || basic J2K/JP2 library with JPWL capabilities || none || ||
 || libopenjpip || JPIP library || none || ||
 || libopenjp3d || JP3D library || none || ||
+|| libopenjpegjni || OpenJPEG Java binding || libopenjpeg || ||
 
 == Executables ==
 
