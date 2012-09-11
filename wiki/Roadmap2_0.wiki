@@ -24,7 +24,7 @@ Equipement
  # incorporate diff into convert.c (j2k codecs)
  # fix cinema test with extra byte
  # reorder libs/directory. cmake reorder/cleanup.
- # add ABI handling (gcc hidden stuff, dllexport for win32).
+ # ~~add ABI handling (gcc hidden stuff, dllexport for win32).~~ (need CFLAGS=-fvisibility=hidden)
  # remove tabs (emacs/vi/sed)
  # remove old v1 symbols
  # rename symbols (remove `_v2` if any), preprend `opj_` to *everything*
