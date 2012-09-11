@@ -2,6 +2,7 @@
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/bin/tcc)
+set(ENV{CFLAGS} "-Wall -funsigned-char -fno-common")
 
 macro(dashboard_hook_init)
   set( dashboard_cache "
