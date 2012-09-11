@@ -28,4 +28,5 @@ Equipement
  # remove tabs (emacs/vi/sed)
  # remove old v1 symbols
  # rename symbols (remove `_v2` if any), preprend `opj_` to *everything*
+ # fix compilation with -Wsign-conversion -Wconversion
  # release v2.0.0 !
