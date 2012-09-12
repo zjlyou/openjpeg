@@ -11,7 +11,7 @@ In order to make the openjpeg project libraries and executables more consistent,
 || *name* || *description* || *dependencies* || *remarks* ||
 || libopenjpeg || basic J2K/JP2 library || none || Rename to "libopenjp2k" to disambiguate from JPEG format ? or is it too late ? MM: I do not like 'jp2k' since we either talk about j2k or jp2... ||
 || libopenjpwl || basic J2K/JP2 library with JPWL capabilities || none || ||
-|| libopenjpip || JPIP library || none || ||
+|| libopenjpip || JPIP library || libopenjpeg || ||
 || libopenjp3d || JP3D library || none || ||
 || libopenjpegjni || OpenJPEG Java binding || libopenjpeg || ||
 
