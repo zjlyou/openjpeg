@@ -7,11 +7,19 @@ set TMPDIR=%TMP%\openjpeg_release
 @rem use VCExpress 2005 for portability
 call "%VS80COMNTOOLS%vsvars32.bat"
 
+@rem User32.lib and al.
+SET LIB=C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib;%LIB%
+SET INCLUDE=C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include;%INCLUDE%
+@rem Another version:
 SET LIB=C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib;%LIB%
-SET LIB=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Lib;%LIB%
 SET INCLUDE=C:\Program Files\Microsoft SDKs\Windows\v7.1\Include;%INCLUDE%
+@rem Another version:
+SET LIB=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Lib;%LIB%
 SET INCLUDE=C:\Program Files\Microsoft Platform SDK for Windows Server 2003 R2\Include;%INCLUDE%
-SET PATH=%PATH%;C:\Program Files/TortoiseSVN/bin/
+
+@rem add svn to PATH
+@rem When installing TortoiseSVN, you need to specifically install cmd line tools:
+SET PATH=%PATH%;C:\Program Files\TortoiseSVN\bin
 
 mkdir %TMPDIR%
 cd %TMPDIR%
