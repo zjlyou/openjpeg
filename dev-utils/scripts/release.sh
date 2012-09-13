@@ -17,7 +17,7 @@ fi
 mkdir -p $TMPDIR
 mkdir $TMPDIR/openjpeg-build
 cd $TMPDIR
-svn checkout http://openjpeg.googlecode.com/svn/tags/version.1.5.1 openjpeg
+svn checkout -q http://openjpeg.googlecode.com/svn/tags/version.1.5.1 openjpeg
 cd openjpeg
 ./bootstrap.sh > $TMPDIR/openjpeg-build/autotools.log 2>&1
 cd ..
