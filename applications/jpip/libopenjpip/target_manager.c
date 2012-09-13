@@ -31,7 +31,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include <assert.h>
 #ifdef _WIN32
 #define snprintf _snprintf /* Visual Studio */
 #include <io.h>
@@ -74,7 +73,7 @@ targetlist_param_t * gene_targetlist(void)
  * @param[out] tmpfname new file name if filepath is a URL
  * @return              file descriptor
  */
-int open_jp2file( const char filepath[], char tmpfname[]);
+int open_jp2file( char filepath[], char tmpfname[]);
 
 target_param_t * gene_target( targetlist_param_t *targetlist, char *targetpath)
 {
@@ -215,7 +214,7 @@ void print_alltarget( targetlist_param_t *targetlist)
   }
 }
 
-target_param_t * search_target( const char targetname[], targetlist_param_t *targetlist)
+target_param_t * search_target( char targetname[], targetlist_param_t *targetlist)
 {
   target_param_t *foundtarget;
 
@@ -231,7 +230,7 @@ target_param_t * search_target( const char targetname[], targetlist_param_t *tar
   return NULL;
 }
 
-target_param_t * search_targetBytid( const char tid[], targetlist_param_t *targetlist)
+target_param_t * search_targetBytid( char tid[], targetlist_param_t *targetlist)
 {
   target_param_t *foundtarget;
   
@@ -248,9 +247,9 @@ target_param_t * search_targetBytid( const char tid[], targetlist_param_t *targe
   return NULL;
 }
 
-int open_remotefile( const char filepath[], char tmpfname[]);
+int open_remotefile( char filepath[], char tmpfname[]);
 
-int open_jp2file( const char filepath[], char tmpfname[])
+int open_jp2file( char filepath[], char tmpfname[])
 {
   int fd;
   char *data;
@@ -300,7 +299,7 @@ int open_jp2file( const char filepath[], char tmpfname[])
 static size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream);
 #endif
 
-int open_remotefile( const char filepath[], char tmpfname[])
+int open_remotefile( char filepath[], char tmpfname[])
 {
 #ifndef SERVER
   (void)filepath;
@@ -337,9 +336,8 @@ int open_remotefile( const char filepath[], char tmpfname[])
 static size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream)
 {
   int *fd = (int *)stream;
-  ssize_t written = write( *fd, ptr, size*nmemb);
-  assert( written >= 0 );
+  int written = write( *fd, ptr, size*nmemb);
 
-  return (size_t)written;
+  return written;
 }
 #endif /*SERVER*/

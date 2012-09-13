@@ -93,7 +93,7 @@ void comparePGXimages_help_display(void) {
 /*******************************************************************************
  * Parse command line
  *******************************************************************************/
-static int parse_cmdline_cmp(int argc, char **argv, test_cmp_parameters* param)
+int parse_cmdline_cmp(int argc, char **argv, test_cmp_parameters* param)
 {
   char *MSElistvalues = NULL;  char *PEAKlistvalues= NULL;
   char *separatorList = NULL;
@@ -332,7 +332,7 @@ double* parseToleranceValues( char* inArg, const int nbcomp)
  * Create filenames from a filename by used separator and nb components
  * (begin to 0)
  *******************************************************************************/
-static char* createMultiComponentsFilename(const char* inFilename, const int indexF, const char* separator)
+char* createMultiComponentsFilename(const char* inFilename, const int indexF, const char* separator)
 {
   char s[255];
   char *outFilename, *ptr;
@@ -497,7 +497,7 @@ int imageToPNG(const opj_image_t* image, const char* filename, int num_comp_sele
 int main(int argc, char **argv)
 {
   test_cmp_parameters inParam;
-  OPJ_UINT32 it_comp, itpxl;
+  int it_comp, itpxl;
   int failed = 0;
   int nbFilenamePGXbase, nbFilenamePGXtest;
   char *filenamePNGtest= NULL, *filenamePNGbase = NULL, *filenamePNGdiff = NULL;
@@ -531,8 +531,7 @@ int main(int argc, char **argv)
          inParam.nr_flag, inParam.separator_base, inParam.separator_test);
 
   if ( (inParam.tabMSEvalues != NULL) && (inParam.tabPEAKvalues != NULL))
-    {
-    int it_comp;
+  {
     printf(" MSE values = [");
     for (it_comp = 0; it_comp < inParam.nbcomp; it_comp++)
       printf(" %f ", inParam.tabMSEvalues[it_comp]);
@@ -595,6 +594,7 @@ int main(int argc, char **argv)
     }
   else
     {
+	if (imageBase) opj_image_destroy(imageBase);
     if (inParam.tabMSEvalues) free(inParam.tabMSEvalues);
     if (inParam.tabPEAKvalues) free(inParam.tabPEAKvalues);
     if (inParam.base_filename) free(inParam.base_filename);

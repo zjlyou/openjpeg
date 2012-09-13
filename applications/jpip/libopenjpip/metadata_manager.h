@@ -35,13 +35,13 @@
 #include "placeholder_manager.h"
 
 typedef struct boxcontents_param{
-  OPJ_OFF_T offset; /**< byte position of the box contents in the file*/
+  Byte8_t offset; /**< byte position of the box contents in the file*/
   Byte8_t length; /**< length of the box contents*/
 } boxcontents_param_t;
 
 /** metadata-bin parameters*/
 typedef struct metadata_param{
-  Byte8_t idx;                                  /**< index number*/
+  int idx;                                  /**< index number*/
   boxlist_param_t *boxlist;                 /**< box list*/
   placeholderlist_param_t *placeholderlist; /**< placeholder box list*/
   boxcontents_param_t *boxcontents;         /**< box contens in case of no boxlist and placeholderlist*/
@@ -89,7 +89,7 @@ void delete_metadatalist( metadatalist_param_t **list);
  * @param[in] boxcontents boxcontents pointer
  * @return                pointer to the generated metadata bin
  */
-metadata_param_t * gene_metadata( Byte8_t idx, boxlist_param_t *boxlist, placeholderlist_param_t *phldlist, boxcontents_param_t *boxcontents);
+metadata_param_t * gene_metadata( int idx, boxlist_param_t *boxlist, placeholderlist_param_t *phldlist, boxcontents_param_t *boxcontents);
 
 /**
  * delete a metadata bin
@@ -103,7 +103,7 @@ void delete_metadata( metadata_param_t **metadata);
  *
  * @return pointer to the box contents
  */
-boxcontents_param_t * gene_boxcontents( OPJ_OFF_T offset, OPJ_SIZE_T length);
+boxcontents_param_t * gene_boxcontents( Byte8_t offset, Byte8_t length);
 
 /**
  * print metadata-bin parameters
@@ -127,7 +127,7 @@ void print_allmetadata( metadatalist_param_t *list);
  * @param[in] list metadata-bin list pointer
  * @return         found metadata-bin pointer
  */
-metadata_param_t * search_metadata( Byte8_t idx, metadatalist_param_t *list);
+metadata_param_t * search_metadata( int idx, metadatalist_param_t *list);
 
 
 /**
@@ -137,7 +137,7 @@ metadata_param_t * search_metadata( Byte8_t idx, metadatalist_param_t *list);
  * @param[in] list    metadata-bin list pointer
  * @return            found metadata-bin index, if not found, -1
  */
-Byte8_t search_metadataidx( char boxtype[4], metadatalist_param_t *list);
+int search_metadataidx( char boxtype[4], metadatalist_param_t *list);
 
 
 /**

@@ -38,7 +38,7 @@
 
 msgtype_t identify_clientmsg( SOCKET connected_socket)
 {
-  OPJ_SIZE_T receive_size;
+  int receive_size;
   char buf[BUF_LEN];
   static const char *magicid[] = { "JPIP-stream", "PNM request", "XML request",
     "TID request", "CID request", "CID destroy", "SIZ request", "JP2 save",
@@ -63,12 +63,10 @@ msgtype_t identify_clientmsg( SOCKET connected_socket)
   return MSGERROR;
 }
 
-Byte_t * receive_JPIPstream( SOCKET connected_socket, char **target, char **tid, char **cid, OPJ_SIZE_T *streamlen)
+Byte_t * receive_JPIPstream( SOCKET connected_socket, char **target, char **tid, char **cid, int *streamlen)
 {
-  char buf[BUF_LEN];
-  const char versionstring[] = "version 1.2";
-  int idatalen;
-  OPJ_SIZE_T linelen, datalen;
+  char buf[BUF_LEN], versionstring[] = "version 1.2";
+  int linelen, datalen;
   Byte_t *jpipstream;
   
   *target = *cid = *tid = NULL;
@@ -101,14 +99,8 @@ Byte_t * receive_JPIPstream( SOCKET connected_socket, char **target, char **tid,
       return NULL;
   }
 
-  idatalen = atoi( buf);
-  if( idatalen < 0 )
-    {
-    fprintf( stderr, "Receive Data: %d Bytes\n", idatalen);
-    return NULL;
-    }
-  datalen = (OPJ_SIZE_T)idatalen;
-  fprintf( stdout, "Receive Data: %lu Bytes\n", datalen);
+  datalen = atoi( buf);
+  fprintf( stderr, "Receive Data: %d Bytes\n", datalen);
 
   jpipstream = receive_stream( connected_socket, datalen);
 
@@ -121,40 +113,40 @@ Byte_t * receive_JPIPstream( SOCKET connected_socket, char **target, char **tid,
   return jpipstream;
 }
 
-void send_XMLstream( SOCKET connected_socket, Byte_t *xmlstream, OPJ_SIZE_T length)
+void send_XMLstream( SOCKET connected_socket, Byte_t *xmlstream, int length)
 {
   Byte_t header[5];
   
   header[0] = 'X';
   header[1] = 'M';
   header[2] = 'L';
-  header[3] = (Byte_t)((length >> 8) & 0xff);
-  header[4] = (Byte_t)(length & 0xff);
+  header[3] = (length >> 8) & 0xff;
+  header[4] = length & 0xff;
 
   send_stream( connected_socket, header, 5);
   send_stream( connected_socket, xmlstream, length);
 }
 
-void send_IDstream(  SOCKET connected_socket, const char *id, OPJ_SIZE_T idlen, const char *label);
+void send_IDstream(  SOCKET connected_socket, char *id, int idlen, const char *label);
 
-void send_CIDstream( SOCKET connected_socket, const char *cid, OPJ_SIZE_T cidlen)
+void send_CIDstream( SOCKET connected_socket, char *cid, int cidlen)
 {
   send_IDstream( connected_socket, cid, cidlen, "CID");
 }
 
-void send_TIDstream( SOCKET connected_socket, const char *tid, OPJ_SIZE_T tidlen)
+void send_TIDstream( SOCKET connected_socket, char *tid, int tidlen)
 {
   send_IDstream( connected_socket, tid, tidlen, "TID");
 }
 
-void send_IDstream(  SOCKET connected_socket, const char *id, OPJ_SIZE_T idlen, const char *label)
+void send_IDstream(  SOCKET connected_socket, char *id, int idlen, const char *label)
 {
-  char header[4];
+  Byte_t header[4];
 
   header[0] = label[0];
   header[1] = label[1];
   header[2] = label[2];
-  header[3] = (char)(idlen & 0xff);
+  header[3] = idlen & 0xff;
 
   send_stream( connected_socket, header, 4);
   send_stream( connected_socket, id, idlen);
@@ -162,7 +154,7 @@ void send_IDstream(  SOCKET connected_socket, const char *id, OPJ_SIZE_T idlen, 
 
 void send_PNMstream( SOCKET connected_socket, Byte_t *pnmstream, unsigned int width, unsigned int height, unsigned int numofcomp, Byte_t maxval)
 { 
-  OPJ_SIZE_T pnmlen = 0;
+  int pnmlen = 0;
   Byte_t header[7];
 
   pnmlen = width*height*numofcomp;

@@ -1,22 +1,22 @@
 # Build the each application if it needed
 
-if(BUILD_CODEC)
-  add_subdirectory(codec)
-endif()
+IF(BUILD_CODEC)
+  ADD_SUBDIRECTORY(codec)
+ENDIF(BUILD_CODEC)
 
-if(BUILD_MJ2)
-  add_subdirectory(mj2)
-endif()
+IF(BUILD_MJ2)
+  ADD_SUBDIRECTORY(mj2)
+ENDIF(BUILD_MJ2)
 
 # Client & Server:
-if(BUILD_JPIP)
-  add_subdirectory(jpip)
-endif()
+IF(BUILD_JPIP)
+  ADD_SUBDIRECTORY(jpip)
+ENDIF(BUILD_JPIP)
 
-if(BUILD_VIEWER)
-  add_subdirectory(OPJViewer)
-endif()
+IF(BUILD_VIEWER)
+  ADD_SUBDIRECTORY(OPJViewer)
+ENDIF(BUILD_VIEWER)
 
-if(BUILD_JAVA)
-	add_subdirectory(JavaOpenJPEG)
-endif()
+IF(BUILD_JAVA)
+	ADD_SUBDIRECTORY(JavaOpenJPEG)
+ENDIF(BUILD_JAVA)

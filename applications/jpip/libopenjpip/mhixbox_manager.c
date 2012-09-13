@@ -32,7 +32,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "mhixbox_manager.h"
-#include "opj_inttypes.h"
 
 #ifdef SERVER
 #include "fcgi_stdio.h"
@@ -48,19 +47,19 @@ mhixbox_param_t * gene_mhixbox( box_param_t *box)
 {
   mhixbox_param_t *mhix;
   markeridx_param_t  *mkridx, *lastmkidx;
-  OPJ_OFF_T pos = 0;
+  Byte8_t pos = 0;
 
   mhix = ( mhixbox_param_t *)malloc( sizeof( mhixbox_param_t));
   
   mhix->tlen = fetch_DBox8bytebigendian( box, (pos+=8)-8);
  
   mhix->first = lastmkidx = NULL;
-  while( (OPJ_SIZE_T)pos < get_DBoxlen( box)){
+  while( pos < get_DBoxlen( box)){
     
     mkridx = ( markeridx_param_t *)malloc( sizeof( markeridx_param_t));
     mkridx->code       = fetch_DBox2bytebigendian( box, (pos+=2)-2);
     mkridx->num_remain = fetch_DBox2bytebigendian( box, (pos+=2)-2);
-    mkridx->offset     = (OPJ_OFF_T)fetch_DBox8bytebigendian( box, (pos+=8)-8);
+    mkridx->offset     = fetch_DBox8bytebigendian( box, (pos+=8)-8);
     mkridx->length     = fetch_DBox2bytebigendian( box, (pos+=2)-2);
     mkridx->next = NULL;
     
@@ -98,14 +97,14 @@ void print_mhixbox( mhixbox_param_t *mhix)
   markeridx_param_t *ptr;
 
   fprintf( logstream, "mhix box info:\n");
-  fprintf( logstream, "\t tlen: %#" PRIx64 "\n", mhix->tlen);
+  fprintf( logstream, "\t tlen: %#llx\n", mhix->tlen);
 
   ptr = mhix->first;
   while( ptr != NULL){
     fprintf( logstream, "marker index info:\n"
 	     "\t code: %#x\n"
 	     "\t num_remain: %#x\n"
-	     "\t offset: %#" PRIx64 "\n"
+	     "\t offset: %#llx\n"
 	     "\t length: %#x\n", ptr->code, ptr->num_remain, ptr->offset, ptr->length);
     ptr=ptr->next;
   }
@@ -117,7 +116,7 @@ void print_markeridx( markeridx_param_t *markeridx)
   fprintf( logstream, "marker index info:\n"
 	   "\t code: %#x\n"
 	   "\t num_remain: %#x\n"
-	   "\t offset: %#" PRIx64 "\n"
+	   "\t offset: %#llx\n"
 	   "\t length: %#x\n", markeridx->code, markeridx->num_remain, markeridx->offset, markeridx->length);
 }
 

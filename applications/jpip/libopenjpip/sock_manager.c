@@ -34,6 +34,9 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#ifdef __FreeBSD__
+#include <netinet/in.h>
+#endif
 #include <unistd.h>
 #endif
 
@@ -51,7 +54,7 @@
 #define logstream stderr
 #endif /*SERVER*/
 
-SOCKET open_listeningsocket( uint16_t port)
+SOCKET open_listeningsocket( int port)
 {
   SOCKET listening_socket;
   struct sockaddr_in sin;
@@ -97,49 +100,49 @@ SOCKET accept_socket( SOCKET listening_socket)
   return accept( listening_socket, (struct sockaddr *)&peer_sin, &addrlen);
 }
 
-void send_stream( SOCKET connected_socket, const void *stream, OPJ_SIZE_T length)
+void send_stream( SOCKET connected_socket, void *stream, int length)
 {
   char *ptr = (char*)stream;
-  OPJ_SIZE_T remlen = length;
+  int remlen = length;
 
   while( remlen > 0){
-    ssize_t sentlen = send( connected_socket, ptr, remlen, 0);
+    int sentlen = send( connected_socket, ptr, remlen, 0);
     if( sentlen == -1){
       fprintf( FCGI_stderr, "sending stream error\n");
       break;
     }
-    remlen = remlen - (OPJ_SIZE_T)sentlen;
+    remlen = remlen - sentlen;
     ptr = ptr + sentlen;
   }
 }
 
-void * receive_stream( SOCKET connected_socket, OPJ_SIZE_T length)
+void * receive_stream( SOCKET connected_socket, int length)
 {
   char *stream, *ptr;
-  OPJ_SIZE_T remlen;
+  int remlen, redlen;
 
   ptr = stream = malloc( length);
   remlen = length;
 
   while( remlen > 0){
-    ssize_t redlen = recv( connected_socket, ptr, remlen, 0);
+    redlen = recv( connected_socket, ptr, remlen, 0);
     if( redlen == -1){
       fprintf( FCGI_stderr, "receive stream error\n");
       free( stream);
       stream = NULL;
       break;
     }
-    remlen -= (OPJ_SIZE_T)redlen;
+    remlen -= redlen;
     ptr = ptr + redlen;
   }
   return stream;
 }
 
-OPJ_SIZE_T receive_line(SOCKET connected_socket, char *p)
+int receive_line(SOCKET connected_socket, char *p)
 {
-  OPJ_SIZE_T len = 0;
+  int len = 0;
   while (1){
-    ssize_t ret;
+    int ret;
     ret = recv( connected_socket, p, 1, 0);
     if ( ret == -1 ){
       perror("receive");
@@ -164,8 +167,6 @@ char * receive_string( SOCKET connected_socket)
 {
   char buf[BUF_LEN];
   
-  /* MM FIXME: there is a nasty bug here, size of buf if BUF_LEN which is never
-  indicated to downstream receive_line */
   receive_line( connected_socket, buf);
     
   return strdup(buf);

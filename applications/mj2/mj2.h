@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2003-2004, Francois-Olivier Devaux
+* Copyright (c) 2003-2004, François-Olivier Devaux
 * Copyright (c) 2003-2004,  Communications and remote sensing Laboratory, Universite catholique de Louvain, Belgium
 * All rights reserved.
  *
@@ -137,7 +137,7 @@ typedef struct mj2_url {
 URN
 */
 typedef struct mj2_urn {		
-  int name[2];
+  int name[4];
   int location[4];
 } mj2_urn_t;
 

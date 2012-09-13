@@ -33,7 +33,6 @@
 
 #include "bool.h"
 #include "byte_manager.h"
-#include "opj_stdint.h"
 
 #ifdef _WIN32
 #include <winsock.h>
@@ -49,7 +48,7 @@ typedef int SOCKET;
  * @param  port opening port number
  * @return      new socket
  */
-SOCKET open_listeningsocket( uint16_t port);
+SOCKET open_listeningsocket( int port);
 
 /**
  * accept a new connection to the listenning socket
@@ -67,7 +66,7 @@ SOCKET accept_socket( SOCKET listening_socket);
  * @param [out] buf              string to be stored
  * @return                       red size
  */
-OPJ_SIZE_T receive_line(SOCKET connected_socket, char *buf);
+int receive_line(SOCKET connected_socket, char *buf);
 
 /**
  * receive a string line (ending with '\n') from client, return malloc string
@@ -84,7 +83,7 @@ char * receive_string( SOCKET connected_socket);
  * @param [in]  length           length of the receiving stream
  * @return                       pointer to the data stream (memory allocated), NULL if failed
  */
-void * receive_stream( SOCKET connected_socket, OPJ_SIZE_T length);
+void * receive_stream( SOCKET connected_socket, int length);
 
 /**
  * send data stream to client
@@ -93,7 +92,7 @@ void * receive_stream( SOCKET connected_socket, OPJ_SIZE_T length);
  * @param [in]  stream           data stream
  * @param [in]  length           length of data stream
  */
-void send_stream( SOCKET connected_socket, const void *stream, OPJ_SIZE_T length);
+void send_stream( SOCKET connected_socket, void *stream, int length);
 
 /**
  * close socket

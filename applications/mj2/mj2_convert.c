@@ -67,12 +67,12 @@ unsigned int yuv_num_frames(mj2_tk_t * tk, char *infile)
   return (unsigned int)(end_of_f / frame_size);
 }
 
-/*  ----------------------- */
-/* */
-/* */
-/*  YUV to IMAGE */
-/* */
-/*  ----------------------- */
+/* -----------------------
+
+
+  YUV to IMAGE
+
+  -----------------------*/
 
 opj_image_t *mj2_image_create(mj2_tk_t * tk, opj_cparameters_t *parameters)
 {
@@ -169,12 +169,12 @@ char yuvtoimage(mj2_tk_t * tk, opj_image_t * img, int frame_num, opj_cparameters
 
 
 
-/*  ----------------------- */
-/* */
-/* */
-/*  IMAGE to YUV */
-/* */
-/*  ----------------------- */
+/*  -----------------------
+
+
+  IMAGE to YUV
+
+  -----------------------*/
 
 
 opj_bool imagetoyuv(opj_image_t * img, char *outfile)
@@ -263,12 +263,12 @@ opj_bool imagetoyuv(opj_image_t * img, char *outfile)
   return OPJ_TRUE;
 }
 
-/*  ----------------------- */
-/* */
-/* */
-/*  IMAGE to BMP */
-/* */
-/*  ----------------------- */
+/*  -----------------------
+
+
+  IMAGE to BMP
+
+  -----------------------*/
 
 int imagetobmp(opj_image_t * img, char *outfile) {
   int w,wr,h,hr,i,pad;

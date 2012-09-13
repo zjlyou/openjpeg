@@ -6,7 +6,6 @@
  * Copyright (c) 2003-2007, Francois-Olivier Devaux and Antonin Descampe
  * Copyright (c) 2005, Herve Drolon, FreeImage Team
  * Copyright (c) 2006-2007, Parvatha Elangovan
- * Copyright (c) 2008, Jerome Fimes, Communications & Systemes <jerome.fimes@c-s.fr>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,7 +34,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
-#include <assert.h>
 
 #ifdef _WIN32
 #include "windirent.h"
@@ -45,10 +43,10 @@
 
 #ifdef _WIN32
 #include <windows.h>
-#define strcasecmp _stricmp
-#define strncasecmp _strnicmp
 #else
 #include <strings.h>
+#define _stricmp strcasecmp
+#define _strnicmp strncasecmp
 #endif /* _WIN32 */
 
 #include "opj_config.h"
@@ -138,7 +136,7 @@ void encode_help_display(void) {
 	fprintf(stdout,"-OutFor \n");
 	fprintf(stdout,"    REQUIRED only if -ImgDir is used\n");
 	fprintf(stdout,"	  Need to specify only format without filename <BMP>  \n");
-	fprintf(stdout,"    Currently accepts PBM, PGM, PPM, PNM, PAM, PGX, PNG, BMP, TIF, RAW, RAWL and TGA formats\n");
+	fprintf(stdout,"    Currently accepts PBM, PGM, PPM, PNM, PAM, PGX, PNG, BMP, TIF, RAW and TGA formats\n");
 	fprintf(stdout,"\n");
 	fprintf(stdout,"-i           : source file  (-i source.pnm also *pbm, *.pgm, *.ppm, *.pam, *.pgx, *png, *.bmp, *.tif, *.raw, *.tga) \n");
 	fprintf(stdout,"    When using this option -o must be used\n");
@@ -213,8 +211,6 @@ void encode_help_display(void) {
 	fprintf(stdout,"               -F rawWidth,rawHeight,rawComp,rawBitDepth,s/u (Signed/Unsigned)\n");
 	fprintf(stdout,"               Example: -i lena.raw -o lena.j2k -F 512,512,3,8,u\n");
 	fprintf(stdout,"\n");
-	fprintf(stdout,"-m           : use array-based MCT, values are coma separated, line by line\n");
-	fprintf(stdout,"			   no specific separators between lines, no space allowed between values\n");
 	fprintf(stdout,"-jpip        : write jpip codestream index box in JP2 output file\n");
 	fprintf(stdout,"               NOTICE: currently supports only RPCL order\n");
 	fprintf(stdout,"\n");
@@ -395,17 +391,17 @@ int load_images(dircnt_t *dirptr, char *imgdirpath){
 int get_file_format(char *filename) {
 	unsigned int i;
 	static const char *extension[] = {
-    "pgx", "pnm", "pgm", "ppm", "pbm", "pam", "bmp", "tif", "raw", "rawl", "tga", "png", "j2k", "jp2", "j2c", "jpc"
+    "pgx", "pnm", "pgm", "ppm", "pbm", "pam", "bmp", "tif", "raw", "tga", "png", "j2k", "jp2", "j2c", "jpc"
     };
 	static const int format[] = {
-    PGX_DFMT, PXM_DFMT, PXM_DFMT, PXM_DFMT, PXM_DFMT, PXM_DFMT, BMP_DFMT, TIF_DFMT, RAW_DFMT, RAWL_DFMT, TGA_DFMT, PNG_DFMT, J2K_CFMT, JP2_CFMT, J2K_CFMT, J2K_CFMT
+    PGX_DFMT, PXM_DFMT, PXM_DFMT, PXM_DFMT, PXM_DFMT, PXM_DFMT, BMP_DFMT, TIF_DFMT, RAW_DFMT, TGA_DFMT, PNG_DFMT, J2K_CFMT, JP2_CFMT, J2K_CFMT, J2K_CFMT
     };
 	char * ext = strrchr(filename, '.');
 	if (ext == NULL)
 		return -1;
 	ext++;
 	for(i = 0; i < sizeof(format)/sizeof(*format); i++) {
-		if(strcasecmp(ext, extension[i]) == 0) {
+		if(_strnicmp(ext, extension[i], 3) == 0) {
 			return format[i];
 		}
 	}
@@ -622,7 +618,6 @@ int parse_cmdline_encoder(int argc, char **argv, opj_cparameters_t *parameters,
 					case BMP_DFMT:
 					case TIF_DFMT:
 					case RAW_DFMT:
-					case RAWL_DFMT:
 					case TGA_DFMT:
 					case PNG_DFMT:
 						break;
@@ -1060,73 +1055,6 @@ int parse_cmdline_encoder(int argc, char **argv, opj_cparameters_t *parameters,
 			break;
 
 				/* ------------------------------------------------------ */
-			case 'm':			/* mct input file */
-			{
-				char *lFilename = opj_optarg;
-				char *lMatrix;
-				char *lCurrentPtr ;
-				float *lCurrentDoublePtr;
-				float *lSpace;
-				int *l_int_ptr;
-				int lNbComp = 0, lTotalComp, lMctComp, i, lStrLen;
-
-				/* Open file */
-				FILE * lFile = fopen(lFilename,"r");
-				if (lFile == NULL) {
-					return 1;
-				}
-
-				/* Set size of file and read its content*/
-				fseek(lFile,0,SEEK_END);
-				lStrLen = ftell(lFile);
-				fseek(lFile,0,SEEK_SET);
-				lMatrix = (char *) malloc(lStrLen + 1);
-				fread(lMatrix, lStrLen, 1, lFile);
-				fclose(lFile);
-
-				lMatrix[lStrLen] = 0;
-				lCurrentPtr = lMatrix;
-
-				/* replace ',' by 0 */
-				while (*lCurrentPtr != 0 ) {
-					if (*lCurrentPtr == ' ') {
-						*lCurrentPtr = 0;
-						++lNbComp;
-					}
-					++lCurrentPtr;
-				}
-				++lNbComp;
-				lCurrentPtr = lMatrix;
-
-				lNbComp = (int) (sqrt(4*lNbComp + 1)/2. - 0.5);
-				lMctComp = lNbComp * lNbComp;
-				lTotalComp = lMctComp + lNbComp;
-				lSpace = (float *) malloc(lTotalComp * sizeof(float));
-				lCurrentDoublePtr = lSpace;
-				for (i=0;i<lMctComp;++i) {
-					lStrLen = strlen(lCurrentPtr) + 1;
-					*lCurrentDoublePtr++ = (float) atof(lCurrentPtr);
-					lCurrentPtr += lStrLen;
-				}
-
-				l_int_ptr = (int*) lCurrentDoublePtr;
-				for (i=0;i<lNbComp;++i) {
-					lStrLen = strlen(lCurrentPtr) + 1;
-					*l_int_ptr++ = atoi(lCurrentPtr);
-					lCurrentPtr += lStrLen;
-				}
-
-				/* TODO should not be here ! */
-				opj_set_MCT(parameters, lSpace, (int *)(lSpace + lMctComp), lNbComp);
-
-				/* Free memory*/
-				free(lSpace);
-				free(lMatrix);
-			}
-			break;
-
-
-				/* ------------------------------------------------------ */
 
 /* UniPG>> */
 #ifdef USE_JPWL
@@ -1493,8 +1421,7 @@ int parse_cmdline_encoder(int argc, char **argv, opj_cparameters_t *parameters,
 		}
 	}
 
-	if ( (parameters->decod_format == RAW_DFMT && raw_cp->rawWidth == 0)
-	|| (parameters->decod_format == RAWL_DFMT && raw_cp->rawWidth == 0)) {
+	if (parameters->decod_format == RAW_DFMT && raw_cp->rawWidth == 0) {
 			fprintf(stderr,"\nError: invalid raw image parameters\n");
 			fprintf(stderr,"Please use the Format option -F:\n");
 			fprintf(stderr,"-F rawWidth,rawHeight,rawComp,rawBitDepth,s/u (Signed/Unsigned)\n");
@@ -1539,71 +1466,48 @@ int parse_cmdline_encoder(int argc, char **argv, opj_cparameters_t *parameters,
 /**
 sample error callback expecting a FILE* client object
 */
-void error_file_callback(const char *msg, void *client_data) {
+void error_callback(const char *msg, void *client_data) {
 	FILE *stream = (FILE*)client_data;
 	fprintf(stream, "[ERROR] %s", msg);
 }
 /**
 sample warning callback expecting a FILE* client object
 */
-void warning_file_callback(const char *msg, void *client_data) {
+void warning_callback(const char *msg, void *client_data) {
 	FILE *stream = (FILE*)client_data;
 	fprintf(stream, "[WARNING] %s", msg);
 }
 /**
 sample debug callback expecting a FILE* client object
 */
-void info_file_callback(const char *msg, void *client_data) {
+void info_callback(const char *msg, void *client_data) {
 	FILE *stream = (FILE*)client_data;
 	fprintf(stream, "[INFO] %s", msg);
 }
 
-/**
-sample error debug callback expecting no client object
-*/
-void error_callback(const char *msg, void *client_data) {
-	(void)client_data;
-	fprintf(stdout, "[ERROR] %s", msg);
-}
-/**
-sample warning debug callback expecting no client object
-*/
-void warning_callback(const char *msg, void *client_data) {
-	(void)client_data;
-	fprintf(stdout, "[WARNING] %s", msg);
-}
-/**
-sample debug callback expecting no client object
-*/
-void info_callback(const char *msg, void *client_data) {
-	(void)client_data;
-	fprintf(stdout, "[INFO] %s", msg);
-}
+/* -------------------------------------------------------------------------- */
 
-/* -------------------------------------------------------------------------- */
-/**
- * IMAGE_TO_J2K MAIN
- */
-/* -------------------------------------------------------------------------- */
 int main(int argc, char **argv) {
-	FILE *fout = NULL;
-
+	opj_bool bSuccess;
 	opj_cparameters_t parameters;	/* compression parameters */
-
-	opj_stream_t *l_stream = 00;
-	opj_codec_t* l_codec = 00;
+	img_fol_t img_fol;
+	opj_event_mgr_t event_mgr;		/* event manager */
 	opj_image_t *image = NULL;
+	int i,num_images;
+	int imageno;
+	dircnt_t *dirptr = NULL;
 	raw_cparameters_t raw_cp;
-
+	opj_codestream_info_t cstr_info;		/* Codestream information structure */
 	char indexfilename[OPJ_PATH_LEN];	/* index file name */
 
-	int i, num_images, imageno;
-	img_fol_t img_fol;
-	dircnt_t *dirptr = NULL;
-
-	opj_bool bSuccess;
-  opj_bool bUseTiles = OPJ_FALSE; /* OPJ_TRUE */
-	OPJ_UINT32 l_nb_tiles = 4;
+	/*
+	configure the event callbacks (not required)
+	setting of each callback is optionnal
+	*/
+	memset(&event_mgr, 0, sizeof(opj_event_mgr_t));
+	event_mgr.error_handler = error_callback;
+	event_mgr.warning_handler = warning_callback;
+	event_mgr.info_handler = info_callback;
 
 	/* set encoding parameters to default values */
 	opj_set_default_encoder_parameters(&parameters);
@@ -1676,7 +1580,6 @@ int main(int argc, char **argv) {
 				continue;
 			}
 		}
-
 		switch(parameters.decod_format) {
 			case PGX_DFMT:
 				break;
@@ -1687,7 +1590,6 @@ int main(int argc, char **argv) {
 			case TIF_DFMT:
 				break;
 			case RAW_DFMT:
-			case RAWL_DFMT:
 				break;
 			case TGA_DFMT:
 				break;
@@ -1698,204 +1600,214 @@ int main(int argc, char **argv) {
 				continue;
 		}
 
-		/* decode the source image */
-		/* ----------------------- */
+			/* decode the source image */
+			/* ----------------------- */
 
-		switch (parameters.decod_format) {
-			case PGX_DFMT:
-				image = pgxtoimage(parameters.infile, &parameters);
-				if (!image) {
-					fprintf(stderr, "Unable to load pgx file\n");
-					return 1;
-				}
-				break;
+			switch (parameters.decod_format) {
+				case PGX_DFMT:
+					image = pgxtoimage(parameters.infile, &parameters);
+					if (!image) {
+						fprintf(stderr, "Unable to load pgx file\n");
+						return 1;
+					}
+					break;
 
-			case PXM_DFMT:
-				image = pnmtoimage(parameters.infile, &parameters);
-				if (!image) {
-					fprintf(stderr, "Unable to load pnm file\n");
-					return 1;
-				}
-				break;
+				case PXM_DFMT:
+					image = pnmtoimage(parameters.infile, &parameters);
+					if (!image) {
+						fprintf(stderr, "Unable to load pnm file\n");
+						return 1;
+					}
+					break;
 
-			case BMP_DFMT:
-				image = bmptoimage(parameters.infile, &parameters);
-				if (!image) {
-					fprintf(stderr, "Unable to load bmp file\n");
-					return 1;
-				}
-				break;
-
+				case BMP_DFMT:
+					image = bmptoimage(parameters.infile, &parameters);
+					if (!image) {
+						fprintf(stderr, "Unable to load bmp file\n");
+						return 1;
+					}
+					break;
 #ifdef HAVE_LIBTIFF
-			case TIF_DFMT:
-				image = tiftoimage(parameters.infile, &parameters);
-				if (!image) {
-					fprintf(stderr, "Unable to load tiff file\n");
-					return 1;
-				}
-			break;
-#endif /* HAVE_LIBTIFF */
-
-			case RAW_DFMT:
-				image = rawtoimage(parameters.infile, &parameters, &raw_cp);
-				if (!image) {
-					fprintf(stderr, "Unable to load raw file\n");
-					return 1;
-				}
-			break;
-
-			case RAWL_DFMT:
-				image = rawltoimage(parameters.infile, &parameters, &raw_cp);
-				if (!image) {
-					fprintf(stderr, "Unable to load raw file\n");
-					return 1;
-				}
-			break;
-
-			case TGA_DFMT:
-				image = tgatoimage(parameters.infile, &parameters);
-				if (!image) {
-					fprintf(stderr, "Unable to load tga file\n");
-					return 1;
-				}
-			break;
-
-#ifdef HAVE_LIBPNG
-			case PNG_DFMT:
-				image = pngtoimage(parameters.infile, &parameters);
-				if (!image) {
-					fprintf(stderr, "Unable to load png file\n");
-					return 1;
-				}
+				case TIF_DFMT:
+					image = tiftoimage(parameters.infile, &parameters);
+					if (!image) {
+						fprintf(stderr, "Unable to load tiff file\n");
+						return 1;
+					}
 				break;
+#endif /* HAVE_LIBTIFF */
+				case RAW_DFMT:
+					image = rawtoimage(parameters.infile, &parameters, &raw_cp);
+					if (!image) {
+						fprintf(stderr, "Unable to load raw file\n");
+						return 1;
+					}
+				break;
+
+				case TGA_DFMT:
+					image = tgatoimage(parameters.infile, &parameters);
+					if (!image) {
+						fprintf(stderr, "Unable to load tga file\n");
+						return 1;
+					}
+				break;
+#ifdef HAVE_LIBPNG
+				case PNG_DFMT:
+					image = pngtoimage(parameters.infile, &parameters);
+					if (!image) {
+						fprintf(stderr, "Unable to load png file\n");
+						return 1;
+					}
+					break;
 #endif /* HAVE_LIBPNG */
 		}
-
 /* Can happen if input file is TIFF or PNG 
  * and HAVE_LIBTIF or HAVE_LIBPNG is undefined
 */
-		if( !image) {
+			if( !image)
+		   {
 			fprintf(stderr, "Unable to load file: got no image\n");
 			return 1;
-		}
+		   }
+			/* Decide if MCT should be used */
+			parameters.tcp_mct = image->numcomps == 3 ? 1 : 0;
 
-		/* Decide if MCT should be used */
-		parameters.tcp_mct = image->numcomps == 3 ? 1 : 0;
-
-		if(parameters.cp_cinema){
-			cinema_setup_encoder(&parameters,image,&img_fol);
-		}
-
-		/* encode the destination image */
-		/* ---------------------------- */
-
-		switch(parameters.cod_format) {
-			case J2K_CFMT:	/* JPEG-2000 codestream */
-			{
-				/* Get a decoder handle */
-				l_codec = opj_create_compress(CODEC_J2K);
-				break;
+			if(parameters.cp_cinema){
+				cinema_setup_encoder(&parameters,image,&img_fol);
 			}
-			case JP2_CFMT:	/* JPEG 2000 compressed image data */
-			{
-				/* Get a decoder handle */
-				l_codec = opj_create_compress(CODEC_JP2);
-				break;
+
+			/* encode the destination image */
+			/* ---------------------------- */
+
+			if (parameters.cod_format == J2K_CFMT) {	/* J2K format output */
+				int codestream_length;
+        size_t res;
+				opj_cio_t *cio = NULL;
+				FILE *f = NULL;
+
+				/* get a J2K compressor handle */
+				opj_cinfo_t* cinfo = opj_create_compress(CODEC_J2K);
+
+				/* catch events using our callbacks and give a local context */
+				opj_set_event_mgr((opj_common_ptr)cinfo, &event_mgr, stderr);
+
+				/* setup the encoder parameters using the current image and user parameters */
+				opj_setup_encoder(cinfo, &parameters, image);
+
+				/* open a byte stream for writing */
+				/* allocate memory for all tiles */
+				cio = opj_cio_open((opj_common_ptr)cinfo, NULL, 0);
+
+				/* encode the image */
+				if (*indexfilename)					/* If need to extract codestream information*/
+				  bSuccess = opj_encode_with_info(cinfo, cio, image, &cstr_info);
+				else
+					bSuccess = opj_encode(cinfo, cio, image, NULL);
+				if (!bSuccess) {
+					opj_cio_close(cio);
+					fprintf(stderr, "failed to encode image\n");
+					return 1;
+				}
+				codestream_length = cio_tell(cio);
+
+				/* write the buffer to disk */
+				f = fopen(parameters.outfile, "wb");
+				if (!f) {
+					fprintf(stderr, "failed to open %s for writing\n", parameters.outfile);
+					return 1;
+				}
+				res = fwrite(cio->buffer, 1, codestream_length, f);
+        if( res < (size_t)codestream_length ) { /* FIXME */
+ 					fprintf(stderr, "failed to write %d (%s)\n", codestream_length, parameters.outfile);
+					return 1;
+         }
+				fclose(f);
+
+				fprintf(stderr,"Generated outfile %s\n",parameters.outfile);
+				/* close and free the byte stream */
+				opj_cio_close(cio);
+
+				/* Write the index to disk */
+				if (*indexfilename) {
+					bSuccess = write_index_file(&cstr_info, indexfilename);
+					if (bSuccess) {
+						fprintf(stderr, "Failed to output index file into [%s]\n", indexfilename);
+					}
+				}
+
+				/* free remaining compression structures */
+				opj_destroy_compress(cinfo);
+				if (*indexfilename)
+					opj_destroy_cstr_info(&cstr_info);
+			} else {			/* JP2 format output */
+				int codestream_length;
+        size_t res;
+				opj_cio_t *cio = NULL;
+				FILE *f = NULL;
+				opj_cinfo_t *cinfo = NULL;
+
+				/* get a JP2 compressor handle */				
+				cinfo = opj_create_compress(CODEC_JP2);
+
+				/* catch events using our callbacks and give a local context */
+				opj_set_event_mgr((opj_common_ptr)cinfo, &event_mgr, stderr);
+
+				/* setup the encoder parameters using the current image and using user parameters */
+				opj_setup_encoder(cinfo, &parameters, image);
+
+				/* open a byte stream for writing */
+				/* allocate memory for all tiles */
+				cio = opj_cio_open((opj_common_ptr)cinfo, NULL, 0);
+
+				/* encode the image */
+				if (*indexfilename || parameters.jpip_on) /* If need to extract codestream information*/
+				  bSuccess = opj_encode_with_info(cinfo, cio, image, &cstr_info);
+				else
+					bSuccess = opj_encode(cinfo, cio, image, NULL);
+				if (!bSuccess) {
+					opj_cio_close(cio);
+					fprintf(stderr, "failed to encode image\n");
+					return 1;
+				}
+				codestream_length = cio_tell(cio);
+
+				/* write the buffer to disk */
+				f = fopen(parameters.outfile, "wb");
+				if (!f) {
+					fprintf(stderr, "failed to open %s for writing\n", parameters.outfile);
+					return 1;
+				}
+				res = fwrite(cio->buffer, 1, codestream_length, f);
+        if( res < (size_t)codestream_length ) { /* FIXME */
+ 					fprintf(stderr, "failed to write %d (%s)\n", codestream_length, parameters.outfile);
+					return 1;
+         }
+				fclose(f);
+				fprintf(stderr,"Generated outfile %s\n",parameters.outfile);
+				/* close and free the byte stream */
+				opj_cio_close(cio);
+
+				/* Write the index to disk */
+				if (*indexfilename) {
+					bSuccess = write_index_file(&cstr_info, indexfilename);
+					if (bSuccess) {
+						fprintf(stderr, "Failed to output index file\n");
+					}
+				}
+
+				/* free remaining compression structures */
+				opj_destroy_compress(cinfo);
+				if (*indexfilename)
+					opj_destroy_cstr_info(&cstr_info);
 			}
-			default:
-				fprintf(stderr, "skipping file..\n");
-				opj_stream_destroy(l_stream);
-				continue;
-		}
-		
-		/* catch events using our callbacks and give a local context */		
-		opj_set_info_handler(l_codec, info_callback,00);
-		opj_set_warning_handler(l_codec, warning_callback,00);
-		opj_set_error_handler(l_codec, error_callback,00);
 
-    if( bUseTiles ) {
-      parameters.cp_tx0 = 0;
-      parameters.cp_ty0 = 0;
-      parameters.tile_size_on = OPJ_TRUE;
-      parameters.cp_tdx = 512;
-      parameters.cp_tdy = 512;
-    }
-		opj_setup_encoder(l_codec, &parameters, image);
-
-		/* Open the output file*/
-		fout = fopen(parameters.outfile, "wb");
-		if (! fout) {
-			fprintf(stderr, "Not enable to create output file!\n");
-			opj_stream_destroy(l_stream);
-			return 1;
-		}
-
-		/* open a byte stream for writing and allocate memory for all tiles */
-		l_stream = opj_stream_create_default_file_stream(fout,OPJ_FALSE);
-		if (! l_stream){
-			return 1;
-		}
-
-		/* encode the image */
-    bSuccess = opj_start_compress(l_codec,image,l_stream);
-    if (!bSuccess)  {
-      fprintf(stderr, "failed to encode image: opj_start_compress\n");
-    }
-    if( bUseTiles ) {
-      OPJ_BYTE *l_data;
-      OPJ_UINT32 l_data_size = 512*512*3;
-      l_data = (OPJ_BYTE*) malloc( l_data_size * sizeof(OPJ_BYTE));
-      memset(l_data, 0, l_data_size );
-      assert( l_data );
-      for (i=0;i<l_nb_tiles;++i) {
-        if (! opj_write_tile(l_codec,i,l_data,l_data_size,l_stream)) {
-          fprintf(stderr, "ERROR -> test_tile_encoder: failed to write the tile %d!\n",i);
-          opj_stream_destroy(l_stream);
-          fclose(fout);
-          opj_destroy_codec(l_codec);
-          opj_image_destroy(image);
-          return 1;
-        }
-      }
-      free(l_data);
-    }
-    else {
-      bSuccess = bSuccess && opj_encode(l_codec, l_stream);
-      if (!bSuccess)  {
-        fprintf(stderr, "failed to encode image: opj_encode\n");
-      }
-    }
-		bSuccess = bSuccess && opj_end_compress(l_codec, l_stream);
-		if (!bSuccess)  {
-			fprintf(stderr, "failed to encode image: opj_end_compress\n");
-		}
-
-		if (!bSuccess)  {
-			opj_stream_destroy(l_stream);
-			fclose(fout);
-      opj_destroy_codec(l_codec);
-      opj_image_destroy(image);
-			fprintf(stderr, "failed to encode image\n");
-			return 1;
-		}
-
-		fprintf(stderr,"Generated outfile %s\n",parameters.outfile);
-		/* close and free the byte stream */
-		opj_stream_destroy(l_stream);
-		fclose(fout);
-
-		/* free remaining compression structures */
-		opj_destroy_codec(l_codec);
-
-		/* free image data */
-		opj_image_destroy(image);
-
+			/* free image data */
+			opj_image_destroy(image);
 	}
 
 	/* free user parameters structure */
-	if(parameters.cp_comment)   free(parameters.cp_comment);
-	if(parameters.cp_matrice)   free(parameters.cp_matrice);
-    if(parameters.cp_cinema)    free(img_fol.rates);
+  if(parameters.cp_comment) free(parameters.cp_comment);
+	if(parameters.cp_matrice) free(parameters.cp_matrice);
 
 	return 0;
 }

@@ -33,6 +33,9 @@
  *  \brief Modification of jpip.c from 2KAN indexer
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "opj_includes.h"
 
 /* 

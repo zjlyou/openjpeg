@@ -90,36 +90,6 @@ Get norm of the basis function used for the irreversible multi-component transfo
 @return 
 */
 double mct_getnorm_real(int compno);
-
-
-opj_bool mct_encode_custom(
-					   /* MCT data */
-					   OPJ_BYTE * p_coding_data,
-					   /* size of components */
-					   OPJ_UINT32 n,
-					   /* components */
-					   OPJ_BYTE ** p_data,
-					   /* nb of components (i.e. size of p_data) */
-					   OPJ_UINT32 p_nb_comp,
-					   /* tells if the data is signed */
-					   OPJ_UINT32 is_signed);
-
-opj_bool mct_decode_custom(
-					   /* MCT data */
-					   OPJ_BYTE * pDecodingData,
-					   /* size of components */
-					   OPJ_UINT32 n,
-					   /* components */
-					   OPJ_BYTE ** pData,
-					   /* nb of components (i.e. size of pData) */
-					   OPJ_UINT32 pNbComp,
-					   /* tells if the data is signed */
-					   OPJ_UINT32 isSigned);
-
-void opj_calculate_norms(OPJ_FLOAT64 * pNorms,OPJ_UINT32 p_nb_comps,OPJ_FLOAT32 * pMatrix);
-
-const OPJ_FLOAT64 * get_mct_norms ();
-const OPJ_FLOAT64 * get_mct_norms_real ();
 /* ----------------------------------------------------------------------- */
 /*@}*/
 

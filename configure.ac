@@ -6,7 +6,7 @@
 # 3) if API or ABI is broken (this case should (must) never happen as it's very bad for a library), or a new designed library, increase MAJOR and set MINOR and MICRO to 0
 
 m4_define([OPJ_MAJOR], [1])
-m4_define([OPJ_MINOR], [99])
+m4_define([OPJ_MINOR], [5])
 m4_define([OPJ_MICRO], [0])
 
 m4_define([lt_cur], m4_eval(OPJ_MAJOR + OPJ_MINOR))
@@ -59,11 +59,7 @@ esac
 AM_CONDITIONAL([HAVE_WIN32], [test "x${have_win32}" = "xyes"])
 AM_CONDITIONAL([HAVE_DARWIN], [test "x${have_darwin}" = "xyes"])
 
-AC_TYPE_SSIZE_T
-if test "x$ac_cv_type_ssize_t" = xyes; then
-AC_DEFINE([HAVE_SSIZE_T], [1],[Define to 1 if you have ssize_t.],
- [AC_MSG([ssize_t not found])])
-fi
+
 ### Additional options to configure
 
 # debug

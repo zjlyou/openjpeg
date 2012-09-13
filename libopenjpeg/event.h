@@ -31,32 +31,6 @@
 
 The functions in EVENT.C have for goal to send output messages (errors, warnings, debug) to the user.
 */
-/**
-Message handler object
-used for 
-<ul>
-<li>Error messages
-<li>Warning messages
-<li>Debugging messages
-</ul>
-*/
-#if 0
-typedef struct opj_event_mgr 
-{
-	/** Data to call the event manager upon */
-	void *			m_error_data;
-	/** Data to call the event manager upon */
-	void *			m_warning_data;
-	/** Data to call the event manager upon */
-	void *			m_info_data;
-	/** Error message callback if available, NULL otherwise */
-	opj_msg_callback error_handler;
-	/** Warning message callback if available, NULL otherwise */
-	opj_msg_callback warning_handler;
-	/** Debug message callback if available, NULL otherwise */
-	opj_msg_callback info_handler;
-} opj_event_mgr_t;
-#endif
 
 #define EVT_ERROR	1	/**< Error event type */
 #define EVT_WARNING	2	/**< Warning event type */
@@ -72,31 +46,11 @@ typedef struct opj_event_mgr
 Write formatted data to a string and send the string to a user callback. 
 @param cinfo Codec context info
 @param event_type Event type or callback to use to send the message
-@param fmt Format-control string (plus optional arguments)
+@param fmt Format-control string (plus optionnal arguments)
 @return Returns true if successful, returns false otherwise
-* FIXME Change by its v2 version this function after ended the merge 
 */
 opj_bool opj_event_msg(opj_common_ptr cinfo, int event_type, const char *fmt, ...);
-
 /* ----------------------------------------------------------------------- */
-
-/**
- * Write formatted data to a string and send the string to a user callback.
- *
- * @param event_mgr			Event handler
- * @param event_type 		Event type or callback to use to send the message
- * @param fmt 				Format-control string (plus optional arguments)
- *
- * @return Returns true if successful, returns false otherwise
- */
-opj_bool opj_event_msg_v2(opj_event_mgr_t* event_mgr, int event_type, const char *fmt, ...);
-/* ----------------------------------------------------------------------- */
-
-/**
- * Set the event manager with the default callback function for the 3 levels.
- */
-void opj_set_default_event_handler(opj_event_mgr_t * p_manager);
-
 /*@}*/
 
 /*@}*/

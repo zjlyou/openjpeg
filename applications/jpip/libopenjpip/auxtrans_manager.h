@@ -44,8 +44,8 @@ typedef struct auxtrans_param{
 /**
  * Initialize auxiliary transport server of JPIP server
  *
- * @param[in] tcp_auxport opening tcp auxiliary port ( 0 not to open, valid No. 49152-65535)
- * @param[in] udp_auxport opening udp auxiliary port ( 0 not to open, valid No. 49152-65535)
+ * @param[in] tcp_auxport opening tcp auxiliary port ( 0 not to open, valid No. 49152–65535)
+ * @param[in] udp_auxport opening udp auxiliary port ( 0 not to open, valid No. 49152–65535)
  * @return                intialized transport parameters
  */
 auxtrans_param_t init_aux_transport( int tcp_auxport, int udp_auxport);
@@ -67,6 +67,6 @@ void close_aux_transport( auxtrans_param_t auxtrans);
  * @param[in] length         length of data
  * @param[in] maxlenPerFrame maximum data length to send per frame
  */
-void send_responsedata_on_aux( bool istcp, auxtrans_param_t auxtrans, const char cid[], void *data, OPJ_SIZE_T length, OPJ_SIZE_T maxlenPerFrame);
+void send_responsedata_on_aux( bool istcp, auxtrans_param_t auxtrans, char cid[], void *data, int length, int maxlenPerFrame);
 
 #endif /* !AUXTRANS_MANAGER_H_ */

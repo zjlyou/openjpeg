@@ -31,8 +31,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <assert.h>
-#include <limits.h>
 #include "jp2k_decoder.h"
 #include "openjpeg.h"
 
@@ -43,76 +41,53 @@ void info_callback(const char *msg, void *client_data);
 
 Byte_t * imagetopnm(opj_image_t *image, ihdrbox_param_t **ihdrbox);
 
-Byte_t * j2k_to_pnm( FILE *fp, ihdrbox_param_t **ihdrbox)
+Byte_t * j2k_to_pnm( Byte_t *j2kstream, Byte8_t j2klen, ihdrbox_param_t **ihdrbox)
 {
   Byte_t *pnmstream = NULL;
   opj_dparameters_t parameters;	/* decompression parameters */
+  opj_event_mgr_t event_mgr;		/* event manager */
   opj_image_t *image = NULL;
-  opj_codec_t *l_codec = NULL;	/* handle to a decompressor */
-  opj_stream_t *l_stream = NULL;
+  opj_dinfo_t* dinfo = NULL;	/* handle to a decompressor */
+  opj_cio_t *cio = NULL;
 
-
+  /* configure the event callbacks (not required) */
+  memset(&event_mgr, 0, sizeof(opj_event_mgr_t));
+  event_mgr.error_handler = error_callback;
+  event_mgr.warning_handler = warning_callback;
+  event_mgr.info_handler = info_callback;
 
   /* set decoding parameters to default values */
   opj_set_default_decoder_parameters(&parameters);
-
-  /* set a byte stream */
-  l_stream = opj_stream_create_default_file_stream( fp, 1);
-  if (!l_stream){
-    fprintf(stderr, "ERROR -> failed to create the stream from the file\n");
-    return NULL;
-  }
 
   /* decode the code-stream */
   /* ---------------------- */
 
   /* JPEG-2000 codestream */
   /* get a decoder handle */
-  l_codec = opj_create_decompress(CODEC_J2K);
+  dinfo = opj_create_decompress( CODEC_J2K);
 
   /* catch events using our callbacks and give a local context */
-  opj_set_info_handler(l_codec, info_callback,00);
-  opj_set_warning_handler(l_codec, warning_callback,00);
-  opj_set_error_handler(l_codec, error_callback,00);
+  opj_set_event_mgr((opj_common_ptr)dinfo, &event_mgr, stderr);
 
   /* setup the decoder decoding parameters using user parameters */
-  if ( !opj_setup_decoder(l_codec, &parameters) ){
-    fprintf(stderr, "ERROR -> j2k_dump: failed to setup the decoder\n");
-    return NULL;
-  }
+  opj_setup_decoder(dinfo, &parameters);
+  /* open a byte stream */
+  cio = opj_cio_open((opj_common_ptr)dinfo, j2kstream, j2klen);
 
-  /* Read the main header of the codestream and if necessary the JP2 boxes*/
-  if(! opj_read_header( l_stream, l_codec, &image)){
-    fprintf(stderr, "ERROR -> j2k_to_image: failed to read the header\n");
-    opj_stream_destroy(l_stream);
-    opj_destroy_codec(l_codec);
-    opj_image_destroy(image);
-    return NULL;
-  }
-
-#ifdef TODO /*decode area could be set from j2k_to_pnm call, modify the protocol between JPIP viewer and opj_dec_server*/
-  if (! opj_set_decode_area( l_codec, image, parameters.DA_x0, parameters.DA_y0, parameters.DA_x1, parameters.DA_y1)){
-    fprintf(stderr, "ERROR -> j2k_to_image: failed to set the decoded area\n");
-    opj_stream_destroy(l_stream);
-    opj_destroy_codec(l_codec);
-    opj_image_destroy(image);
-    return NULL;
-  }
-#endif /*TODO*/
-
-  /* Get the decoded image */
-  if ( !( opj_decode(l_codec, l_stream, image) && opj_end_decompress(l_codec,l_stream) ) ) {
-    fprintf(stderr, "ERROR -> j2k_to_image: failed to decode image!\n");
-    opj_stream_destroy(l_stream);
-    opj_destroy_codec(l_codec);
-    opj_image_destroy(image);
-    return NULL;
-  }
+  /* decode the stream and fill the image structure */
+  image = opj_decode(dinfo, cio);
 
   fprintf(stderr, "image is decoded!\n");
 
+  if(!image) {
+    fprintf(stderr, "ERROR -> jp2_to_image: failed to decode image!\n");
+    opj_destroy_decompress(dinfo);
+    opj_cio_close(cio);
+    return NULL;
+  }
+
   /* close the byte stream */
-  opj_stream_destroy(l_stream);
+  opj_cio_close(cio);
   
   /* create output image */
   /* ------------------- */
@@ -120,8 +95,8 @@ Byte_t * j2k_to_pnm( FILE *fp, ihdrbox_param_t **ihdrbox)
     fprintf( stderr, "PNM image not generated\n");
 
   /* free remaining structures */
-  if(l_codec) {
-    opj_destroy_codec(l_codec);
+  if(dinfo) {
+    opj_destroy_decompress(dinfo);
   }
 
   /* free image data structure */
@@ -157,10 +132,10 @@ void info_callback(const char *msg, void *client_data) {
 
 Byte_t * imagetopnm(opj_image_t *image, ihdrbox_param_t **ihdrbox)
 {
-  OPJ_UINT32 adjustR, adjustG=0, adjustB=0;
-  OPJ_SIZE_T datasize;
+  int adjustR, adjustG=0, adjustB=0;
+  int datasize;
   Byte_t *pix=NULL, *ptr=NULL;
-  OPJ_UINT32 i;
+  int i;
   
   if(*ihdrbox){
     if( (*ihdrbox)->nc != image->numcomps)
@@ -179,10 +154,8 @@ Byte_t * imagetopnm(opj_image_t *image, ihdrbox_param_t **ihdrbox)
     *ihdrbox = (ihdrbox_param_t *)malloc( sizeof(ihdrbox_param_t));
     (*ihdrbox)->width  = image->comps[0].w;
     (*ihdrbox)->height = image->comps[0].h;
-    assert( image->comps[0].prec < 256 );
-    (*ihdrbox)->bpc    = (Byte_t)image->comps[0].prec;
-    assert( image->numcomps < USHRT_MAX );
-    (*ihdrbox)->nc     = (Byte2_t)image->numcomps;
+    (*ihdrbox)->bpc    = image->comps[0].prec;
+    (*ihdrbox)->nc     = image->numcomps;
   }
   
   datasize = (image->numcomps)*(image->comps[0].w)*(image->comps[0].h);

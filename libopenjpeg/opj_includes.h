@@ -27,12 +27,6 @@
 #define OPJ_INCLUDES_H
 
 /*
- * This must be included before any system headers,
- * since they can react to macro defined there
- */
-#include "opj_config.h"
-
-/*
  ==========================================================
    Standard includes used by the library
  ==========================================================
@@ -46,41 +40,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <ctype.h>
-#include <assert.h>
-
-/*
-  Use fseeko() and ftello() if they are available since they use
-  'off_t' rather than 'long'.  It is wrong to use fseeko() and
-  ftello() only on systems with special LFS support since some systems
-  (e.g. FreeBSD) support a 64-bit off_t by default.
-*/
-#if defined(HAVE_FSEEKO)
-#  define fseek  fseeko
-#  define ftell  ftello
-#endif
-
-
-#if defined(WIN32) && !defined(Windows95) && !defined(__BORLANDC__) && \
-  !(defined(_MSC_VER) && _MSC_VER < 1400) && \
-  !(defined(__MINGW32__) && __MSVCRT_VERSION__ < 0x800)
-  /*
-    Windows '95 and Borland C do not support _lseeki64
-    Visual Studio does not support _fseeki64 and _ftelli64 until the 2005 release.
-    Without these interfaces, files over 2GB in size are not supported for Windows.
-  */
-#  define OPJ_FSEEK(stream,offset,whence) _fseeki64(stream,/* __int64 */ offset,whence)
-#  define OPJ_FSTAT(fildes,stat_buff) _fstati64(fildes,/* struct _stati64 */ stat_buff)
-#  define OPJ_FTELL(stream) /* __int64 */ _ftelli64(stream)
-#  define OPJ_STAT_STRUCT_T struct _stati64
-#  define OPJ_STAT(path,stat_buff) _stati64(path,/* struct _stati64 */ stat_buff)
-#else
-#  define OPJ_FSEEK(stream,offset,whence) fseek(stream,offset,whence)
-#  define OPJ_FSTAT(fildes,stat_buff) fstat(fildes,stat_buff)
-#  define OPJ_FTELL(stream) ftell(stream)
-#  define OPJ_STAT_STRUCT_T struct stat
-#  define OPJ_STAT(path,stat_buff) stat(path,stat_buff)
-#endif
-
 
 /*
  ==========================================================
@@ -145,7 +104,6 @@ static INLINE long lrintf(float f){
 }
 #endif
 
-#include "opj_inttypes.h"
 #include "j2k_lib.h"
 #include "opj_malloc.h"
 #include "event.h"
@@ -178,8 +136,5 @@ static INLINE long lrintf(float f){
 #include "./jpwl/jpwl.h"
 #endif /* USE_JPWL */
 /* <<JPWL */
-
-/* V2 */
-#include "function_list.h"
 
 #endif /* OPJ_INCLUDES_H */

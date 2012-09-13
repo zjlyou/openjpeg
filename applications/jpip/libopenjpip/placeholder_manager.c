@@ -32,7 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "placeholder_manager.h"
-#include "opj_inttypes.h"
+
 
 #ifdef SERVER
 #include "fcgi_stdio.h"
@@ -74,7 +74,7 @@ void delete_placeholderlist( placeholderlist_param_t **list)
   free( *list);
 }
 
-placeholder_param_t * gene_placeholder( box_param_t *box, Byte8_t origID)
+placeholder_param_t * gene_placeholder( box_param_t *box, int origID)
 {
   placeholder_param_t *placeholder;
 
@@ -85,7 +85,7 @@ placeholder_param_t * gene_placeholder( box_param_t *box, Byte8_t origID)
   placeholder->OrigID = origID;
   placeholder->OrigBH = fetch_headbytes( box);
   placeholder->OrigBHlen = box->headlen;
-  placeholder->LBox = 20+(Byte4_t)box->headlen;
+  placeholder->LBox = 20+box->headlen;
   placeholder->next = NULL;
 
   return placeholder;
@@ -115,7 +115,7 @@ void print_placeholder( placeholder_param_t *phld)
   fprintf( logstream, "\t LBox: %d %#x\n", phld->LBox, phld->LBox);
   fprintf( logstream, "\t TBox: %.4s\n", phld->TBox);
   fprintf( logstream, "\t Flags: %#x %#x\n", phld->Flags, phld->Flags);
-  fprintf( logstream, "\t OrigID: %" PRId64 "\n", phld->OrigID);
+  fprintf( logstream, "\t OrigID: %lld\n", phld->OrigID);
   fprintf( logstream, "\t OrigBH: ");
   
   for( i=0; i< phld->OrigBHlen; i++)

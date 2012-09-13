@@ -33,8 +33,9 @@
  *  \brief Modification of jpip.c from 2KAN indexer
  */
 
+#include <stdlib.h>
+#include <math.h>
 #include "opj_includes.h"
-
 
 /* 
  * Write faix box of phix

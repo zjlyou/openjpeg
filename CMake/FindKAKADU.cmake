@@ -10,10 +10,10 @@
 #  For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 #
 
-find_program(KDU_EXPAND_EXECUTABLE
+FIND_PROGRAM(KDU_EXPAND_EXECUTABLE
   kdu_expand
   )
 
-mark_as_advanced(
+MARK_AS_ADVANCED(
   KDU_EXPAND_EXECUTABLE
   )

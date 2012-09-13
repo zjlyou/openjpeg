@@ -30,7 +30,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 #include "ihdrbox_manager.h"
 
 ihdrbox_param_t * gene_ihdrbox( metadatalist_param_t *metadatalist, Byte_t *jpipstream)
@@ -38,7 +37,6 @@ ihdrbox_param_t * gene_ihdrbox( metadatalist_param_t *metadatalist, Byte_t *jpip
   ihdrbox_param_t *ihdrbox;
   metadata_param_t *meta;
   box_param_t *jp2h, *ihdr;
-  int bpc_val;
   
   jp2h = NULL;
   meta = metadatalist->first;
@@ -67,9 +65,7 @@ ihdrbox_param_t * gene_ihdrbox( metadatalist_param_t *metadatalist, Byte_t *jpip
   ihdrbox->height = big4( jpipstream+get_DBoxoff(ihdr));
   ihdrbox->width  = big4( jpipstream+get_DBoxoff(ihdr)+4);
   ihdrbox->nc     = big2( jpipstream+get_DBoxoff(ihdr)+8);
-  bpc_val = *(jpipstream+get_DBoxoff(ihdr)+10)+1;
-  assert( bpc_val >= 0 && bpc_val <= 255 );
-  ihdrbox->bpc    = (Byte_t)bpc_val;
+  ihdrbox->bpc    = *(jpipstream+get_DBoxoff(ihdr)+10)+1;
 
   free( ihdr);
 

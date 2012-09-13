@@ -33,7 +33,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "boxheader_manager.h"
-#include "opj_inttypes.h"
 
 #ifdef SERVER
 #include "fcgi_stdio.h"
@@ -45,7 +44,7 @@
 #endif /*SERVER*/
 
 
-boxheader_param_t * gene_boxheader( int fd, OPJ_OFF_T offset)
+boxheader_param_t * gene_boxheader( int fd, Byte8_t offset)
 {
   Byte8_t boxlen;
   Byte_t headlen;
@@ -71,14 +70,14 @@ boxheader_param_t * gene_boxheader( int fd, OPJ_OFF_T offset)
   return boxheader;
 }
 
-boxheader_param_t * gene_childboxheader( box_param_t *superbox, OPJ_OFF_T offset)
+boxheader_param_t * gene_childboxheader( box_param_t *superbox, Byte8_t offset)
 {
-  return gene_boxheader( superbox->fd, get_DBoxoff(superbox)+offset);
+  return gene_boxheader( superbox->fd, get_DBoxoff( superbox)+offset);
 }
 
 void print_boxheader( boxheader_param_t *boxheader)
 {
   fprintf( logstream, "boxheader info:\n"
 	   "\t type: %.4s\n"
-	   "\t length:%" PRId64 " %#" PRIx64 "\n", boxheader->type, boxheader->length, boxheader->length);
+	   "\t length:%lld %#llx\n", boxheader->type, boxheader->length, boxheader->length);
 }

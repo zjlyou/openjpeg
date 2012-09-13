@@ -59,7 +59,7 @@
  * @param[in] filename file name string
  * @return             file descriptor
  */
-FILE * open_jp2file( const char filename[]);
+FILE * open_jp2file( char filename[]);
 
 
 /**
@@ -69,7 +69,7 @@ FILE * open_jp2file( const char filename[]);
  * @param[out] fsize    file byte size
  * @return              pointer to the xml file content buffer
  */
-char * read_xmlfile( const char filename[], long *fsize);
+char * read_xmlfile( char filename[], long *fsize);
 
 int main(int argc, char *argv[])
 {
@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
     fprintf( stderr, "USAGE: ./addXMLinJP2 modifing.jp2 adding.xml\n");
     return -1;
   }
-
+  
   fp = open_jp2file( argv[1]);
   if( !fp)
     return -1;
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
   fputc( (boxsize>>8)&0xff, fp);
   fputc( boxsize&0xff, fp);
   fwrite( type, 4, 1, fp);
-  fwrite( xmldata, fsize, 1, fp);
+  fwrite( xmldata, (size_t)fsize, 1, fp);
   
   free( xmldata);
   fclose(fp);
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
   return 0;
 }
 
-FILE * open_jp2file( const char filename[])
+FILE * open_jp2file( char filename[])
 {
   FILE *fp;
   char *data;
@@ -137,12 +137,12 @@ FILE * open_jp2file( const char filename[])
   return fp;
 }
 
-char * read_xmlfile( const char filename[], long *fsize)
+char * read_xmlfile( char filename[], long *fsize)
 {
   FILE *fp;
   char *data;
   
-  /*  fprintf( stderr, "open %s\n", filename);*/
+  /*  fprintf( stderr, "open %s\n", filename); */
   if(!(fp = fopen( filename, "r"))){
     fprintf( stderr, "XML file %s not found\n", filename);
     return NULL;
@@ -166,9 +166,9 @@ char * read_xmlfile( const char filename[], long *fsize)
     return NULL;
   }
 
-  data = (char *)malloc( *fsize);
+  data = (char *)malloc( (size_t)*fsize);
   
-  if( fread( data, *fsize, 1, fp) != 1){
+  if( fread( data, (size_t)*fsize, 1, fp) != 1){
     fprintf( stderr, "XML file %s broken (read error)\n", filename);
     free( data);
     fclose(fp);

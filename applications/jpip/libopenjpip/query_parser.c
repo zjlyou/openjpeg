@@ -39,11 +39,9 @@
 #endif
 
 #include <stdio.h>
-#include <assert.h>
 #include <string.h>
 #include <stdlib.h>
 #include "query_parser.h"
-#include "opj_stdint.h"
 
 #ifdef SERVER
 #include "fcgi_stdio.h"
@@ -70,7 +68,7 @@ query_param_t * get_initquery(void);
  * @param[out] fieldval string to copy the field value, if not found, NULL
  * @return pointer to the next field string, if there is none, NULL
  */
-char * get_fieldparam( const char *stringptr, char *fieldname, char *fieldval);
+char * get_fieldparam( char *stringptr, char *fieldname, char *fieldval);
 
 void parse_cclose( char *src, query_param_t *query_param);
 void parse_metareq( char *field, query_param_t *query_param);
@@ -85,11 +83,10 @@ void parse_comps( char *field, query_param_t *query_param);
 /** maximum length of field value*/
 #define MAX_LENOFFIELDVAL 128
 
-query_param_t * parse_query( const char *query_string)
+query_param_t * parse_query( char *query_string)
 {
   query_param_t *query_param;
-  const char *pquery;
-  char fieldname[MAX_LENOFFIELDNAME], fieldval[MAX_LENOFFIELDVAL];
+  char *pquery, fieldname[MAX_LENOFFIELDNAME], fieldval[MAX_LENOFFIELDVAL];
 
   query_param = get_initquery();
   
@@ -195,7 +192,7 @@ query_param_t * get_initquery(void)
 }
 
 
-char * get_fieldparam( const char *stringptr, char *fieldname, char *fieldval)
+char * get_fieldparam( char *stringptr, char *fieldname, char *fieldval)
 {
   char *eqp, *andp, *nexfieldptr;
 
@@ -212,11 +209,9 @@ char * get_fieldparam( const char *stringptr, char *fieldname, char *fieldval)
   else
     nexfieldptr = andp+1;
 
-  assert( (size_t)(eqp-stringptr));
-  strncpy( fieldname, stringptr, (size_t)(eqp-stringptr));
+  strncpy( fieldname, stringptr, eqp-stringptr);
   fieldname[eqp-stringptr]='\0';
-  assert( andp-eqp-1 >= 0);
-  strncpy( fieldval, eqp+1, (size_t)(andp-eqp-1));
+  strncpy( fieldval, eqp+1, andp-eqp-1);
   fieldval[andp-eqp-1]='\0';
 
   return nexfieldptr;
@@ -308,8 +303,7 @@ void parse_metareq( char *field, query_param_t *query_param)
   src = ptr;
   while( *ptr != ']'){
     if( *ptr == ';'){
-      assert( ptr-src >= 0);
-      strncpy( req_box_prop, src, (size_t)(ptr-src));
+      strncpy( req_box_prop, src, ptr-src);
       parse_req_box_prop( req_box_prop, numofboxreq++, query_param);
       ptr++;
       src = ptr;
@@ -317,8 +311,7 @@ void parse_metareq( char *field, query_param_t *query_param)
     }
     ptr++;
   }
-  assert(ptr-src>=0);
-  strncpy( req_box_prop, src, (size_t)(ptr-src));
+  strncpy( req_box_prop, src, ptr-src);
 
   parse_req_box_prop( req_box_prop, numofboxreq++, query_param);
 
@@ -399,7 +392,7 @@ void parse_comps( char *field, query_param_t *query_param)
     }
   
   query_param->lastcomp = stop > aux ? stop : aux;
-  query_param->comps = (bool *)calloc( 1, (OPJ_SIZE_T)(query_param->lastcomp+1)*sizeof(bool));
+  query_param->comps = (bool *)calloc( 1, (query_param->lastcomp+1)*sizeof(bool));
 
   for( i=start; i<=stop; i++)
     query_param->comps[i]=true;

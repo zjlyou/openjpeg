@@ -54,7 +54,7 @@ typedef struct message_param{
   Byte8_t bin_offset;         /**< offset of the data in this message from the start of the data-bin*/
   Byte8_t length;             /**< message byte length*/
   Byte8_t aux;                /**<*/
-  OPJ_OFF_T res_offset;         /**< offset in the resource*/
+  Byte8_t res_offset;         /**< offset in the resource*/
   placeholder_param_t *phld;  /**< placeholder pointer in index*/
   struct message_param *next; /**< pointer to the next message*/
 } message_param_t;
@@ -121,7 +121,7 @@ void enqueue_tileheader( int tile_id, msgqueue_param_t *msgqueue);
  * @param[in]     level    decomposition level
  * @param[in,out] msgqueue message queue pointer
  */
-void enqueue_tile( Byte4_t tile_id, int level, msgqueue_param_t *msgqueue);
+void enqueue_tile( int tile_id, int level, msgqueue_param_t *msgqueue);
 
 /**
  * enqueue precinct data-bin into message queue
@@ -141,7 +141,7 @@ void enqueue_precinct( int seq_id, int tile_id, int comp_id, int layers, msgqueu
  * @param[in]     meta_id  metadata-bin id
  * @param[in,out] msgqueue message queue pointer
  */
-void enqueue_metadata( Byte8_t meta_id, msgqueue_param_t *msgqueue);
+void enqueue_metadata( int meta_id, msgqueue_param_t *msgqueue);
 
 
 /**
@@ -161,7 +161,7 @@ void recons_stream_from_msgqueue( msgqueue_param_t *msgqueue, int tmpfd);
  * @param[in]     offset       offset of the stream from the whole beginning
  * @param[in,out] msgqueue     adding message queue pointer
  */
-void parse_JPIPstream( Byte_t *JPIPstream, Byte8_t streamlen, OPJ_OFF_T offset, msgqueue_param_t *msgqueue);
+void parse_JPIPstream( Byte_t *JPIPstream, Byte8_t streamlen, Byte8_t offset, msgqueue_param_t *msgqueue);
 
 /**
  * parse JPT- JPP- stream to message queue

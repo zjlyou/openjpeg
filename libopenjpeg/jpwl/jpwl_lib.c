@@ -677,7 +677,7 @@ opj_bool jpwl_correct(opj_j2k_t *j2k) {
 		id = cio_read(cio, 2);
 
 		/* details */
-		printf("Marker@%d: %X\n", cio_tell(cio) - 2, id);
+		printf("Marker@%lld: %X\n", cio_tell(cio) - 2, id);
 
 		/* do an action in response to the read marker */
 		switch (id) {
@@ -1581,7 +1581,7 @@ opj_bool jpwl_esd_fill(opj_j2k_t *j2k, jpwl_esd_ms_t *esd, unsigned char *buf) {
 	return OPJ_TRUE;
 }
 
-opj_bool jpwl_esd_write(opj_j2k_t *j2k, jpwl_esd_ms_t *esd, unsigned char *buf) {
+void jpwl_esd_write(opj_j2k_t *j2k, jpwl_esd_ms_t *esd, unsigned char *buf) {
 
 	/* Marker */
 	*(buf++) = (unsigned char) (J2K_MS_ESD >> 8); 

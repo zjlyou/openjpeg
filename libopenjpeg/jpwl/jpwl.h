@@ -243,9 +243,7 @@ as a possible value, mening that the information is not available) and the infor
 are not yet implemented
 @param j2k J2K handle
 */
-#if 0
 void j2k_write_epc(opj_j2k_t *j2k);
-#endif
 
 /**
 Read the EPB marker (Error Protection Block)
@@ -336,7 +334,7 @@ opj_bool jpwl_esd_fill(opj_j2k_t *j2k, jpwl_esd_ms_t *esdmark, unsigned char *bu
 
 opj_bool jpwl_epb_fill(opj_j2k_t *j2k, jpwl_epb_ms_t *epbmark, unsigned char *buf, unsigned char *post_buf);
 
-opj_bool j2k_add_marker(opj_codestream_info_t *cstr_info, unsigned short int type, int pos, int len);
+void j2k_add_marker(opj_codestream_info_t *cstr_info, unsigned short int type, int pos, int len);
 
 /** corrects the data in the JPWL codestream
 @param j2k J2K compressor handle

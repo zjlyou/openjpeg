@@ -44,6 +44,5 @@
 #define RAW_DFMT 15
 #define TGA_DFMT 16
 #define PNG_DFMT 17
-#define RAWL_DFMT 18
 
 #endif /* _OPJ_FORMAT_DEFS_H_ */

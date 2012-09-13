@@ -85,8 +85,8 @@ typedef struct QR{
 /**
  * Initialize the JPIP server
  *
- * @param[in] tcp_auxport opening tcp auxiliary port ( 0 not to open, valid No. 49152-65535)
- * @param[in] udp_auxport opening udp auxiliary port ( 0 not to open, valid No. 49152-65535)
+ * @param[in] tcp_auxport opening tcp auxiliary port ( 0 not to open, valid No. 49152–65535)
+ * @param[in] udp_auxport opening udp auxiliary port ( 0 not to open, valid No. 49152–65535)
  * @return                intialized server record pointer
  */
 server_record_t * init_JPIPserver( int tcp_auxport, int udp_auxport);
@@ -104,7 +104,7 @@ void terminate_JPIPserver( server_record_t **rec);
  * @param[in]  query_string request query string
  * @return     initialized query/response data pointer
  */
-QR_t * parse_querystring( const char *query_string);
+QR_t * parse_querystring( char *query_string);
 
 /**
  * 2nd process; process JPIP request and construct message queue
@@ -157,7 +157,7 @@ void local_log( bool query, bool messages, bool sessions, bool targets, QR_t *qr
 typedef struct dec_server_record{
   cachelist_param_t *cachelist; /**< cache list*/
   Byte_t *jpipstream;           /**< JPT/JPP stream*/
-  OPJ_SIZE_T jpipstreamlen;            /**< length of jpipstream*/
+  int jpipstreamlen;            /**< length of jpipstream*/
   msgqueue_param_t *msgqueue;   /**< parsed message queue of jpipstream*/
   SOCKET listening_socket;      /**< listenning socket*/
 } dec_server_record_t;
@@ -169,7 +169,7 @@ typedef SOCKET client_t;
 /**
  * Initialize the image decoding server
  *
- * @param[in] port opening tcp port (valid No. 49152-65535)
+ * @param[in] port opening tcp port (valid No. 49152–65535)
  * @return         intialized decoding server record pointer
  */
 dec_server_record_t * init_dec_server( int port);
@@ -245,7 +245,7 @@ void destroy_jpipdecoder( jpip_dec_param_t **dec);
  * @param[in]  dec   JPIP decoding parameters pointer
  * @return           true if succeed
  */
-bool fread_jpip( const char fname[], jpip_dec_param_t *dec);
+bool fread_jpip( char fname[], jpip_dec_param_t *dec);
 
 /**
  * Decode jpip codestream
@@ -261,7 +261,7 @@ void decode_jpip( jpip_dec_param_t *dec);
  * @param[in]  dec   JPIP decoding parameters pointer
  * @return           true if succeed
  */
-bool fwrite_jp2k( const char fname[], jpip_dec_param_t *dec);
+bool fwrite_jp2k( char fname[], jpip_dec_param_t *dec);
 
 /**
  * Option; print out parameter values to stderr

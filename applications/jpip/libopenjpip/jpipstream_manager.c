@@ -38,7 +38,7 @@
 #include "ihdrbox_manager.h"
 #include "j2kheader_manager.h"
 
-Byte_t * update_JPIPstream( Byte_t *newstream, OPJ_SIZE_T newstreamlen, Byte_t *cache_stream, OPJ_SIZE_T *streamlen)
+Byte_t * update_JPIPstream( Byte_t *newstream, int newstreamlen, Byte_t *cache_stream, int *streamlen)
 {
   Byte_t *stream = (Byte_t *)malloc( (*streamlen)+newstreamlen);
   if( *streamlen > 0)
@@ -52,7 +52,7 @@ Byte_t * update_JPIPstream( Byte_t *newstream, OPJ_SIZE_T newstreamlen, Byte_t *
   return stream;
 }
 
-void save_codestream( Byte_t *codestream, OPJ_SIZE_T streamlen, const char *fmt)
+void save_codestream( Byte_t *codestream, Byte8_t streamlen, const char *fmt)
 {
   time_t timer;
   struct tm *t_st;
@@ -76,20 +76,11 @@ Byte_t * jpipstream_to_pnm( Byte_t *jpipstream, msgqueue_param_t *msgqueue, Byte
   Byte_t *pnmstream;
   Byte_t *j2kstream; /* j2k or jp2 codestream */
   Byte8_t j2klen;
-  FILE *fp;
-  const char j2kfname[] = "tmp.j2k";
 
   j2kstream = recons_j2k( msgqueue, jpipstream, csn, fw, fh, &j2klen); 
+  pnmstream = j2k_to_pnm( j2kstream, j2klen, ihdrbox);
 
-  fp = fopen( j2kfname, "w+b");
-  fwrite( j2kstream, j2klen, 1, fp);
   free( j2kstream);
-  fseek( fp, 0, SEEK_SET);
-
-  pnmstream = j2k_to_pnm( fp, ihdrbox);
-
-  fclose( fp);
-  remove( j2kfname);
 
   return pnmstream;
 }

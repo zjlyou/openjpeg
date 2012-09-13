@@ -1011,7 +1011,7 @@ int imagetobmp(opj_image_t * image, const char *outfile) {
 	int adjustR, adjustG, adjustB;
 
   if (image->comps[0].prec < 8) {
-    fprintf(stderr, "Unsupported number of components: %d\n", image->comps[0].prec);
+    fprintf(stderr, "Unsupported precision: %d\n", image->comps[0].prec);
     return 1;
   }
 	if (image->numcomps >= 3 && image->comps[0].dx == image->comps[1].dx
@@ -2484,16 +2484,19 @@ opj_image_t* tiftoimage(const char *filename, opj_cparameters_t *parameters)
 	w= tiWidth;
 	h= tiHeight;
 
-	if(tiBps != 8 && tiBps != 16 && tiBps != 12) tiBps = 0;
-	if(tiPhoto != 1 && tiPhoto != 2) tiPhoto = 0;
-
-    if( !tiBps || !tiPhoto)
    {
-	if( !tiBps)
+	unsigned short b = tiBps, p = tiPhoto;
+
+	if(tiBps != 8 && tiBps != 16 && tiBps != 12) b = 0;
+	if(tiPhoto != 1 && tiPhoto != 2) p = 0;
+
+    if( !b || !p)
+  {
+	if( !b)
      fprintf(stderr,"imagetotif: Bits=%d, Only 8 and 16 bits"
       " implemented\n",tiBps);
 	else
-	if( !tiPhoto)
+	if( !p)
      fprintf(stderr,"tiftoimage: Bad color format %d.\n\tOnly RGB(A)"
       " and GRAY(A) has been implemented\n",(int) tiPhoto);
 
@@ -2501,8 +2504,8 @@ opj_image_t* tiftoimage(const char *filename, opj_cparameters_t *parameters)
 	TIFFClose(tif);
 
     return NULL;
+  }
    }
-
    {/* From: tiff-4.0.x/libtiff/tif_getimage.c : */
 	uint16* sampleinfo;
 	uint16 extrasamples;
@@ -2540,7 +2543,6 @@ opj_image_t* tiftoimage(const char *filename, opj_cparameters_t *parameters)
 	numcomps = 3 + has_alpha;
 	color_space = CLRSPC_SRGB;
 
-/*#define USETILEMODE*/
 	for(j = 0; j < numcomps; j++) 
   {
 	if(parameters->cp_cinema) 
@@ -2557,17 +2559,9 @@ opj_image_t* tiftoimage(const char *filename, opj_cparameters_t *parameters)
 	cmptparm[j].dy = subsampling_dy;
 	cmptparm[j].w = w;
 	cmptparm[j].h = h;
-#ifdef USETILEMODE
-  cmptparm[j].x0 = 0;
-  cmptparm[j].y0 = 0;
-#endif
   }
 
-#ifdef USETILEMODE
-	image = opj_image_tile_create(numcomps,&cmptparm[0],color_space);
-#else
 	image = opj_image_create(numcomps, &cmptparm[0], color_space);
-#endif
 
 	if(!image) 
   {
@@ -2641,25 +2635,21 @@ opj_image_t* tiftoimage(const char *filename, opj_cparameters_t *parameters)
 	   {
 		if(index < imgsize)
 	  {
-#ifndef USETILEMODE
 		image->comps[0].data[index] = dat8[i+0];/* R */
 		image->comps[1].data[index] = dat8[i+1];/* G */
 		image->comps[2].data[index] = dat8[i+2];/* B */
 		if(has_alpha)
 		 image->comps[3].data[index] = dat8[i+3];
-#endif
 
 		if(parameters->cp_cinema)
 	 {
 /* Rounding 8 to 12 bits
 */
-#ifndef USETILEMODE
 		image->comps[0].data[index] = image->comps[0].data[index] << 4 ;
 		image->comps[1].data[index] = image->comps[1].data[index] << 4 ;
 		image->comps[2].data[index] = image->comps[2].data[index] << 4 ;
 		if(has_alpha)
 		 image->comps[3].data[index] = image->comps[3].data[index] << 4 ;
-#endif
 	 }
 		index++;
 	  }/*if(index*/
@@ -2713,11 +2703,7 @@ opj_image_t* tiftoimage(const char *filename, opj_cparameters_t *parameters)
 	cmptparm[j].w = w;
 	cmptparm[j].h = h;
   }
-#ifdef USETILEMODE
-	image = opj_image_tile_create(numcomps,&cmptparm[0],color_space);
-#else
 	image = opj_image_create(numcomps, &cmptparm[0], color_space);
-#endif
 
 	if(!image) 
   {
@@ -2802,7 +2788,8 @@ opj_image_t* tiftoimage(const char *filename, opj_cparameters_t *parameters)
 	RAW IMAGE FORMAT
 
  <<-- <<-- <<-- <<-- */
-static opj_image_t* rawtoimage_common(const char *filename, opj_cparameters_t *parameters, raw_cparameters_t *raw_cp, opj_bool big_endian) {
+
+opj_image_t* rawtoimage(const char *filename, opj_cparameters_t *parameters, raw_cparameters_t *raw_cp) {
 	int subsampling_dx = parameters->subsampling_dx;
 	int subsampling_dy = parameters->subsampling_dy;
 
@@ -2876,26 +2863,17 @@ static opj_image_t* rawtoimage_common(const char *filename, opj_cparameters_t *p
 		unsigned short value;
 		for(compno = 0; compno < numcomps; compno++) {
 			for (i = 0; i < w * h; i++) {
-				unsigned char temp1;
-				unsigned char temp2;
-				if (!fread(&temp1, 1, 1, f)) {
+				unsigned char temp;
+				if (!fread(&temp, 1, 1, f)) {
 					fprintf(stderr,"Error reading raw file. End of file probably reached.\n");
 					return NULL;
 				}
-				if (!fread(&temp2, 1, 1, f)) {
+				value = temp << 8;
+				if (!fread(&temp, 1, 1, f)) {
 					fprintf(stderr,"Error reading raw file. End of file probably reached.\n");
 					return NULL;
 				}
-        if( big_endian )
-          {
-          value = temp1 << 8;
-          value += temp2;
-          }
-        else
-          {
-          value = temp2 << 8;
-          value += temp1;
-          }
+				value += temp;
 				image->comps[compno].data[i] = raw_cp->rawSigned?(short)value:value;
 			}
 		}
@@ -2913,15 +2891,7 @@ static opj_image_t* rawtoimage_common(const char *filename, opj_cparameters_t *p
 	return image;
 }
 
-opj_image_t* rawltoimage(const char *filename, opj_cparameters_t *parameters, raw_cparameters_t *raw_cp) {
-  return rawtoimage_common(filename, parameters, raw_cp, OPJ_FALSE);
-}
-
-opj_image_t* rawtoimage(const char *filename, opj_cparameters_t *parameters, raw_cparameters_t *raw_cp) {
-  return rawtoimage_common(filename, parameters, raw_cp, OPJ_TRUE);
-}
-
-int imagetoraw_common(opj_image_t * image, const char *outfile, opj_bool big_endian)
+int imagetoraw(opj_image_t * image, const char *outfile)
 {
 	FILE *rawFile = NULL;
   size_t res;
@@ -2998,25 +2968,16 @@ int imagetoraw_common(opj_image_t * image, const char *outfile, opj_bool big_end
 				ptr = image->comps[compno].data;
 				for (line = 0; line < h; line++) {
 					for(row = 0; row < w; row++)	{					
-						unsigned char temp1;
-						unsigned char temp2;
+						unsigned char temp;
 						curr = (signed short int) (*ptr & mask);
-            if( big_endian )
-              {
-              temp1 = (unsigned char) (curr >> 8);
-              temp2 = (unsigned char) curr;
-              }
-            else
-              {
-              temp2 = (unsigned char) (curr >> 8);
-              temp1 = (unsigned char) curr;
-              }
-            res = fwrite(&temp1, 1, 1, rawFile);
+						temp = (unsigned char) (curr >> 8);
+						res = fwrite(&temp, 1, 1, rawFile);
             if( res < 1 ) {
               fprintf(stderr, "failed to write 1 byte for %s\n", outfile);
               return 1;
             }
-						res = fwrite(&temp2, 1, 1, rawFile);
+						temp = (unsigned char) curr;
+						res = fwrite(&temp, 1, 1, rawFile);
             if( res < 1 ) {
               fprintf(stderr, "failed to write 1 byte for %s\n", outfile);
               return 1;
@@ -3032,25 +2993,16 @@ int imagetoraw_common(opj_image_t * image, const char *outfile, opj_bool big_end
 				ptr = image->comps[compno].data;
 				for (line = 0; line < h; line++) {
 					for(row = 0; row < w; row++)	{				
-						unsigned char temp1;
-						unsigned char temp2;
+						unsigned char temp;
 						curr = (unsigned short int) (*ptr & mask);
-            if( big_endian )
-              {
-              temp1 = (unsigned char) (curr >> 8);
-              temp2 = (unsigned char) curr;
-              }
-            else
-              {
-              temp2 = (unsigned char) (curr >> 8);
-              temp1 = (unsigned char) curr;
-              }
-            res = fwrite(&temp1, 1, 1, rawFile);
+						temp = (unsigned char) (curr >> 8);
+						res = fwrite(&temp, 1, 1, rawFile);
             if( res < 1 ) {
               fprintf(stderr, "failed to write 1 byte for %s\n", outfile);
               return 1;
             }
-						res = fwrite(&temp2, 1, 1, rawFile);
+						temp = (unsigned char) curr;
+						res = fwrite(&temp, 1, 1, rawFile);
             if( res < 1 ) {
               fprintf(stderr, "failed to write 1 byte for %s\n", outfile);
               return 1;
@@ -3073,16 +3025,6 @@ int imagetoraw_common(opj_image_t * image, const char *outfile, opj_bool big_end
 	}
 	fclose(rawFile);
 	return 0;
-}
-
-int imagetoraw(opj_image_t * image, const char *outfile)
-{
-  return imagetoraw_common(image, outfile, OPJ_TRUE);
-}
-
-int imagetorawl(opj_image_t * image, const char *outfile)
-{
-  return imagetoraw_common(image, outfile, OPJ_FALSE);
 }
 
 #ifdef HAVE_LIBPNG

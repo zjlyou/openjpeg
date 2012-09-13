@@ -290,7 +290,7 @@ void enqueue_imagedata( query_param_t query_param, msgqueue_param_t *msgqueue)
 
   imgreg  = map_viewin2imgreg( query_param.fx, query_param.fy, 
 			       query_param.rx, query_param.ry, query_param.rw, query_param.rh,
-			       (int)codeidx->SIZ.XOsiz, (int)codeidx->SIZ.YOsiz, (int)codeidx->SIZ.Xsiz, (int)codeidx->SIZ.Ysiz, 
+			       codeidx->SIZ.XOsiz, codeidx->SIZ.YOsiz, codeidx->SIZ.Xsiz, codeidx->SIZ.Ysiz, 
 			       numOfreslev );
 
   if( query_param.len == 0)
@@ -318,8 +318,8 @@ void enqueue_imagedata( query_param_t query_param, msgqueue_param_t *msgqueue)
 	  /* high priority */
 	  /*printf("Tile completely contained within view-window %d\n", tile_id);*/
 	  if( msgqueue->cachemodel->jppstream){
-	    enqueue_tileheader( (int)tile_id, msgqueue);
-	    enqueue_allprecincts( (int)tile_id, imgreg.level, query_param.lastcomp, query_param.comps, query_param.layers, msgqueue);
+	    enqueue_tileheader( tile_id, msgqueue);
+	    enqueue_allprecincts( tile_id, imgreg.level, query_param.lastcomp, query_param.comps, query_param.layers, msgqueue);
 	  }
 	  else
 	    enqueue_tile( tile_id, imgreg.level, msgqueue);
@@ -329,14 +329,14 @@ void enqueue_imagedata( query_param_t query_param, msgqueue_param_t *msgqueue)
 	  /* low priority */
 	  /*printf("Tile partially overlaps view-window %d\n", tile_id);*/
 	  if( msgqueue->cachemodel->jppstream){
-	    enqueue_tileheader( (int)tile_id, msgqueue);
+	    enqueue_tileheader( tile_id, msgqueue);
 
       /* FIXME: The following code is suspicious it implicitely cast an unsigned int to int, which truncates values */
-	    xmin = tile_Xrange.minvalue >= (Byte4_t)(imgreg.xosiz + imgreg.ox) ? 0 : imgreg.xosiz + imgreg.ox - (int)tile_Xrange.minvalue;
-	    xmax = tile_Xrange.maxvalue <= (Byte4_t)(imgreg.xosiz + imgreg.ox + imgreg.sx) ? (int)(tile_Xrange.maxvalue - tile_Xrange.minvalue -1) : (int)(imgreg.xosiz + imgreg.ox + imgreg.sx - (int)tile_Xrange.minvalue - 1);
-	    ymin = tile_Yrange.minvalue >= (Byte4_t)(imgreg.yosiz + imgreg.oy) ? 0 : imgreg.yosiz + imgreg.oy - (int)tile_Yrange.minvalue;
-	    ymax = tile_Yrange.maxvalue <= (Byte4_t)(imgreg.yosiz + imgreg.oy + imgreg.sy) ? (int)(tile_Yrange.maxvalue - tile_Yrange.minvalue - 1) : (int)(imgreg.yosiz + imgreg.oy + imgreg.sy - (int)tile_Yrange.minvalue - 1);
-	    enqueue_precincts( xmin, xmax, ymin, ymax, (int)tile_id, imgreg.level, query_param.lastcomp, query_param.comps, query_param.layers, msgqueue);
+	    xmin = tile_Xrange.minvalue >= (Byte4_t)(imgreg.xosiz + imgreg.ox) ? 0 : imgreg.xosiz + imgreg.ox - tile_Xrange.minvalue;
+	    xmax = tile_Xrange.maxvalue <= (Byte4_t)(imgreg.xosiz + imgreg.ox + imgreg.sx) ? tile_Xrange.maxvalue - tile_Xrange.minvalue -1 : imgreg.xosiz + imgreg.ox + imgreg.sx - tile_Xrange.minvalue -1;
+	    ymin = tile_Yrange.minvalue >= (Byte4_t)(imgreg.yosiz + imgreg.oy) ? 0 : imgreg.yosiz + imgreg.oy - tile_Yrange.minvalue;
+	    ymax = tile_Yrange.maxvalue <= (Byte4_t)(imgreg.yosiz + imgreg.oy + imgreg.sy) ? tile_Yrange.maxvalue - tile_Yrange.minvalue -1 : imgreg.yosiz + imgreg.oy + imgreg.sy - tile_Yrange.minvalue -1;
+	    enqueue_precincts( xmin, xmax, ymin, ymax, tile_id, imgreg.level, query_param.lastcomp, query_param.comps, query_param.layers, msgqueue);
 	  }
 	  else
 	    enqueue_tile( tile_id, imgreg.level, msgqueue);
@@ -347,6 +347,7 @@ void enqueue_imagedata( query_param_t query_param, msgqueue_param_t *msgqueue)
 }
 
 
+/* MM: shouldnt xmin/xmax be Byte4_t instead ? */
 void enqueue_precincts( int xmin, int xmax, int ymin, int ymax, int tile_id, int level, int lastcomp, bool *comps, int layers, msgqueue_param_t *msgqueue)
 {
   index_param_t *codeidx;
@@ -357,40 +358,34 @@ void enqueue_precincts( int xmin, int xmax, int ymin, int ymax, int tile_id, int
   Byte4_t xminP, xmaxP, yminP, ymaxP;
 
   codeidx  = msgqueue->cachemodel->target->codeidx;
-  /* MM: shouldnt xmin/xmax be Byte4_t instead ? */
-  if( xmin < 0 || xmax < 0 || ymin < 0 || ymax < 0)
-    return;
-  /* MM: I think the API should not really be int should it ? */
-  if( tile_id < 0 )
-    return;
 
   for( c=0; c<codeidx->SIZ.Csiz; c++)
     if( lastcomp == -1 /*all*/ || ( c<=lastcomp && comps[c])){
       seq_id = 0;
       for( res_lev=0, dec_lev=codeidx->COD.numOfdecomp; dec_lev>=level; res_lev++, dec_lev--){
 	
-	XTsiz = get_tile_XSiz( codeidx->SIZ, (Byte4_t)tile_id, dec_lev);
-	YTsiz = get_tile_YSiz( codeidx->SIZ, (Byte4_t)tile_id, dec_lev);
+	XTsiz = get_tile_XSiz( codeidx->SIZ, tile_id, dec_lev);
+	YTsiz = get_tile_YSiz( codeidx->SIZ, tile_id, dec_lev);
 	
 	XPsiz = ( codeidx->COD.Scod & 0x01) ? codeidx->COD.XPsiz[ res_lev] : XTsiz;
 	YPsiz = ( codeidx->COD.Scod & 0x01) ? codeidx->COD.YPsiz[ res_lev] : YTsiz;
 	  
 	for( u=0; u<ceil((double)YTsiz/(double)YPsiz); u++){
-	  yminP = (Byte4_t)u*YPsiz;
-	  ymaxP = (Byte4_t)(u+1)*YPsiz-1;
+	  yminP = u*YPsiz;
+	  ymaxP = (u+1)*YPsiz-1;
 	  if( YTsiz <= ymaxP)
 	    ymaxP = YTsiz-1;
 	  
 	  for( v=0; v<ceil((double)XTsiz/(double)XPsiz); v++, seq_id++){
-	    xminP = (Byte4_t)v*XPsiz;
-	    xmaxP = (Byte4_t)(v+1)*XPsiz-1;
+	    xminP = v*XPsiz;
+	    xmaxP = (v+1)*XPsiz-1;
 	    if( XTsiz <= xmaxP)
 	      xmaxP = XTsiz-1;
 	    
-	    if( xmaxP < (Byte4_t)xmin || xminP > (Byte4_t)xmax || ymaxP < (Byte4_t)ymin || yminP > (Byte4_t)ymax){
+	    if( xmaxP < xmin || xminP > xmax || ymaxP < ymin || yminP > ymax){
 	      /* Precinct completely excluded from view-window */
 	    }
-	    else if( xminP >= (Byte4_t)xmin && xmaxP <= (Byte4_t)xmax && yminP >= (Byte4_t)ymin && ymaxP <= (Byte4_t)ymax){
+	    else if( xminP >= xmin && xmaxP <= xmax && yminP >= ymin && ymaxP <= ymax){
 	      /* Precinct completely contained within view-window
 	       high priority */
 	      enqueue_precinct( seq_id, tile_id, c, (dec_lev>level)?-1:layers, msgqueue);
@@ -415,16 +410,14 @@ void enqueue_allprecincts( int tile_id, int level, int lastcomp, bool *comps, in
   Byte4_t XPsiz, YPsiz;
 
   codeidx  = msgqueue->cachemodel->target->codeidx;
-  if( tile_id < 0 )
-    return;
 
   for( c=0; c<codeidx->SIZ.Csiz; c++)
     if( lastcomp == -1 /*all*/ || ( c<=lastcomp && comps[c])){
       seq_id = 0;
       for( res_lev=0, dec_lev=codeidx->COD.numOfdecomp; dec_lev>=level; res_lev++, dec_lev--){
 	
-	XTsiz = get_tile_XSiz( codeidx->SIZ, (Byte4_t)tile_id, dec_lev);
-	YTsiz = get_tile_YSiz( codeidx->SIZ, (Byte4_t)tile_id, dec_lev);
+	XTsiz = get_tile_XSiz( codeidx->SIZ, tile_id, dec_lev);
+	YTsiz = get_tile_YSiz( codeidx->SIZ, tile_id, dec_lev);
 	
 	XPsiz = ( codeidx->COD.Scod & 0x01) ? codeidx->COD.XPsiz[ res_lev] : XTsiz;
 	YPsiz = ( codeidx->COD.Scod & 0x01) ? codeidx->COD.YPsiz[ res_lev] : YTsiz;
@@ -445,9 +438,9 @@ bool enqueue_metabins( query_param_t query_param, metadatalist_param_t *metadata
       return false;
     }
     else{
-      Byte8_t idx = search_metadataidx( query_param.box_type[i], metadatalist);
+      int idx = search_metadataidx( query_param.box_type[i], metadatalist);
 
-      if( idx != (Byte8_t)-1)
+      if( idx != -1)
 	enqueue_metadata( idx, msgqueue);
       else{
 	fprintf( FCGI_stdout, "Status: 400\r\n");

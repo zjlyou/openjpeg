@@ -29,12 +29,9 @@
  */
 
 #include "metadata_manager.h"
-#include "opj_inttypes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <limits.h>
-#include <assert.h>
 
 #ifdef SERVER
 #include "fcgi_stdio.h"
@@ -66,10 +63,10 @@ metadatalist_param_t * const_metadatalist( int fd)
   box_param_t *box, *next;
   placeholderlist_param_t *phldlist;
   placeholder_param_t *phld;
-  Byte8_t idx;
+  int idx;
   Byte8_t filesize;
 
-  if(!(filesize = (Byte8_t)get_filesize( fd)))
+  if(!(filesize = get_filesize( fd)))
     return NULL;
   
   if( !(toplev_boxlist = get_boxstructure( fd, 0, filesize))){
@@ -122,7 +119,7 @@ void delete_metadatalist( metadatalist_param_t **list)
   free( *list);
 }
 
-metadata_param_t * gene_metadata( Byte8_t idx, boxlist_param_t *boxlist, placeholderlist_param_t *phldlist, boxcontents_param_t *boxcontents)
+metadata_param_t * gene_metadata( int idx, boxlist_param_t *boxlist, placeholderlist_param_t *phldlist, boxcontents_param_t *boxcontents)
 {
   metadata_param_t *bin;
   
@@ -160,16 +157,15 @@ void insert_metadata_into_list( metadata_param_t *metabin, metadatalist_param_t 
 void print_metadata( metadata_param_t *metadata)
 {
   boxcontents_param_t *boxcont;
-  fprintf( logstream, "metadata-bin %" PRIu64 " info:\n", metadata->idx);
+  fprintf( logstream, "metadata-bin %d info:\n", metadata->idx);
   print_allbox( metadata->boxlist);
   print_allplaceholder( metadata->placeholderlist);
  
   boxcont = metadata->boxcontents;
   if( boxcont)
       fprintf( logstream, "box contents:\n"
-	       "\t offset: %" PRId64 " %#" PRIx64 "\n" 
-         "\t length: %" PRId64 " %#" PRIx64 "\n", boxcont->offset,
-         boxcont->offset, boxcont->length, boxcont->length);
+	       "\t offset: %lld %#llx\n" 
+	       "\t length: %lld %#llx\n", boxcont->offset, boxcont->offset, boxcont->length, boxcont->length);
 }
 
 void print_allmetadata( metadatalist_param_t *list)
@@ -184,7 +180,7 @@ void print_allmetadata( metadatalist_param_t *list)
   }
 }
 
-boxcontents_param_t * gene_boxcontents( OPJ_OFF_T offset, OPJ_SIZE_T length)
+boxcontents_param_t * gene_boxcontents( Byte8_t offset, Byte8_t length)
 {
   boxcontents_param_t *contents;
 
@@ -196,7 +192,7 @@ boxcontents_param_t * gene_boxcontents( OPJ_OFF_T offset, OPJ_SIZE_T length)
   return contents;
 }
 
-metadata_param_t * search_metadata( Byte8_t idx, metadatalist_param_t *list)
+metadata_param_t * search_metadata( int idx, metadatalist_param_t *list)
 { 
   metadata_param_t *found;
 
@@ -212,10 +208,8 @@ metadata_param_t * search_metadata( Byte8_t idx, metadatalist_param_t *list)
   return NULL;
 }
 
-Byte8_t search_metadataidx( char boxtype[4], metadatalist_param_t *list)
+int search_metadataidx( char boxtype[4], metadatalist_param_t *list)
 {
-  /* MM FIXME: what is the return type of this function ?
-   Byte8_t or int ? */
   metadata_param_t *ptr;
   int i;
 
@@ -249,5 +243,5 @@ Byte8_t search_metadataidx( char boxtype[4], metadatalist_param_t *list)
     }
     ptr = ptr->next;
   }
-  return (Byte8_t)-1;
+  return -1;
 }

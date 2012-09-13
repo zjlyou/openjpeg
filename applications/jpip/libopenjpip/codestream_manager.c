@@ -30,7 +30,6 @@
 
 #include <stdio.h>
 #include "codestream_manager.h"
-#include "opj_inttypes.h"
 
 #ifdef SERVER
 #include "fcgi_stdio.h"
@@ -41,7 +40,7 @@
 #define logstream stderr
 #endif /*SERVER */
 
-codestream_param_t set_codestream( int fd, OPJ_OFF_T offset, OPJ_SIZE_T length)
+codestream_param_t set_codestream( int fd, Byte8_t offset, Byte8_t length)
 {
   codestream_param_t cs;
 
@@ -52,22 +51,22 @@ codestream_param_t set_codestream( int fd, OPJ_OFF_T offset, OPJ_SIZE_T length)
   return cs;
 }
 
-Byte_t * fetch_codestreambytes( codestream_param_t *cs, OPJ_OFF_T offset, OPJ_SIZE_T size)
+Byte_t * fetch_codestreambytes( codestream_param_t *cs, long offset, int size)
 {
   return fetch_bytes( cs->fd, cs->offset+offset, size);
 }
 
-Byte_t fetch_codestream1byte( codestream_param_t *cs, OPJ_OFF_T offset)
+Byte_t fetch_codestream1byte( codestream_param_t *cs, long offset)
 {
   return fetch_1byte( cs->fd, cs->offset+offset);
 }
 
-Byte2_t fetch_codestream2bytebigendian( codestream_param_t *cs, OPJ_OFF_T offset)
+Byte2_t fetch_codestream2bytebigendian( codestream_param_t *cs, long offset)
 {
   return fetch_2bytebigendian( cs->fd, cs->offset+offset);
 }
 
-Byte4_t fetch_codestream4bytebigendian( codestream_param_t *cs, OPJ_OFF_T offset)
+Byte4_t fetch_codestream4bytebigendian( codestream_param_t *cs, long offset)
 {
   return fetch_4bytebigendian( cs->fd, cs->offset+offset);
 }
@@ -76,6 +75,6 @@ void print_codestream( codestream_param_t cs)
 {
   fprintf( logstream, "codestream info:\n"
 	   "\t fd: %d\n"
-	   "\t offset: %#" PRIx64 "\n"
-	   "\t length: %#" PRIx64 "\n", cs.fd, cs.offset, cs.length);
+	   "\t offset: %#llx\n"
+	   "\t length: %#llx\n", cs.fd, cs.offset, cs.length);
 }

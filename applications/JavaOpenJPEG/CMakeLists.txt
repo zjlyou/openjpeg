@@ -1,9 +1,13 @@
 #JavaOpenJPEG/CMakeLists.txt
 
 # First thing define the common source:
-set(openjpegjni_SRCS
+SET(openjpegjni_SRCS
   JavaOpenJPEGDecoder.c
   JavaOpenJPEG.c
+  ${OPENJPEG_SOURCE_DIR}/applications/codec/index.c
+  ${OPENJPEG_SOURCE_DIR}/applications/codec/convert.c
+  #${OPENJPEG_SOURCE_DIR}/applications/common/color.c
+  ${OPENJPEG_SOURCE_DIR}/applications/common/opj_getopt.c
   )
 
 # JNI binding:
@@ -20,9 +24,21 @@ include_directories(
 add_library(openjpegjni MODULE
   ${openjpegjni_SRCS}
   )
+TARGET_LINK_LIBRARIES(openjpegjni ${OPENJPEG_LIBRARY_NAME})
+
+IF(WIN32)
+  SET(OPENJPEG_INSTALL_JNI_DIR ${OPENJPEG_INSTALL_BIN_DIR})
+ELSE()
+  SET(OPENJPEG_INSTALL_JNI_DIR ${OPENJPEG_INSTALL_LIB_DIR})
+ENDIF()
+
+INSTALL(TARGETS openjpegjni
+  EXPORT OpenJPEGTargets
+  LIBRARY DESTINATION ${OPENJPEG_INSTALL_JNI_DIR} COMPONENT Libraries
+)
 
 # build jar:
-find_package(Java 1.5 REQUIRED) # javac, jar
+FIND_PACKAGE(Java 1.5 REQUIRED) # javac, jar
 
 # build dep list:
 file(GLOB java_srcs "java-sources/org/openJpeg/*.java")
@@ -30,7 +46,7 @@ file(GLOB java_srcs "java-sources/org/openJpeg/*.java")
 # make sure target javac dir exists:
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/classes)
 # Build java
-add_custom_command(
+ADD_CUSTOM_COMMAND(
   OUTPUT ${LIBRARY_OUTPUT_PATH}/openjpeg.jar
   COMMAND ${Java_JAVAC_EXECUTABLE} -sourcepath  "${CMAKE_CURRENT_SOURCE_DIR}/java-sources"
   ${java_srcs} -d ${CMAKE_CURRENT_BINARY_DIR}/classes
@@ -41,7 +57,11 @@ add_custom_command(
 )
 
 # name the target
-add_custom_target(OpenJPEGJavaJar ALL
+ADD_CUSTOM_TARGET(OpenJPEGJavaJar ALL
   DEPENDS ${LIBRARY_OUTPUT_PATH}/openjpeg.jar
   COMMENT "building openjpeg.jar"
+)
+
+INSTALL(FILES ${LIBRARY_OUTPUT_PATH}/openjpeg.jar
+  DESTINATION ${OPENJPEG_INSTALL_SHARE_DIR} COMPONENT JavaModule
 )

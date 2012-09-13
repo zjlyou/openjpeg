@@ -1,13 +1,13 @@
-include_regular_expression("^.*$")
+INCLUDE_REGULAR_EXPRESSION("^.*$")
 
-include_directories(
+INCLUDE_DIRECTORIES(
   ${OPENJPEG_SOURCE_DIR}/libopenjpeg
   ${FCGI_INCLUDE_DIRS}
   ${CURL_INCLUDE_DIRS}
 )
 
 # Defines the source code for the library
-set(OPENJPIP_SRCS
+SET(OPENJPIP_SRCS
   ${CMAKE_CURRENT_SOURCE_DIR}/boxheader_manager.c
   ${CMAKE_CURRENT_SOURCE_DIR}/codestream_manager.c
   ${CMAKE_CURRENT_SOURCE_DIR}/imgreg_manager.c
@@ -34,11 +34,11 @@ set(OPENJPIP_SRCS
   ${CMAKE_CURRENT_SOURCE_DIR}/sock_manager.c
   )
 
-set(SERVER_SRCS
+SET(SERVER_SRCS
   ${CMAKE_CURRENT_SOURCE_DIR}/auxtrans_manager.c
   )
 
-set(LOCAL_SRCS
+SET(LOCAL_SRCS
   ${CMAKE_CURRENT_SOURCE_DIR}/jp2k_decoder.c
   ${CMAKE_CURRENT_SOURCE_DIR}/imgsock_manager.c
   ${CMAKE_CURRENT_SOURCE_DIR}/jpipstream_manager.c
@@ -47,26 +47,26 @@ set(LOCAL_SRCS
   )
 
 # Build the library
-add_library(openjpip_local STATIC ${OPENJPIP_SRCS} ${LOCAL_SRCS})
-target_link_libraries(openjpip_local ${OPENJPEG_LIBRARY_NAME})
-if(WIN32)
+ADD_LIBRARY(openjpip_local STATIC ${OPENJPIP_SRCS} ${LOCAL_SRCS})
+TARGET_LINK_LIBRARIES(openjpip_local ${OPENJPEG_LIBRARY_NAME})
+IF(WIN32)
   # add Winsock on windows+mingw
-  target_link_libraries(openjpip_local ws2_32)
-endif()
+  TARGET_LINK_LIBRARIES(openjpip_local ws2_32)
+ENDIF(WIN32)
 
 # Install library
-install(TARGETS openjpip_local
+INSTALL(TARGETS openjpip_local
   EXPORT OpenJPEGTargets
   DESTINATION ${OPENJPEG_INSTALL_LIB_DIR} COMPONENT Libraries
   )
 
-if(BUILD_JPIP_SERVER)
-  add_library(openjpip_server STATIC ${OPENJPIP_SRCS} ${SERVER_SRCS})
-  target_link_libraries(openjpip_server ${FCGI_LIBRARIES} ${CURL_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
-  set_target_properties(openjpip_server
+IF(BUILD_JPIP_SERVER)
+  ADD_LIBRARY(openjpip_server STATIC ${OPENJPIP_SRCS} ${SERVER_SRCS})
+  TARGET_LINK_LIBRARIES(openjpip_server ${FCGI_LIBRARIES} ${CURL_LIBRARIES} ${CMAKE_THREAD_LIBS})
+  SET_TARGET_PROPERTIES(openjpip_server
     PROPERTIES COMPILE_FLAGS "-DSERVER")
-  install(TARGETS openjpip_server
+  INSTALL(TARGETS openjpip_server
     EXPORT OpenJPEGTargets
     DESTINATION ${OPENJPEG_INSTALL_LIB_DIR} COMPONENT Libraries
     )
-endif()
+ENDIF(BUILD_JPIP_SERVER)

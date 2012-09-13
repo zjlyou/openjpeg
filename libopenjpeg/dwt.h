@@ -52,54 +52,46 @@ Forward 5-3 wavelet tranform in 2-D.
 Apply a reversible DWT transform to a component of an image.
 @param tilec Tile component information (current tile)
 */
-opj_bool opj_dwt_encode(opj_tcd_tilecomp_v2_t * tilec);
-
+void dwt_encode(opj_tcd_tilecomp_t * tilec);
 /**
 Inverse 5-3 wavelet tranform in 2-D.
 Apply a reversible inverse DWT transform to a component of an image.
 @param tilec Tile component information (current tile)
 @param numres Number of resolution levels to decode
 */
-opj_bool opj_dwt_decode(opj_tcd_tilecomp_v2_t* tilec, OPJ_UINT32 numres);
-
+void dwt_decode(opj_tcd_tilecomp_t* tilec, int numres);
 /**
 Get the gain of a subband for the reversible 5-3 DWT.
 @param orient Number that identifies the subband (0->LL, 1->HL, 2->LH, 3->HH)
 @return Returns 0 if orient = 0, returns 1 if orient = 1 or 2, returns 2 otherwise
 */
-OPJ_UINT32 opj_dwt_getgain(OPJ_UINT32 orient) ;
+int dwt_getgain(int orient);
 /**
 Get the norm of a wavelet function of a subband at a specified level for the reversible 5-3 DWT.
 @param level Level of the wavelet function
 @param orient Band of the wavelet function
 @return Returns the norm of the wavelet function
 */
-double dwt_getnorm(int level, int orient); /* TODO REMOVE IT*/
-OPJ_FLOAT64 opj_dwt_getnorm(OPJ_UINT32 level, OPJ_UINT32 orient);
+double dwt_getnorm(int level, int orient);
 /**
 Forward 9-7 wavelet transform in 2-D. 
 Apply an irreversible DWT transform to a component of an image.
 @param tilec Tile component information (current tile)
 */
-opj_bool opj_dwt_encode_real(opj_tcd_tilecomp_v2_t * tilec);
+void dwt_encode_real(opj_tcd_tilecomp_t * tilec);
 /**
-KEEP TRUNK VERSION + return type of v2 because rev557
 Inverse 9-7 wavelet transform in 2-D. 
 Apply an irreversible inverse DWT transform to a component of an image.
 @param tilec Tile component information (current tile)
 @param numres Number of resolution levels to decode
 */
-/* V1 void dwt_decode_real(opj_tcd_tilecomp_t* tilec, int numres); */
-opj_bool dwt_decode_real(opj_tcd_tilecomp_t* tilec, int numres);
-
-opj_bool dwt_decode_real_v2(opj_tcd_tilecomp_v2_t* restrict tilec, OPJ_UINT32 numres);
-
+void dwt_decode_real(opj_tcd_tilecomp_t* tilec, int numres);
 /**
 Get the gain of a subband for the irreversible 9-7 DWT.
 @param orient Number that identifies the subband (0->LL, 1->HL, 2->LH, 3->HH)
 @return Returns the gain of the 9-7 wavelet transform
 */
-OPJ_UINT32 opj_dwt_getgain_real(OPJ_UINT32 orient);
+int dwt_getgain_real(int orient);
 /**
 Get the norm of a wavelet function of a subband at a specified level for the irreversible 9-7 DWT
 @param level Level of the wavelet function
@@ -107,13 +99,12 @@ Get the norm of a wavelet function of a subband at a specified level for the irr
 @return Returns the norm of the 9-7 wavelet
 */
 double dwt_getnorm_real(int level, int orient);
-OPJ_FLOAT64 opj_dwt_getnorm_real(OPJ_UINT32 level, OPJ_UINT32 orient);
 /**
 Explicit calculation of the Quantization Stepsizes 
 @param tccp Tile-component coding parameters
 @param prec Precint analyzed
 */
-void opj_dwt_calc_explicit_stepsizes(opj_tccp_t * tccp, OPJ_UINT32 prec);
+void dwt_calc_explicit_stepsizes(opj_tccp_t * tccp, int prec);
 /* ----------------------------------------------------------------------- */
 /*@}*/
 

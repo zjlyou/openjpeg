@@ -32,9 +32,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <assert.h>
 #include "box_manager.h"
-#include "opj_inttypes.h"
 
 #ifdef SERVER
 #include "fcgi_stdio.h"
@@ -45,7 +43,7 @@
 #define logstream stderr
 #endif /*SERVER*/
 
-boxlist_param_t * gene_boxlist(void)
+boxlist_param_t * gene_boxlist()
 {
   boxlist_param_t *boxlist;
 
@@ -57,41 +55,38 @@ boxlist_param_t * gene_boxlist(void)
   return boxlist;
 }
 
-boxlist_param_t * get_boxstructure( int fd, OPJ_OFF_T offset, OPJ_SIZE_T length)
+boxlist_param_t * get_boxstructure( int fd, Byte8_t offset, Byte8_t length)
 {
   boxlist_param_t *boxlist;
   box_param_t *box;
-  OPJ_OFF_T pos;
+  int pos;
   
   boxlist = NULL;
   pos = offset;
-  assert( (OPJ_OFF_T)length>=0);
   do{
     if(!(box = gene_boxbyOffset( fd, pos)))
       break;
     
-    assert( (OPJ_OFF_T)box->length >= 0);
-    pos += (OPJ_OFF_T)box->length;
+    pos += box->length;
     
     if( !boxlist)
       boxlist = gene_boxlist();
     insert_box_into_list( box, boxlist);
-  }while( pos < offset+(OPJ_OFF_T)length);
+  }while( pos < (int)(offset+length));
 
   return boxlist;
 }
 
-box_param_t * gene_boxbyOffset( int fd, OPJ_OFF_T offset)
+box_param_t * gene_boxbyOffset( int fd, Byte8_t offset)
 {
   Byte_t *data;
-  Byte8_t boxlen;
-  Byte_t headlen;
+  Byte8_t boxlen, headlen;
   char *boxtype;
   box_param_t *box;
 
   /* read LBox and TBox*/
   if(!(data = fetch_bytes( fd, offset, 8))){
-    fprintf( FCGI_stderr, "Error: error in gene_boxbyOffset( %d, %" PRId64 ")\n", fd, offset);
+    fprintf( FCGI_stderr, "Error: error in gene_boxbyOffset( %d, %lld)\n", fd, offset);
     return NULL;
   }
   
@@ -116,7 +111,7 @@ box_param_t * gene_boxbyOffset( int fd, OPJ_OFF_T offset)
       free(data2);
     }
     else{
-      fprintf( FCGI_stderr, "Error: error in gene_boxbyOffset( %d, %" PRId64 ")\n", fd, offset);
+      fprintf( FCGI_stderr, "Error: error in gene_boxbyOffset( %d, %lld)\n", fd, offset);
       free( data);
       return NULL;
     }
@@ -132,10 +127,9 @@ box_param_t * gene_boxbyOffset( int fd, OPJ_OFF_T offset)
   return box;
 }
 
-box_param_t * gene_boxbyOffinStream( Byte_t *stream, OPJ_OFF_T offset)
+box_param_t * gene_boxbyOffinStream( Byte_t *stream, Byte8_t offset)
 {
-  Byte8_t boxlen;
-  Byte_t headlen;
+  Byte8_t boxlen, headlen;
   char *boxtype;
   box_param_t *box;
 
@@ -167,28 +161,22 @@ box_param_t * gene_boxbyOffinStream( Byte_t *stream, OPJ_OFF_T offset)
 }
 
 
-box_param_t * gene_boxbyType( int fd, OPJ_OFF_T offset, OPJ_SIZE_T length, const char TBox[])
+box_param_t * gene_boxbyType( int fd, Byte8_t offset, Byte8_t length, const char TBox[])
 {
-  OPJ_OFF_T pos;
+  Byte8_t pos;
   Byte_t *data;
-  Byte8_t boxlen;
-  Byte_t headlen;
+  Byte8_t boxlen, headlen;
   char *boxtype;
   box_param_t *foundbox;
 
   
   if( length==0){ /* set the max length*/
-    if( get_filesize( fd) <= offset )
+    if( (length = get_filesize( fd) - offset) <= 0)
       return NULL;
-    assert( get_filesize( fd) > offset );
-    assert( offset >= 0 );
-    length = (OPJ_SIZE_T)(get_filesize( fd) - offset);
   }
 
   pos = offset;
-  assert( pos >= 0 );
-  assert( (OPJ_OFF_T)length >= 0 );
-  while( pos < offset+(OPJ_OFF_T)length-7){ /* LBox+TBox-1=7*/
+  while( pos < offset+length-7){ /* LBox+TBox-1=7*/
     
     /* read LBox and TBox*/
     if((data = fetch_bytes( fd, pos, 8))){
@@ -205,7 +193,7 @@ box_param_t * gene_boxbyType( int fd, OPJ_OFF_T offset, OPJ_SIZE_T length, const
 	  free(data2);
 	}
 	else{
-	  fprintf( FCGI_stderr, "Error: error in gene_boxbyType( %d, %" PRId64 ", %" PRId64 ", %s)\n", fd, offset, length, TBox);
+	  fprintf( FCGI_stderr, "Error: error in gene_boxbyType( %d, %lld, %lld, %s)\n", fd, offset, length, TBox);
 	  return NULL;
 	}
       }
@@ -223,30 +211,32 @@ box_param_t * gene_boxbyType( int fd, OPJ_OFF_T offset, OPJ_SIZE_T length, const
       free( data);
     }
     else{
-      fprintf( FCGI_stderr, "Error: error in gene_boxbyType( %d, %" PRId64 ", %" PRId64 ", %s)\n", fd, offset, length, TBox);
+      fprintf( FCGI_stderr, "Error: error in gene_boxbyType( %d, %lld, %lld, %s)\n", fd, offset, length, TBox);
       return NULL;
     }
-    assert( ((Byte8_t)pos+boxlen)>=(Byte8_t)pos);
-    pos+= (OPJ_OFF_T)boxlen;
+    pos+= boxlen;
   }
   fprintf( FCGI_stderr, "Error: Box %s not found\n", TBox);
 
   return NULL;
 }
 
-box_param_t * gene_boxbyTypeinStream( Byte_t *stream, OPJ_OFF_T offset, OPJ_SIZE_T length, const char TBox[])
+box_param_t * gene_boxbyTypeinStream( Byte_t *stream, Byte8_t offset, Byte8_t length, const char TBox[])
 {
-  OPJ_OFF_T pos;
+  Byte8_t pos;
   Byte_t *data;
-  Byte8_t boxlen;
-  Byte_t headlen;
+  Byte8_t boxlen, headlen;
   char *boxtype;
   box_param_t *foundbox;
 
+  
+  if( length<=0){ /* set the max length*/
+    fprintf( FCGI_stderr, "func gene_boxbyTypeinStream(), max length must be more than 0\n");
+    return NULL;
+  }
+  
   pos = offset;
-  assert( pos >= 0 );
-  assert( (OPJ_OFF_T)length >= 0 );
-  while( pos < offset+(OPJ_OFF_T)(length)-7){ /* LBox+TBox-1=7*/
+  while( pos < offset+length-7){ /* LBox+TBox-1=7*/
     
     /* read LBox and TBox*/
     data = stream + pos;
@@ -270,39 +260,31 @@ box_param_t * gene_boxbyTypeinStream( Byte_t *stream, OPJ_OFF_T offset, OPJ_SIZE
       foundbox->next = NULL;
       return foundbox;
     }
-    assert( ((Byte8_t)pos+boxlen)>=(Byte8_t)pos);
-    pos+= (OPJ_OFF_T)boxlen;
+    pos+= boxlen;
   }
   fprintf( FCGI_stderr, "Error: Box %s not found\n", TBox);
   
   return NULL;
 }
 
-box_param_t * gene_childboxbyOffset( box_param_t *superbox, OPJ_OFF_T offset)
+box_param_t * gene_childboxbyOffset( box_param_t *superbox, Byte8_t offset)
 {
   return gene_boxbyOffset( superbox->fd, get_DBoxoff( superbox)+offset);
 }
 
-box_param_t * gene_childboxbyType( box_param_t *superbox, OPJ_OFF_T offset, const char TBox[])
+box_param_t * gene_childboxbyType( box_param_t *superbox, Byte8_t offset, const char TBox[])
 {
-  OPJ_SIZE_T DBOXlen = get_DBoxlen(superbox);
-  assert( offset >= 0 );
-  if( DBOXlen < (OPJ_SIZE_T)offset )
-    {
-    fprintf( FCGI_stderr, "Error: Impossible happen %lu < %ld\n", DBOXlen, offset);
-    return NULL;
-    }
-  return gene_boxbyType( superbox->fd, get_DBoxoff( superbox)+offset, DBOXlen-(OPJ_SIZE_T)offset, TBox);
+  return gene_boxbyType( superbox->fd, get_DBoxoff( superbox)+offset, get_DBoxlen( superbox)-offset, TBox);
 }
 
-OPJ_OFF_T get_DBoxoff( box_param_t *box)
+Byte8_t get_DBoxoff( box_param_t *box)
 {
   return box->offset+box->headlen;
 }
 
-OPJ_SIZE_T get_DBoxlen( box_param_t *box)
+Byte8_t get_DBoxlen( box_param_t *box)
 {
-  return box->length - box->headlen;
+  return box->length-box->headlen;
 }
 
 Byte_t * fetch_headbytes( box_param_t *box)
@@ -310,27 +292,27 @@ Byte_t * fetch_headbytes( box_param_t *box)
   return fetch_bytes( box->fd, box->offset, box->headlen);
 }
 
-Byte_t * fetch_DBoxbytes( box_param_t *box, OPJ_OFF_T offset, OPJ_SIZE_T size)
+Byte_t * fetch_DBoxbytes( box_param_t *box, long offset, int size)
 {
   return fetch_bytes( box->fd, get_DBoxoff( box)+offset, size);
 }
 
-Byte_t fetch_DBox1byte( box_param_t *box, OPJ_OFF_T offset)
+Byte_t fetch_DBox1byte( box_param_t *box, long offset)
 {
   return fetch_1byte( box->fd, get_DBoxoff( box)+offset);
 }
 
-Byte2_t fetch_DBox2bytebigendian( box_param_t *box, OPJ_OFF_T offset)
+Byte2_t fetch_DBox2bytebigendian( box_param_t *box, long offset)
 {
   return fetch_2bytebigendian( box->fd, get_DBoxoff( box)+offset);
 }
 
-Byte4_t fetch_DBox4bytebigendian( box_param_t *box, OPJ_OFF_T offset)
+Byte4_t fetch_DBox4bytebigendian( box_param_t *box, long offset)
 {
   return fetch_4bytebigendian( box->fd, get_DBoxoff( box)+offset);
 }
 
-Byte8_t fetch_DBox8bytebigendian( box_param_t *box, OPJ_OFF_T offset)
+Byte8_t fetch_DBox8bytebigendian( box_param_t *box, long offset)
 {
   return fetch_8bytebigendian( box->fd, get_DBoxoff( box)+offset);
 }
@@ -357,10 +339,9 @@ void print_box( box_param_t *box)
 {
   fprintf( logstream, "box info:\n"
 	   "\t type: %.4s\n"
-	   "\t offset: %" PRId64 " %#" PRIx64 "\n" 
+	   "\t offset: %lld %#llx\n" 
 	   "\t header length: %d\n"
-     "\t length: %" PRId64 " %#" PRIx64 "\n", box->type, box->offset, 
-     box->offset, box->headlen, box->length, box->length);
+	   "\t length: %lld %#llx\n", box->type, box->offset, box->offset, box->headlen, box->length, box->length);
 }
 
 void print_allbox( boxlist_param_t *boxlist)
@@ -400,7 +381,7 @@ void delete_box_in_list( box_param_t **box, boxlist_param_t *boxlist)
   free( *box);
 }
 
-void delete_box_in_list_by_type( const char type[], boxlist_param_t *boxlist)
+void delete_box_in_list_by_type( char type[], boxlist_param_t *boxlist)
 {
   box_param_t *box;
 
