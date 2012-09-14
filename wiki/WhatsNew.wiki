@@ -5,6 +5,10 @@
 
 <wiki:gadget url="http://openjpeg.googlecode.com/svn/dev-utils/scripts/gcChanges.xml" up_projectName="openjpeg" width="500" border="1" />
 
+==September 2012: OpenJPEG 1.5.1 released==
+
+[http://code.google.com/p/openjpeg/downloads/list OpenJPEG 1.5.1] has been released. More info [http://openjpeg.googlecode.com/svn/branches/openjpeg-1.5/NEWS here] and a detailed view [http://openjpeg.googlecode.com/svn/tags/version.1.5.1/CHANGES here].
+
 ==February 2012: OpenJPEG 1.5 released==
 
 [http://code.google.com/p/openjpeg/downloads/list OpenJPEG 1.5] has been released. More info [http://openjpeg.googlecode.com/svn/branches/openjpeg-1.5/NEWS here].
