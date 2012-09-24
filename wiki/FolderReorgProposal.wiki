@@ -31,7 +31,7 @@ In order to make the openjpeg project libraries and executables more consistent,
 || opj_mj2_decompress || was: mj2_to_frames || libopenjpeg || currently, it does not use the openjpeg API correctly ||
 || opj_mj2_extract || was: extract_j2k_from_mj2 || libopenjpeg || currently, it does not use the openjpeg API correctly ||
 || opj_mj2_wrap || was: wrap_j2k_in_mj2 || libopenjpeg || currently, it does not use the openjpeg API correctly ||
-|| opj_test_index(check with kaori what to do!) || was: test_index || libopenjpeg || ||
+|| opj_jpip_test_jp2 || was: test_index || libopenjpeg || ||
 || opj_addxml?dont like the name! || was: addXMLinJP2 || libopenjpeg || ||
 || removed !  || was: jpip_to_j2k || libopenjpeg || replaced by image_to_j2k -jpip||
 || removed ! || was: jpip_to_jp2 || libopenjpeg || replaced by image_to_j2k -jpip||
