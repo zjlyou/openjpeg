@@ -29,4 +29,5 @@ Equipement
  # remove old v1 symbols
  # rename symbols (remove `_v2` if any), preprend `opj_` to *everything*
  # fix compilation with -Wsign-conversion -Wconversion
+ # rename int.h/fix.h & j2k_lib.h
  # release v2.0.0 !
