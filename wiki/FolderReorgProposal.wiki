@@ -43,7 +43,7 @@ A new directory structure is also proposed for the svn repository. Based on Vinc
   * openjpeg
     * src/  (where the code for the libraries are located)
       * lib/ (where the code of libraries are located)
-        * openjpeg/
+        * openjp2/
         * openjpip/
         * openjpwl/
         * openjp3d/
