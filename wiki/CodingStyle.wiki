@@ -48,9 +48,15 @@ Because OpenJPEG is written in C. One should use C style comment: {{{/*}}} and {
 
 For doxygen, one should use {{{/**}}} and {{{*/}}}
 
+== Charset ==
+
+ * What charset to use for unicode ? None !
+ * C does not support anything other than ASCII
+ * Eg: "Università" in comment should be "Universita'"
+ * and "Université" in comment should be "Universite"
+
 = Open Questions =
 
- * What charset to use for unicode ? UTF-8 is a good contestant. Eg: "Università" in comment
  * tab spaces ? indent ? uncrutify rule ?
  * file type (UNIX eol would be nice)
 
