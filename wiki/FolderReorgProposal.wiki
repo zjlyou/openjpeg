@@ -56,7 +56,8 @@ A new directory structure is also proposed for the svn repository. Based on Vinc
           * java/ [opj_jpip_viewer]
         * wx
           * opj_viewer/ [will need C++ compiler]
-        * jp3d [??? ]
+        * jp3d
+          * tcltk/ [will need tcl/tk interpreter]
     * cmake/
     * m4/
     * doc/
