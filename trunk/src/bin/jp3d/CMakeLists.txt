@@ -5,6 +5,16 @@ SET(common_SRCS
   convert.c
   )
 
+# Headers file are located here:
+include_directories(
+  ${OPENJPEG_SOURCE_DIR}/src/lib/openjp3d
+  ${LCMS_INCLUDE_DIRNAME}
+  ${OPENJPEG_SOURCE_DIR}/src/bin/common
+  ${Z_INCLUDE_DIRNAME}
+  ${PNG_INCLUDE_DIRNAME}
+  ${TIFF_INCLUDE_DIRNAME}
+  )
+
 IF(WIN32)
   IF(BUILD_SHARED_LIBS)
     ADD_DEFINITIONS(-DOPJ_EXPORTS)
@@ -16,7 +26,7 @@ ENDIF(WIN32)
 # Loop over all executables:
 FOREACH(exe jp3d_to_volume volume_to_jp3d)
   ADD_EXECUTABLE(${exe} ${exe}.c ${common_SRCS})
-  TARGET_LINK_LIBRARIES(${exe} ${OPENJP3D_LIBRARY_NAME})
+  TARGET_LINK_LIBRARIES(${exe} openjp3d)
   # On unix you need to link to the math library:
   IF(UNIX)
     TARGET_LINK_LIBRARIES(${exe} m)
@@ -24,6 +34,6 @@ FOREACH(exe jp3d_to_volume volume_to_jp3d)
   # Install exe
   INSTALL(TARGETS ${exe}
     EXPORT OpenJP3DTargets
-    DESTINATION ${OPENJP3D_INSTALL_BIN_DIR} COMPONENT Applications
+    DESTINATION ${OPENJPEG_INSTALL_BIN_DIR} COMPONENT Applications
   )
 ENDFOREACH(exe)

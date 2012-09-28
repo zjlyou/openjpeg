@@ -1,6 +1,7 @@
 #!/bin/sh
 # The next line is executed by /bin/sh, but not tcl \
 exec wish "$0" ${1+"$@"}
+lappend auto_path /usr/share/tcltk/bwidget1.9.2
 
 namespace eval jp3dVM {
 
