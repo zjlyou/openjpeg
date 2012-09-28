@@ -63,6 +63,8 @@ A new directory structure is also proposed for the svn repository. Based on Vinc
     * tests/
       * apps/
       * src/
+    * wrapping/
+      * java/
     * thirdparty/
 
 Remaining questions : 
