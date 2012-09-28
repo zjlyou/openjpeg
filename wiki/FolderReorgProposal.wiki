@@ -35,6 +35,8 @@ In order to make the openjpeg project libraries and executables more consistent,
 || opj_addxml?dont like the name! || was: addXMLinJP2 || libopenjpeg || ||
 || opj_jpip_to_jp2  || was: jpip_to_j2k || libopenjpeg || ||
 || opj_jpip_to_jp2 || was: jpip_to_jp2 || libopenjpeg || ||
+|| opj_jp3d_decompress || was: jp3d_to_volume || libopenjp3d || ||
+|| opj_jp3d_compress || was:  volume_to_jp3d|| libopenjp3d || ||
 
 = New directory structure =
 
