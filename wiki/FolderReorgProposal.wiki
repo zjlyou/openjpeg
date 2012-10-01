@@ -33,8 +33,8 @@ In order to make the openjpeg project libraries and executables more consistent,
 || opj_mj2_wrap || was: wrap_j2k_in_mj2 || libopenjpeg || currently, it does not use the openjpeg API correctly ||
 || opj_jpip_test_jp2 || was: test_index || libopenjpeg || ||
 || opj_addxml?dont like the name! || was: addXMLinJP2 || libopenjpeg || ||
-|| opj_jpip_to_jp2  || was: jpip_to_j2k || libopenjpeg || ||
-|| opj_jpip_to_jp2 || was: jpip_to_jp2 || libopenjpeg || ||
+|| opj_jpip_transcode  || was: jpip_to_j2k || libopenjpeg || ||
+|| opj_jpip_transcode || was: jpip_to_jp2 || libopenjpeg || ||
 || opj_jp3d_decompress || was: jp3d_to_volume || libopenjp3d || ||
 || opj_jp3d_compress || was:  volume_to_jp3d|| libopenjp3d || ||
 
