@@ -66,7 +66,6 @@ A new directory structure is also proposed for the svn repository. Based on Vinc
         * jp3d
           * tcltk/ [will need tcl/tk interpreter]
     * cmake/
-    * m4/
     * doc/
     * tests/
       * apps/
