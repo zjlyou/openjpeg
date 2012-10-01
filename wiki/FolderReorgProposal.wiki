@@ -38,6 +38,10 @@ In order to make the openjpeg project libraries and executables more consistent,
 || opj_jp3d_decompress || was: jp3d_to_volume || libopenjp3d || ||
 || opj_jp3d_compress || was:  volume_to_jp3d|| libopenjp3d || ||
 
+== Java binding ==
+
+The openjpeg.jar will remain called 'openjpeg.jar' it is meant to provide the full OpenJPEG API. This means that the openjpeg.jar will load the individual components (openjp2, openjp3d...).
+
 == Single Build System ==
 
 See:
