@@ -38,6 +38,11 @@ In order to make the openjpeg project libraries and executables more consistent,
 || opj_jp3d_decompress || was: jp3d_to_volume || libopenjp3d || ||
 || opj_jp3d_compress || was:  volume_to_jp3d|| libopenjp3d || ||
 
+== Single Build System ==
+
+See:
+ * http://groups.google.com/group/openjpeg/msg/9e83d9075ec07823
+
 = New directory structure =
 
 A new directory structure is also proposed for the svn repository. Based on Vincent Torri suggestion+Addition from Mathieu Malaterre, here is the current proposal : 
