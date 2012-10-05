@@ -24,6 +24,8 @@ Equipement
  # incorporate diff into convert.c (j2k codecs)
  # fix cinema test with extra byte
  # fix MJ2 to use new API ?
+  * copy/paste opj 1.5 branch
+ # move JPIP code within openjpip / jpip directories
  # ~~reorder libs/directory see [[FolderReorgProposal]]. cmake reorder/cleanup.~~
  # ~~add ABI handling (gcc hidden stuff, dllexport for win32).~~ (need CFLAGS=-fvisibility=hidden)
  # remove tabs (emacs/vi/sed)
