@@ -32,3 +32,4 @@ Equipement
  # fix compilation with -Wsign-conversion -Wconversion
  # rename int.h/fix.h & j2k_lib.h
  # release v2.0.0 !
+ # remove svn/branches/v2 !
