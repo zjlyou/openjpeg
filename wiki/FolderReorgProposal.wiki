@@ -37,6 +37,7 @@ In order to make the openjpeg project libraries and executables more consistent,
 || opj_jpip_transcode || was: jpip_to_jp2 || libopenjpeg || ||
 || opj_jp3d_decompress || was: jp3d_to_volume || libopenjp3d || ||
 || opj_jp3d_compress || was:  volume_to_jp3d|| libopenjp3d || ||
+|| opj_jpip_compress || was: image_to_j2k -jpip || libopenjpip || ||
 
 == Java binding ==
 
