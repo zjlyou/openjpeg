@@ -28,7 +28,7 @@ Equipement
  # ~~move JPIP code within openjpip / jpip directories~~
  # ~~reorder libs/directory see [[FolderReorgProposal]]. cmake reorder/cleanup.~~
  # ~~add ABI handling (gcc hidden stuff, dllexport for win32).~~ (need CFLAGS=-fvisibility=hidden)
- # remove tabs (emacs/vi/sed)
+ # remove tabs (emacs/vi/sed). Use hjonshon uncrustify
  # remove old v1 symbols
  # rename symbols (remove `_v2` if any), preprend `opj_` to *everything*
  # fix compilation with -Wsign-conversion -Wconversion
