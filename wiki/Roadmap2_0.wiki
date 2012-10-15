@@ -23,15 +23,15 @@ Equipement
  # ~~Add several encoding tests to verify class-1 compliance~~
  # incorporate diff into convert.c (j2k codecs)
  # fix cinema test with extra byte
- # fix MJ2 to use new API ?
-  * copy/paste opj 1.5 branch
- # move JPIP code within openjpip / jpip directories
+ # ~~fix MJ2 to use new API ?~~
+  * ~~copy/paste opj 1.5 branch~~
+ # ~~move JPIP code within openjpip / jpip directories~~
  # ~~reorder libs/directory see [[FolderReorgProposal]]. cmake reorder/cleanup.~~
  # ~~add ABI handling (gcc hidden stuff, dllexport for win32).~~ (need CFLAGS=-fvisibility=hidden)
  # remove tabs (emacs/vi/sed)
  # remove old v1 symbols
  # rename symbols (remove `_v2` if any), preprend `opj_` to *everything*
  # fix compilation with -Wsign-conversion -Wconversion
- # rename int.h/fix.h & j2k_lib.h
+ # ~~rename int.h/fix.h & j2k_lib.h~~
  # release v2.0.0 !
  # remove svn/branches/v2 !
