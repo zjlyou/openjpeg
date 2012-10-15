@@ -33,6 +33,7 @@ Equipement
  # rename symbols (remove `_v2` if any), preprend `opj_` to *everything*
  # fix compilation with -Wsign-conversion -Wconversion
  # ~~rename int.h/fix.h & j2k_lib.h~~
+ # openjpwl: need to use opj 1.5
  # what is the minimum cmake version required for openjpeg ? 2.8.2 or earlier ?
  # release v2.0.0 !
  # remove svn/branches/v2 !
