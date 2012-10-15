@@ -85,3 +85,15 @@ If you're using cygwin or MinGW+MSYS, the same procedures as for Unix can be use
 
 Otherwise you can use cmake to generate project files for the IDE you are using (VC2010, etc).
 Type 'cmake --help' for available generators on your platform.
+
+=Using OpenJPEG=
+
+To use openjpeg exported cmake file, simply create your application doing:
+
+{{{
+$ cat CMakeLists.txt
+find_package(OpenJPEG REQUIRED)
+include_directories(${OPENJPEG_INCLUDE_DIRS})
+add_executable(myapp myapp.c)
+target_link_libraries(myapp ${OPENJPEG_LIBRARIES})
+}}}
