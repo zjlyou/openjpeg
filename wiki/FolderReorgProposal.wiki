@@ -39,9 +39,18 @@ How do we solve both (1) and (2) ? Possible solutions:
 $ cat CMakeLists.txt
 add_library(libCore STATIC internal.c)
 add_library(libA SHARED a.c)
-target_link_libraries(libA libCore)
+target_link_libraries(libA LINK_PRIVATE libCore)
 add_library(libB SHARED b.c)
-target_link_libraries(libB libA) # libCore is pulled by cmake automatically
+target_link_libraries(libB LINK_PUBLIC libA LINK_PRIVATE libCore)
+install(TARGETS libA libB
+  EXPORT myexport
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+)
+install(EXPORT myexport DESTINATION share)
+#set_target_properties(libA PROPERTIES
+#  PRIVATE_HEADER "internal.h"
+#)
 }}}
 == Executables ==
 
