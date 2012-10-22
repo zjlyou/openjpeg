@@ -34,7 +34,7 @@ How do we solve both (1) and (2) ? Possible solutions:
 
  # We do not install cio.h. This means people would have to guess the types used by cio`*` functions. This would clearly indicate this is a private API.
  # document them as being implementation details functions.
- # Another more complex solution would something like this:
+ # Another more complex solution would be something like this:
 {{{
 $ cat CMakeLists.txt
 add_library(libCore STATIC internal.c)
