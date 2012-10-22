@@ -33,7 +33,7 @@ above 'jpip_iptr_offset'.
 How do we solve both (1) and (2) ? Possible solutions:
 
  # We do not install cio.h. This means people would have to guess the types used by cio`*` functions. This would clearly indicate this is a private API.
-
+ # document them as being implementation details functions.
 
 == Executables ==
 
