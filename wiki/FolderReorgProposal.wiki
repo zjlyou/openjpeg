@@ -15,6 +15,22 @@ In order to make the openjpeg project libraries and executables more consistent,
 || libopenjp3d || JP3D library || none || ||
 || libopenjpegjni || OpenJPEG Java binding || libopenjpeg || ||
 
+=== Library Symbols ===
+
+Goals: When implementing the JPEG 2000 standard using OpenJPEG API, it should be possible to re-use as much code as possible.
+
+Implementation details:
+When implementing any parts after Part 2, it should be possible to link to openjp2. For instance in the case of JPIP, to prevent code duplication, we had to re-use all the cio* & function_list* functionalities. Furthermore another low level change had to be done:
+
+http://code.google.com/p/openjpeg/source/diff?spec=svn2067&r=2067&format=side&path=/trunk/src/lib/openjp2/jp2.h
+
+  See line 211 ('Point location for split...') just
+above 'jpip_iptr_offset'.
+
+# It seems to me (MM) that this is a desirable goals to maintain a clean separation in between all the Parts of JPEG 2000. Multiples reasons:
+maintenance, clean design, separation...
+# It seems for other dev (MSD) that it is potential harmful to expose low level functionalities such as cio* and as such it would be better to move back anything related to file writing (JPIP extention) back into the OPENJP2 folder.
+
 == Executables ==
 
 || *name* || *description* || *dependencies* || *remarks* ||
