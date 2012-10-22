@@ -52,6 +52,9 @@ install(EXPORT myexport DESTINATION share)
 #  PRIVATE_HEADER "internal.h"
 #)
 }}}
+
+All the above possible solutions, are brute-force solutions. Another way at solving (1) & (2) would be to go over the *exact* API that poses issues and maybe extend openjp2 to provide a clean API that is easy to maintain while provide the same functionalities (or better) and help reduce code redundancy with openjpip.
+
 == Executables ==
 
 || *name* || *description* || *dependencies* || *remarks* ||
