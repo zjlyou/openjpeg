@@ -42,7 +42,7 @@ Equipement
 == Sub-missions ==
 
 || *filename* || *tasks* ||
-|| bio.h/.c || pourquoi stddef dans bio.h ? -> opj_include ||
+|| bio.h/.c || why include stddef only in bio.h and not in opj_include directly : For the moment we will keep as it ||
 || cio.c/.h	|| remove cio_ (marked as deprecated) ||
 ||              || remove opj_cio struct from openjpeg.h|| 
 || dwt.c/.h	|| clean comments and reorganize local/exported functions|| 
