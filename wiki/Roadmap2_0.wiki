@@ -54,7 +54,7 @@ Equipement
 || j2k.c	|| 2 TODO LH + ~~TODO add invert.c~~ + clean/remove/adapt the dump fonctions ? + TODO index management|| 
 || j2k.h	|| remove opj_tcp; opj_cp; opj_j2k + remove dump functions ?|| 
 || jp2.c/.h	|| clean/remove/adapt the dump fonctions ? + remove opj_jp2|| 
-|| jpt.c/.h	|| remove non compatible with v2 style|| 
+|| jpt.c/.h	|| ~~remove non compatible with v2 style~~|| 
 || mct.h/c	|| ok||
 || mqc.c/.h	|| ~~MQC_PERF_OPT~~ See issue #182 ? + opj_mqc_init_enc why a difference in branch v2 (see issue #183)|| 
 || openjpeg.c	|| || 
