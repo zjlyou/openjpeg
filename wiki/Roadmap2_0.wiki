@@ -52,8 +52,8 @@ Equipement
 || image.h/.c	|| status of op_image_create0. We can keep it ontil full opaque pointer is realized. see http://en.wikipedia.org/wiki/Opaque_pointer#C||
 ||              || rename opj_image_tile_create /merge with opj_image_create|| 
 || j2k.c	|| 2 TODO LH + ~~TODO add invert.c~~ + clean/remove/adapt the dump fonctions ? + TODO index management|| 
-|| j2k.h	|| remove opj_tcp; opj_cp; opj_j2k + remove dump functions ?|| 
-|| jp2.c/.h	|| clean/remove/adapt the dump fonctions ? + remove opj_jp2|| 
+|| j2k.h	|| ~~ remove opj_tcp; opj_cp; opj_j2k and rename all v2 to the right name ~~ + remove dump functions ?|| 
+|| jp2.c/.h	|| clean/remove/adapt the dump fonctions ? + ~~remove/rename opj_jp2/opj_jp2_v2~~|| 
 || jpt.c/.h	|| ~~remove non compatible with v2 style~~|| 
 || mct.h/c	|| ok||
 || mqc.c/.h	|| ~~MQC_PERF_OPT~~ See issue #182 ? + opj_mqc_init_enc why a difference in branch v2 (see issue #183)|| 
@@ -64,6 +64,6 @@ Equipement
 || raw.h/.c	|| ok|| 
 || t1.h	|| clean opj_t1 (remove opj_common_ptr)|| 
 || t1.c	|| manage t1_dec_clnpass; t1_dec_clnpass_step; + t1_dec_clnpass_step_vsc;  t1_dec_clnpass_step_partial + compare + t1_getwmsedec and v2 version + remove warnings|| 
-|| t2.c/.h	|| || 
+|| t2.c/.h	|| clean opj_t2 (remove opj_common_ptr)|| 
 || tcd.c/.h	|| remove tcd dump ? Or adapt it|| 
 || tgt.c	|| manage the frpintf (issue #184)|| 
