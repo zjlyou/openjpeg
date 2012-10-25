@@ -48,7 +48,8 @@ Equipement
 || dwt.c/.h	|| clean comments and reorganize local/exported functions|| 
 || event./h 	|| remove the old opj_event_msg + move the op_event_mgr struct t from openjpeg.h to event.h|| 
 || funtion_list.c/.h	|| ~~remove OPJ_CALLCONV~~|| 
-|| image.h/.c	|| status of op_image_create0 + rename opj_image_tile_create /merge with opj_image_create|| 
+|| image.h/.c	|| status of op_image_create0. We can keep it ontil full opaque pointer is realized. see http://en.wikipedia.org/wiki/Opaque_pointer#C
+||              || rename opj_image_tile_create /merge with opj_image_create|| 
 || j2k.c	|| 2 TODO LH + ~~TODO add invert.c~~ + clean/remove/adapt the dump fonctions ? + TODO index management|| 
 || j2k.h	|| remove opj_tcp; opj_cp; opj_j2k + remove dump functions ?|| 
 || jp2.c/.h	|| clean/remove/adapt the dump fonctions ? + remove opj_jp2|| 
