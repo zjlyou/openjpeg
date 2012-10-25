@@ -26,6 +26,7 @@ Equipement
  # ~~fix MJ2 to use new API ?~~
   * ~~copy/paste opj 1.5 branch~~
  # ~~move JPIP code within openjpip / jpip directories~~
+  * ~~move back jpip file level into openjp2~~
  # ~~reorder libs/directory see [[FolderReorgProposal]]. cmake reorder/cleanup.~~
  # ~~add ABI handling (gcc hidden stuff, dllexport for win32).~~ (need CFLAGS=-fvisibility=hidden)
  # remove tabs (emacs/vi/sed). Use hjonshon uncrustify
