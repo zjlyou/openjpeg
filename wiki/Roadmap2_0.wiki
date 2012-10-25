@@ -65,4 +65,4 @@ Equipement
 || t1.c	|| manage t1_dec_clnpass; t1_dec_clnpass_step; + t1_dec_clnpass_step_vsc;  t1_dec_clnpass_step_partial + compare + t1_getwmsedec and v2 version + remove warnings|| 
 || t2.c/.h	|| || 
 || tcd.c/.h	|| remove tcd dump ? Or adapt it|| 
-|| tgt.c	|| manage the frpintf|| 
+|| tgt.c	|| manage the frpintf (issue #184)|| 
