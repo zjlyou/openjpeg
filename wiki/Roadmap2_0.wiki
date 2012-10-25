@@ -43,7 +43,8 @@ Equipement
 
 || *filename* || *tasks* ||
 || bio.h/.c || pourquoi stddef dans bio.h ? -> opj_include ||
-|| cio.c/.h	|| TODO virer les cio_ + virer la structure opj_cio de openjpeg.h|| 
+|| cio.c/.h	|| remove cio_ (marked as deprecated) ||
+||              || remove opj_cio struct from openjpeg.h|| 
 || dwt.c/.h	|| clean comments and reorganize local/exported functions|| 
 || event./h 	|| remove the old opj_event_msg + move the op_event_mgr struct t from openjpeg.h to event.h|| 
 || funtion_list.c/.h	|| ~~remove OPJ_CALLCONV~~|| 
