@@ -38,3 +38,29 @@ Equipement
  # what is the minimum cmake version required for openjpeg ? 2.8.2 or earlier ?
  # release v2.0.0 !
  # remove svn/branches/v2 !
+
+== Sub-missions ==
+
+|| *filename* || *tasks* ||
+|| bio.h/.c || pourquoi stddef dans bio.h ? -> opj_include ||
+|| cio.c/.h	|| TODO virer les cio_ + virer la structure opj_cio de openjpeg.h|| 
+|| dwt.c/.h	|| clean comments and reorganize local/exported functions|| 
+|| event./h 	|| remove the old opj_event_msg + move the op_event_mgr struct t from openjpeg.h to event.h|| 
+|| funtion_list.c/.h	|| remove OPJ_CALLCONV|| 
+|| image.h/.c	|| status of op_image_create0 + rename opj_image_tile_create /merge with opj_image_create|| 
+|| j2k.c	|| 2 TODO LH + TODO add invert.c + clean/remove/adapt the dump fonctions ? + TODO index management|| 
+|| j2k.h	|| remove opj_tcp; opj_cp; opj_j2k + remove dump functions ?|| 
+|| jp2.c/.h	|| clean/remove/adapt the dump fonctions ? + remove opj_jp2|| 
+|| jpt.c/.h	|| remove non compatible with v2 style|| 
+|| mct.h/c	|| ok||
+|| mqc.c/.h	|| MQC_PERF_OPT ? + opj_mqc_init_enc why a difference in branch v2|| 
+|| openjpeg.c	|| || 
+|| opj_clock.c/.h|| 	ok|| 
+|| pi.h	|| change the opj_pi_iterator.first to opj_bool|| 
+|| pi.c 	|| ok|| 
+|| raw.h/.c	|| ok|| 
+|| t1.h	|| clean opj_t1 (remove opj_common_ptr)|| 
+|| t1.c	|| manage t1_dec_clnpass; t1_dec_clnpass_step; + t1_dec_clnpass_step_vsc;  t1_dec_clnpass_step_partial + compare + t1_getwmsedec and v2 version + remove warnings|| 
+|| t2.c/.h	|| || 
+|| tcd.c/.h	|| remove tcd dump ? Or adapt it|| 
+|| tgt.c	|| manage the frpintf|| 
