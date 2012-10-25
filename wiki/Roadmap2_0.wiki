@@ -55,7 +55,7 @@ Equipement
 || jp2.c/.h	|| clean/remove/adapt the dump fonctions ? + remove opj_jp2|| 
 || jpt.c/.h	|| remove non compatible with v2 style|| 
 || mct.h/c	|| ok||
-|| mqc.c/.h	|| ~~MQC_PERF_OPT~~ See #182 ? + opj_mqc_init_enc why a difference in branch v2 (see issue #183)|| 
+|| mqc.c/.h	|| ~~MQC_PERF_OPT~~ See issue #182 ? + opj_mqc_init_enc why a difference in branch v2 (see issue #183)|| 
 || openjpeg.c	|| || 
 || opj_clock.c/.h|| 	ok|| 
 || pi.h	|| change the opj_pi_iterator.first to opj_bool|| 
