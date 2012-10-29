@@ -17,10 +17,11 @@ fi
 mkdir -p $TMPDIR
 mkdir $TMPDIR/openjpeg-build
 cd $TMPDIR
-svn checkout -q http://openjpeg.googlecode.com/svn/tags/version.1.5.1 openjpeg
-cd openjpeg
-./bootstrap.sh > $TMPDIR/openjpeg-build/autotools.log 2>&1
-cd ..
+# Use tag to construct package:
+#svn checkout -q http://openjpeg.googlecode.com/svn/tags/version.1.5.1 openjpeg
+# DEBUG: use openjpeg from trunk
+svn checkout -q http://openjpeg.googlecode.com/svn/trunk openjpeg
+# END DEBUG
 
 cmake_options="\
  -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
@@ -38,15 +39,20 @@ cmake_options="$cmake_options -DCMAKE_OSX_ARCHITECTURES:STRING=i386;x86_64 -DCMA
 fi
 fi
 
+# carefully define out API:
+CFLAGS="-fvisibility=hidden"
 # On linux 64 bits machines, build 32 bits version
 # (comment if needed)
 is64="`uname -m | grep -i x86_64`"
 if [ "$is64" != "" ]; then
   isLinux="`uname -s | grep -i Linux`"
   if [ "$isLinux" != "" ]; then
-    cmake_options="$cmake_options -DCMAKE_C_FLAGS:STRING=-m32 -DCPACK_SYSTEM_NAME:STRING=Linux-i386"
+    CFLAGS="$CFLAGS -m32"
+    cmake_options="$cmake_options -DCPACK_SYSTEM_NAME:STRING=Linux-i386"
   fi
 fi
+# pass CFLAGS to cmake:
+export CFLAGS
 
 cd $TMPDIR/openjpeg-build
 cmake -G"Unix Makefiles" $cmake_options ../openjpeg > config.log 2>&1
@@ -64,4 +70,3 @@ fi
 
 # create source zip
 cpack -G TGZ --config CPackSourceConfig.cmake > s-tgz.log 2>&1
-
