@@ -18,9 +18,9 @@ mkdir -p $TMPDIR
 mkdir $TMPDIR/openjpeg-build
 cd $TMPDIR
 # Use tag to construct package:
-#svn checkout -q http://openjpeg.googlecode.com/svn/tags/version.1.5.1 openjpeg
+svn checkout -q http://openjpeg.googlecode.com/svn/tags/version.2.0 openjpeg
 # DEBUG: use openjpeg from trunk
-svn checkout -q http://openjpeg.googlecode.com/svn/trunk openjpeg
+#svn checkout -q http://openjpeg.googlecode.com/svn/trunk openjpeg
 # END DEBUG
 
 cmake_options="\

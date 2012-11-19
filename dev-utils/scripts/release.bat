@@ -23,7 +23,7 @@ SET PATH=%PATH%;C:\Program Files\TortoiseSVN\bin
 
 mkdir %TMPDIR%
 cd %TMPDIR%
-svn checkout -q http://openjpeg.googlecode.com/svn/tags/version.1.5.1 openjpeg > svn.log 2>&1
+svn checkout -q http://openjpeg.googlecode.com/svn/tags/version.2.0 openjpeg > svn.log 2>&1
 
 mkdir %TMPDIR%\openjpeg-build
 cd %TMPDIR%\openjpeg-build

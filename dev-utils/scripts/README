@@ -7,8 +7,8 @@ $ ./genchange.sh
 
 copy the branch
 
-$ svn copy https://openjpeg.googlecode.com/svn/branches/openjpeg-1.5 https://openjpeg.googlecode.com/svn/tags/version.1.5
-$ svn add CHANGES ../../tags/version.1.5
+$ svn copy https://openjpeg.googlecode.com/svn/branches/openjpeg-2.0 https://openjpeg.googlecode.com/svn/tags/version.2.0
+$ svn add CHANGES ../../tags/version.2.0
 $ svn commit
 
 2. Generates the source tarball + binary tarball (OSX package on Mac):
@@ -22,23 +22,23 @@ If you have a windows box, from a CMD console:
 You can use googlecode_upload.py to upload your files directly:
 
 # SOURCES
-$ ./googlecode_upload.py -s "Version 1.5 source files of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-All,Type-Source /tmp/openjpeg_release/openjpeg-build/openjpeg-1.5.0.tar.gz
+$ ./googlecode_upload.py -s "Version 2.0 source files of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-All,Type-Source /tmp/openjpeg_release/openjpeg-build/openjpeg-2.0.0.tar.gz
 
 # LINUX (32 bits)
-$ ./googlecode_upload.py -s "Version 1.5 Linux 32-bits Binaries of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-Linux,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-1.5.0-Linux-i386.tar.gz
+$ ./googlecode_upload.py -s "Version 2.0 Linux 32-bits Binaries of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-Linux,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-2.0.0-Linux-i386.tar.gz
 
 # LINUX (64 bits)
-$ ./googlecode_upload.py -s "Version 1.5 Linux 64-bits Binaries of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-Linux,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-1.5.0-Linux-x86_64.tar.gz
+$ ./googlecode_upload.py -s "Version 2.0 Linux 64-bits Binaries of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-Linux,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-2.0.0-Linux-x86_64.tar.gz
 
 # Mac OSX 32-bit Universal (for Intel or PPC, Tiger/10.4 or later)
-$ ./googlecode_upload.py -s "Version 1.5 Mac OSX 32-bit Universal Binaries (for Intel or PPC, Tiger/10.4 or later) of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-OSX,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-1.5.0-Darwin-universal.dmg
-$ ./googlecode_upload.py -s "Version 1.5 Mac OSX 32-bit Universal Binaries (for Intel or PPC, Tiger/10.4 or later) of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-OSX,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-1.5.0-Darwin-universal.tar.gz
+$ ./googlecode_upload.py -s "Version 2.0 Mac OSX 32-bit Universal Binaries (for Intel or PPC, Tiger/10.4 or later) of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-OSX,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-2.0.0-Darwin-universal.dmg
+$ ./googlecode_upload.py -s "Version 2.0 Mac OSX 32-bit Universal Binaries (for Intel or PPC, Tiger/10.4 or later) of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-OSX,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-2.0.0-Darwin-universal.tar.gz
 
 # Mac OSX 64/32-bit Universal (for Intel, Snow Leopard/10.6 or later)
-$ ./googlecode_upload.py -s "Version 1.5 Mac OSX 64/32-bit Universal DMG Package (for Intel, Snow Leopard/10.6 or later) of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-OSX,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-1.5.0-Darwin64-universal.dmg
-$ ./googlecode_upload.py -s "Version 1.5 Mac OSX 64/32-bit Universal Binaries (for Intel, Snow Leopard/10.6 or later) of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-OSX,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-1.5.0-Darwin64-universal.tar.gz
+$ ./googlecode_upload.py -s "Version 2.0 Mac OSX 64/32-bit Universal DMG Package (for Intel, Snow Leopard/10.6 or later) of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-OSX,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-2.0.0-Darwin64-universal.dmg
+$ ./googlecode_upload.py -s "Version 2.0 Mac OSX 64/32-bit Universal Binaries (for Intel, Snow Leopard/10.6 or later) of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-OSX,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-2.0.0-Darwin64-universal.tar.gz
 
 # Windows (32bits)
-$ ./googlecode_upload.py -s "Version 1.5 Windows Installer of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-Windows,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-1.5.0-win32-x86.exe
-$ ./googlecode_upload.py -s "Version 1.5 Windows Binaries of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-Windows,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-1.5.0-win32-x86.zip 
+$ ./googlecode_upload.py -s "Version 2.0 Windows Installer of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-Windows,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-2.0.0-win32-x86.exe
+$ ./googlecode_upload.py -s "Version 2.0 Windows Binaries of OpenJPEG library and codecs" -p openjpeg -l Featured,OpSys-Windows,Type-Executable /tmp/openjpeg_release/openjpeg-build/openjpeg-2.0.0-win32-x86.zip 
 
