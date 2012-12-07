@@ -10,13 +10,14 @@ This page will describe the steps to integrate this branch into svn/trunk
 = Participants =
 
  * Mathieu Malaterre
+ * ?
 
 = Details =
 
  # Create cuda subdirectory in src/lib/openjp2
  # Move all cuda-related code within this directory
  # add new compile time CUDA option (cmake)
- # rename cuda wrapper function to have opj_ prefix (just in case)
+ # rename cuda wrapper function to have `opj_` prefix (just in case)
  # start compiling as compile time option
  # add new runtime option to select in between CPU based alg and GPU based
  # Ship OpenJPEG 2.2 !
