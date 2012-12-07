@@ -15,6 +15,7 @@
     * [CDash]
     * [BuildSystems Build Systems]
   * [Roadmap OpenJPEG Roadmap]
+    * [RoadmapCuda]
     * [Roadmap2_0]
     * [FolderReorgProposal New folder organization and naming convention]
     * [Optimization]
