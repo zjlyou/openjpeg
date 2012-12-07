@@ -1,0 +1,24 @@
+#summary Roadmap for integrating CUDA code
+
+= Introduction =
+
+GSoC 2012 did produce some nice optimized CUDA code for OpenJPEG:
+https://gitorious.org/~aditya12agd5/openjpeg-optimization/aditya12agd5s-openjpeg-optimization
+
+This page will describe the steps to integrate this branch into svn/trunk
+
+= Participants =
+
+ * Mathieu Malaterre
+
+= Details =
+
+ # Create cuda subdirectory in src/lib/openjp2
+ # Move all cuda-related code within this directory
+ # add new compile time CUDA option (cmake)
+ # rename cuda wrapper function to have opj_ prefix (just in case)
+ # start compiling as compile time option
+ # add new runtime option to select in between CPU based alg and GPU based
+ # Ship OpenJPEG 2.2 !
+
+We should try to minimize any API break !
