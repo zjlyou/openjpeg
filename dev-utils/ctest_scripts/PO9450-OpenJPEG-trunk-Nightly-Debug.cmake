@@ -10,8 +10,8 @@
 cmake_minimum_required(VERSION 2.8)
 
 # Set where to find src and test data and where to build binaries.
-SET (CTEST_SOURCE_DIRECTORY       "C:/Users/msavinau/dev/nightly/src/opj-trunk")
-SET (CTEST_BINARY_DIRECTORY       "C:/Users/msavinau/dev/nightly/build/opj-trunk-Debug")
+SET (CTEST_SOURCE_DIRECTORY       "C:/Users/msavinau/dev/nightly/OPJ-MVSC09-trunk-debug-3rdP/src")
+SET (CTEST_BINARY_DIRECTORY       "C:/Users/msavinau/dev/nightly/OPJ-MVSC09-trunk-debug-3rdP/build")
 SET (CTEST_SOURCE_DATA_DIRECTORY  "C:/Users/msavinau/dev/nightly/data/opj-data")
 
 # User inputs:
@@ -19,7 +19,7 @@ SET( CTEST_CMAKE_GENERATOR      "Visual Studio 9 2008" )      # What is your com
 SET( CTEST_CMAKE_COMMAND        "C:/Program Files/CMake 2.8/bin/cmake.exe" )
 SET( CTEST_SITE                 "PO9450.c-s.fr" )             # Generally the output of hostname
 SET( CTEST_BUILD_CONFIGURATION  Debug)                        # What type of build do you want ?
-SET( CTEST_BUILD_NAME           "Win7-VS2008-32bits-trunk-${CTEST_BUILD_CONFIGURATION}") # Build Name
+SET( CTEST_BUILD_NAME           "Win7-MVSC09-32bits-trunk-${CTEST_BUILD_CONFIGURATION}") # Build Name
 
 SET(CTEST_CUSTOM_WARNING_EXCEPTION  
     ${CTEST_CUSTOM_WARNING_EXCEPTION}

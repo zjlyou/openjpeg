@@ -10,8 +10,8 @@
 cmake_minimum_required(VERSION 2.8)
 
 # Set where to find src and test data and where to build binaries.
-SET (CTEST_SOURCE_DIRECTORY       "C:/Users/msavinau/dev/nightly/src/opj-1.5")
-SET (CTEST_BINARY_DIRECTORY       "C:/Users/msavinau/dev/nightly/build/opj-1.5-release")
+SET (CTEST_SOURCE_DIRECTORY       "C:/Users/msavinau/dev/nightly/OPJ-MVSC09-b1.5-release/src")
+SET (CTEST_BINARY_DIRECTORY       "C:/Users/msavinau/dev/nightly/OPJ-MVSC09-b1.5-release/build")
 SET (CTEST_SOURCE_DATA_DIRECTORY  "C:/Users/msavinau/dev/nightly/data/opj-data")
 
 # User inputs:
