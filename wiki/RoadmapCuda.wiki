@@ -23,3 +23,7 @@ This page will describe the steps to integrate this branch into svn/trunk
  # Ship OpenJPEG 2.2 !
 
 We should try to minimize any API break !
+
+= Bugs =
+
+ # On hold because of: http://cmake.org/Bug/view.php?id=13824
