@@ -62,7 +62,7 @@ You should read the [http://code.google.com/p/google-summer-of-code/wiki/Advicef
 == Mickaël Savinaud ==
 == Nicolas Bertrand ==
 
-Nicolas is a PhD student working on Digital Cinema, with Utopia ( a French network of indie cinema theaters). The goal is to provide a full open-source solution for creation, projection and distribution of digital copies in theaters. As Digital Cinema uses JPEG2000 for compression, OpenJpeg was chosen for encoding and decoding Images. More precisely, Nicolas work on OpenJpeg decoding optimization, to speed-up the decompression time to reach a decoding frame rate from 1/24 to 1/30 s on a "standard" machine ( no dedicated hardware used).
+Nicolas is a PhD student working on Digital Cinema, with Utopia ( a French network of indie cinema theaters). The goal is to provide a full open-source solution for creation, projection and distribution of digital copies in theaters. As Digital Cinema uses JPEG2000 for compression, !OpenJPEG was chosen for encoding and decoding Images. More precisely, Nicolas work on !OpenJPEG decoding optimization, to speed-up the decompression time to reach a decoding frame rate from 1/24 to 1/30 s on a "standard" machine ( no dedicated hardware used).
 
 google account: nicoinattendu (gmail)
 
