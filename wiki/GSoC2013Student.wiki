@@ -1,0 +1,11 @@
+#summary All information for a student to apply to OpenJPEG Google Summer of Code 2013
+
+= Timeline =
+
+You have until May 3: 19:00 UTC to apply to Google Summer of Code.
+
+[http://www.google-melange.com/gsoc/events/google/gsoc2013 Full timeline]
+
+
+
+More to come ...
