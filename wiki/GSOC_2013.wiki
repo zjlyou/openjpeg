@@ -1,13 +1,34 @@
-#summary All documentation about OpenJPEG and GSOC2013
+#summary Documentation about OpenJPEG and GSOC2013
 
+<wiki:toc max_depth="2" />
+----
 = Introduction =
 
 [https://google-melange.appspot.com/gsoc/homepage/google/gsoc2013 Google Summer of Code 2013] has been announced and mentoring organizations are able to apply until March 29th.
+
 This year, OpenJPEG will apply as organization.
 
-= Important date ==
-   
-= OpenJPEG GSOC 2013 idea =
+Quick overview of OpenJPEG is [https://code.google.com/p/openjpeg here].
+
+If you have any questions, feel free to contact the OpenJPEG mentoring administrator, Antonin Descampe, at (antonin -at- gmail com).
+
+If you are volunteering to become a mentor, please read the topics below and contact the administrator.
+
+If you are a student interested in any of the following projects, please go to [GSoC2013Student GSOC 2013 Student Application page] to apply.
+
+This page contains a few project ideas (which, by no means, limits any prospective proposals).
+
+----
+= Timeline =
+
+March 29, 2013 - Deadline to apply as organization
+April 22, 2013 - Applications open for students
+May 3, 2013 - Deadline for students to apply
+
+[http://www.google-melange.com/gsoc/events/google/gsoc2013 full timeline]
+
+----
+= OpenJPEG GSOC 2013 projects =
 
 == Improve the OpenJPEG API ==
 
@@ -20,3 +41,29 @@ The project would consist of three parts:
   * implement the opaque pointer for the image structure 
   * implement the system and functions to access to this sructure
   * implement the new data management into this new OpenJPEG API
+
+----
+= Possible ideas =
+
+  * Continue GSOC2012 project : GPU implementation
+  * Enable multithread encoding and decoding
+  * Improve speed performance of entropy coding part
+  * Firefox plugin implementation
+
+----
+= Mentors list =
+
+If you are considering becoming a mentor, please send the admin a mail. 
+
+You should read the [http://code.google.com/p/google-summer-of-code/wiki/AdviceforMentors advice for mentors] before.
+
+== Mickaël Savinaud ==
+
+
+= Links =
+
+[https://code.google.com/p/google-summer-of-code/wiki/WikiStart GSoC Knowledge Base Wiki]
+
+[http://www.google-melange.com/gsoc/document/show/gsoc_program/google/gsoc2013/help_page GSoC 2013 FAQs]
+
+[http://www.google-melange.com/gsoc/events/google/gsoc2013 GSoC 2013 Timeline]
