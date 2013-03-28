@@ -21,3 +21,4 @@
     * [Optimization]
   * [GSoC2012 Google Summer of Code 2012]
   * [socis2012 ESA Summer of Code 2012]
+  * [GSOC_2013 Google Summer of Code 2013]
