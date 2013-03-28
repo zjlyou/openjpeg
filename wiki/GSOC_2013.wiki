@@ -58,8 +58,9 @@ If you are considering becoming a mentor, please send the admin a mail.
 You should read the [http://code.google.com/p/google-summer-of-code/wiki/AdviceforMentors advice for mentors] before.
 
 == Mickaël Savinaud ==
+== Nicolas Bertrand ==
 
-
+----
 = Links =
 
 [https://code.google.com/p/google-summer-of-code/wiki/WikiStart GSoC Knowledge Base Wiki]
