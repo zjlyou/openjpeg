@@ -22,7 +22,9 @@ This page contains a few project ideas (which, by no means, limits any prospecti
 = Timeline =
 
 March 29, 2013 - Deadline to apply as organization
+
 April 22, 2013 - Applications open for students
+
 May 3, 2013 - Deadline for students to apply
 
 [http://www.google-melange.com/gsoc/events/google/gsoc2013 full timeline]
@@ -59,6 +61,10 @@ You should read the [http://code.google.com/p/google-summer-of-code/wiki/Advicef
 
 == Mickaël Savinaud ==
 == Nicolas Bertrand ==
+
+Nicolas is a PhD student working on Digital Cinema, with Utopia ( a French network of indie cinema theaters). The goal is to provide a full open-source solution for creation, projection and distribution of digital copies in theaters. As Digital Cinema uses JPEG2000 for compression, OpenJpeg was chosen for encoding and decoding Images. More precisely, Nicolas work on OpenJpeg decoding optimization, to speed-up the decompression time to reach a decoding frame rate from 1/24 to 1/30 s on a "standard" machine ( no dedicated hardware used).
+
+google account: nicoinattendu (gmail)
 
 ----
 = Links =
