@@ -45,10 +45,65 @@ The project would consist of four parts:
   * implement the new data management into this new OpenJPEG API
 
 ----
-= Possible ideas =
 
-  * Continue GSOC2012 project : GPU implementation
-  * Enable multithread encoding and decoding
+== Continue GSOC2012 project : GPU implementation ==
+
+_Proposed by_: *Nicolas Bertrand*
+
+Last year in GSOC ([http://code.google.com/p/openjpeg/wiki/GSoC2012 2012]) we started an implementation of JPEG2000 decoding in GPU.
+JPEG2000 is a very efficient compressor, but its very time consuming. 
+The project will consist to continue the port of encoding and decoding functions to GPU.
+
+Nowadays a lot of research is done to implement JPEG2000 encoding/decoding in GPU. We will find very usefull to test some poposed algorithms
+
+When a image is decoded on GPU we will need also to directly render the image in the GPU graphic card (via OpenGL) or send it back to CPU.
+When JPEG2000 is used for digital cinema the color-space is the CIE XYZ.
+
+
+The project would consist:
+- Implement a video filter XYZ to RGB, and display it oin graphic card
+- Parallelize at codeblock the decompression (i.e intra codeblock)
+- Implement inter codeblock  algorithm explained by  Jiri Matela ([http://d-nb.info/1010555529/34#page=85 2010]) and  Papers :
+  * Efficient JPEG2000 EBCOT Context Modeling for Massively Parallel Architectures.
+  * Low GPU Occupancy Approach to Fast Arithmetic Coding in JPEG2000
+
+This project is so in scope of computer science research and appilication on open sour software
+
+== Enable multithread encoding and decoding ==
+_Proposed by_: *Nicolas Bertrand* 
+
+CPUs are now currently embedded with lot of core/threads. JPEG2000 is a very efficient compressor, but its very time consuming. We can use multi-thread to decode at image level. Some benchmarking and test will be needeed.
+Try multi-threading: 
+  * at tile level
+  * at component level
+  * resolution level
+  * layer level
+  * precinct/codeblock level
+  * codeblock level
+
+The project would consist :
+  * on implementing those thrading levels and benchmark it
+  * Try a slightly different approach ( ie pull/push architecture) inspired from research paper Mutlithreaded processing paradigms for JPEG2000
+
+This project is so in scope of computer science research and appilication on open sour software
+
+== Improve speed performance of entropy coding part ==
+_Proposed by_: *Nicolas Bertrand* 
+
+In JPEG2000, the entropy/arithmetic coding is done with the EBCOT algoorithm. Clever, efficient, bu time consuming
+
+The project would consist :
+  * Find in code possible optimizations( algorithmic, data propagation compilation)
+  * Introduce SSE instruction set to increase the (de)coding time performance
+  * Benchmark the optimization
+
+
+
+
+
+
+
+= Possible ideas =
   * Improve speed performance of entropy coding part
   * Firefox plugin implementation
   * A cross-platform JPEG 2000 viewer, as an alternative to kdu_show 
