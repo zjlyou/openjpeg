@@ -51,6 +51,7 @@ The project would consist of four parts:
   * Enable multithread encoding and decoding
   * Improve speed performance of entropy coding part
   * Firefox plugin implementation
+  * A cross-platform JPEG 2000 viewer, as an alternative to kdu_show 
 
 ----
 = Mentors list =
