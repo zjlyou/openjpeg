@@ -38,8 +38,8 @@ _Proposed by_: *Mickaël Savinaud*
 
 There is a need for a OpenJPEG API reworking after the 2.0 release. Indeed the API is too complicated and it is not adapted to communication with other softwares. For example it could be nice to provide a a modern C API based on [http://en.wikipedia.org/wiki/Opaque_pointer opaque pointer] to facilitate the future evolution. A good example could be find into the [http://www.gdal.org/gdal_8h.html C GDAL API]. The use of opaque pointer for image properties, metadata (color, additional information) will need to provide several accessors (get/set) or to use a key-value system. Another evolution is to avoid the allocation of (encoding or decoding) data by OpenJPEG. With this API evolution, user will pass through the API a char buffer previously allocated with the correct size. It will simplify the management of data and improve the performance (in the encoding part some data copy are done but can be avoid with this new framework). 
 
-The project would consist of three parts:
-  * evaluate and study the some API based on opaque pointer (GDAL is a good project)
+The project would consist of four parts:
+  * evaluate and study some API based on opaque pointer (GDAL is a good project)
   * implement the opaque pointer for the image structure 
   * implement the system and functions to access to this sructure
   * implement the new data management into this new OpenJPEG API
