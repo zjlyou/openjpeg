@@ -61,7 +61,7 @@ You should read the [http://code.google.com/p/google-summer-of-code/wiki/Advicef
 
 == Mickaël Savinaud ==
 
-Mickaël has a PhD in Applied Mathematics from Ecole Centrale Paris, and is currently working as a Research Engineer at C-S (www.c-s.fr). He is in charge of the OrfeoToolbox project (http://www.orfeo-toolbox.org/otb/).
+Mickaël has a PhD in Applied Mathematics from Ecole Centrale Paris, and is currently working as a Research Engineer at C-S (www.c-s.fr). He is in charge of the [http://www.orfeo-toolbox.org/otb/ OrfeoToolbox project]
 
 google account : savmickael
 
