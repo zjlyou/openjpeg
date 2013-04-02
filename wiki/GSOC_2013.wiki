@@ -44,7 +44,6 @@ The project would consist of four parts:
   * implement the system and functions to access to this sructure
   * implement the new data management into this new OpenJPEG API
 
-----
 
 == Continue GSOC2012 project : GPU implementation ==
 
@@ -70,6 +69,7 @@ The project would consist:
 This project is so in scope of computer science research and appilication on open sour software
 
 == Enable multithread encoding and decoding ==
+
 _Proposed by_: *Nicolas Bertrand* 
 
 CPUs are now currently embedded with lot of core/threads. JPEG2000 is a very efficient compressor, but its very time consuming. We can use multi-thread to decode at image level. Some benchmarking and test will be needeed.
@@ -88,6 +88,7 @@ The project would consist :
 This project is so in scope of computer science research and appilication on open sour software
 
 == Improve speed performance of entropy coding part ==
+
 _Proposed by_: *Nicolas Bertrand* 
 
 In JPEG2000, the entropy/arithmetic coding is done with the EBCOT algoorithm. Clever, efficient, bu time consuming
@@ -97,14 +98,9 @@ The project would consist :
   * Introduce SSE instruction set to increase the (de)coding time performance
   * Benchmark the optimization
 
-
-
-
-
-
+----
 
 = Possible ideas =
-  * Improve speed performance of entropy coding part
   * Firefox plugin implementation
   * A cross-platform JPEG 2000 viewer, as an alternative to kdu_show 
 
