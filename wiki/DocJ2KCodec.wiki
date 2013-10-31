@@ -2,7 +2,7 @@
 
 <wiki:toc max_depth="2" />
 
-=image_to_j2k=
+=opj_compress=
 
 ==Description==
 
@@ -11,7 +11,7 @@ This program reads in an image of a certain type and converts it to a JPEG 2000 
 ==Usage==
 
 {{{
-image_to_j2k ... 
+opj_compress ... 
 }}}
 
 {{{
@@ -196,7 +196,7 @@ Foreach packet
 
     Example of a 512x512 image with 3 unsigned components of 8 bits: 
     {{{
-image_to_j2k -i lena.raw -o lena.j2k -F 512,512,3,8,u
+opj_compress -i lena.raw -o lena.j2k -F 512,512,3,8,u
     }}}
 
   As explained above, in the case of raw images with a component depth comprised between 9 and 16 bits, each component data must be stored on two bytes, the first byte containing the MSBs and the second byte the LSBs.
@@ -286,7 +286,7 @@ Following option is available only if the library has been compiled with the jpw
   }}}
   means default protection to headers (MH and TPHs) as well as data packets, one ESD in MH
  
-=j2k_to_image=
+=opj_decompress=
 
 ==Description==
 
@@ -300,7 +300,7 @@ This program reads in a jpeg2000 image and converts it to another image type. It
 ==Usage==
 
 {{{
-j2k_to_image ... 
+opj_decompress ... 
 }}}
 
 {{{
