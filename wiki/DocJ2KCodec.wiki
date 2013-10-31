@@ -2,6 +2,8 @@
 
 <wiki:toc max_depth="2" />
 
+Note : as of v2.0, OpenJPEG executables for JPEG 2000 compression and decompression are named opj_compress and opj_decompress, respectively. In OpenJPEG v1.x, they were named image_to_j2k and j2k_to_image. Following documentation is still valid for those using OpenJPEG 1.x executables.
+
 =opj_compress=
 
 ==Description==
