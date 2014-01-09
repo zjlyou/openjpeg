@@ -1,9 +1,11 @@
 #summary News from the OpenJPEG project
 #labels Featured,Restrict-AddWikiComment-Commit
 
+<wiki:comment>
 ==Latest revisions==
 
 <wiki:gadget url="http://openjpeg.googlecode.com/svn/dev-utils/scripts/gcChanges.xml" up_projectName="openjpeg" width="500" border="1" />
+</wiki:comment>
 
 ==November 2012: OpenJPEG 2.0.0 released==
 
