@@ -6,4 +6,4 @@ Code repository, issue tracking system and everything else except downloads rema
 
 PLEASE CLICK [https://sourceforge.net/projects/openjpeg.mirror/files/ HERE] TO GO TO SOURCEFORGE DOWNLOADS OR DIRECTLY PICK ONE HEREUNDER.
 
-<wiki:gadget url="http://google-code-feed-gadget.googlecode.com/svn/trunk/gadget.xml" up_feeds="http://sourceforge.net/api/file/index/project-id/2048818/mtime/desc/limit/50/rss" up_maxFeeds="10" up_maxFeaturedFeeds="10" up_minFeaturedChrome="true" width="500" height="600" border="1"/>
+<wiki:gadget url="http://www.openjpeg.org/gadgetFeedXML/gadget.xml" up_feeds="http://sourceforge.net/api/file/index/project-id/2048818/mtime/desc/limit/50/rss" up_maxFeeds="21" width="500" height="500" border="1"/>
