@@ -2,7 +2,9 @@
 
 = Introduction =
 
-This page describe the situation with build systems in OpenJPEG
+*LEGACY* This page document the state of openjpeg before release 1.5. And thus does not apply to openjpeg 2.0 and up.
+
+This page describe the situation with build systems in OpenJPEG.
 
 = Details =
 
