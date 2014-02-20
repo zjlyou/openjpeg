@@ -3,7 +3,7 @@ set -x
 
 # Prepare JPIP server from yesterday builds:
 # http://code.google.com/p/openjpeg/wiki/JPIP
-cd $HOME/Dashboards/MyTests/openjpeg-b15-nightly-linux_gcc44-v1.5-debug
+cd $HOME/Dashboards/MyTests/openjpeg-b15-nightly-linux_gcc47-v1.5-debug
 DESTDIR=/tmp/jpip-install make install
 cd /tmp/jpip-install/usr/local/bin/
 # get some data
