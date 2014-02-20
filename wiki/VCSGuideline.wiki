@@ -79,3 +79,15 @@ $ hg pull --rebase
 It will be rebase locally your local modifications on the top of the current server version. 
 
 An another interesting extension available with mercurial is the [http://mercurial.selenic.com/wiki/HisteditExtension Histedit] extension which enable to modify your local history after commit operation. It is useful when you don't want keep some commits in your local history before pushing to the svn repository.   
+
+== svnsync ==
+
+Sometimes it is useful to have a local copy of OpenJPEG SVN. In which case you could follow steps from: https://www.coderesort.com/about/wiki/HowTo/Subversion/SvnSync.
+
+In summary:
+# $ cd /tmp
+# $ svnadmin create openjpeg_local
+# $ echo '#!/bin/sh' > ./openjpeg_local/hooks/pre-revprop-change
+# $ chmod +x ./openjpeg_local/hooks/pre-revprop-change
+# $ svnsync initialize file:///tmp/openjpeg_local/ http://openjpeg.googlecode.com/svn/trunk/
+# $ svnsync sync file:///tmp/openjpeg_local/
