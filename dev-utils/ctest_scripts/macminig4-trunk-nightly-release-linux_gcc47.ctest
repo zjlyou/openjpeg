@@ -1,17 +1,11 @@
 # Client maintainer: mathieu . malaterre  gmail . com
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
-set(ENV{CC} /usr/bin/gcc-4.4)
+set(ENV{CC} /usr/bin/gcc-4.7)
 
 macro(dashboard_hook_init)
   set( dashboard_cache "
   BUILD_TESTING:BOOL=ON
-  # in v2, static is the default
-  BUILD_SHARED_LIBS:BOOL=ON
-  # In v2 the following is required to get tests
-  BUILD_EXAMPLES:BOOL=ON
-  # v2 requires a subset of data:
-  JPEG2000_CONFORMANCE_DATA_ROOT:PATH=$ENV{HOME}/Dashboards/MyTests/data/baseline/nonregression
     "
     )
 endmacro(dashboard_hook_init)

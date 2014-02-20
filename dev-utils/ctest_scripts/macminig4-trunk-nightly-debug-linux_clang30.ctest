@@ -1,7 +1,7 @@
 # Client maintainer: mathieu . malaterre  gmail . com
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
-set(ENV{CC} /usr/bin/gcc-4.1)
+set(ENV{CC} /usr/bin/clang)
 set(ENV{JFLAGS} "-Xlint:deprecation")
 
 macro(dashboard_hook_init)
