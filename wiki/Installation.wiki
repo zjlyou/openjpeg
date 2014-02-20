@@ -57,6 +57,10 @@ been checked out of course).
 
 Note 2 : to execute the encoding test suite, kakadu binaries are needed to decode encoded image and compare it to the baseline. Kakadu binaries are freely available for non-commercial purposes at http://www.kakadusoftware.com. kdu_expand will need to be in your PATH for cmake to find it.
 
+Note 3 : OpenJPEG can be build with BUILD_THIRDPARTY:BOOL=ON, in which case you need to install some system libraries. On a Debian-like system you can simply do:
+{{{
+sudo apt-get install liblcms2-dev  libtiff-dev libpng-dev libz-dev
+}}}
 === Using ctest script to perform dashboard submission===
 You can used ctest command to build the openjepg lib and submit to the dashboard.
 {{{
