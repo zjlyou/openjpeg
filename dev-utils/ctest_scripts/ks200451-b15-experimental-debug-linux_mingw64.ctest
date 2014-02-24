@@ -11,7 +11,7 @@ macro(dashboard_hook_init)
   BUILD_TESTING:BOOL=ON
   BUILD_JPIP:BOOL=ON
   BUILD_JPIP_SERVER:BOOL=OFF
-  BUILD_THIRDPARTY:BOOL=OFF
+  BUILD_THIRDPARTY:BOOL=ON
     "
     )
 endmacro(dashboard_hook_init)
