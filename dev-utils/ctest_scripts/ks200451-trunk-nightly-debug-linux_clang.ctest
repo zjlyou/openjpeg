@@ -2,7 +2,9 @@
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/bin/clang)
-set(ENV{CFLAGS} "-pedantic -Wconversion")
+# set(ENV{CFLAGS} "-pedantic -Wconversion")
+# https://code.google.com/p/openjpeg/issues/detail?id=255&start=100
+set(ENV{CFLAGS} "-Wno-uninitialized -Wno-unused-parameter -Wall -Wcast-align -Wdisabled-optimization -Wextra -Wformat=2 -Winvalid-pch -Wno-format-nonliteral -Wpointer-arith -Wunused -Wwrite-strings -funit-at-a-time -Wno-strict-overflow")
 set(ENV{JFLAGS} "-Xlint:deprecation")
 
 macro(dashboard_hook_init)
