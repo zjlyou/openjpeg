@@ -2,6 +2,7 @@
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/bin/gcc-4.6)
+set(ENV{CFLAGS} "-march=native")
 set(ENV{JFLAGS} "-Xlint:deprecation")
 
 macro(dashboard_hook_init)
