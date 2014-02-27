@@ -275,8 +275,11 @@ foreach(v
 endforeach(v)
 message("Dashboard script configuration:\n${vars}\n")
 
+# http://www.cmake.org/Wiki/CMake_Scripting_Of_CTest#ctest_using_git
 # Avoid non-ascii characters in tool output.
-set(ENV{LC_ALL} C)
+set(ENV{LC_ALL} C) # LC_MESSAGES
+# Avoid non-ascii characters in compiler output
+set(ENV{LANG} C)
 
 # Helper macro to write the initial cache.
 macro(write_cache)
