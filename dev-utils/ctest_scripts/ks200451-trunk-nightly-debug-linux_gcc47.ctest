@@ -5,9 +5,9 @@ set(ENV{CC} /usr/bin/gcc-4.7)
 set(ENV{CFLAGS} "-Wall -Wmissing-prototypes -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -fno-builtin -fomit-frame-pointer  -Wno-long-long")
 set(ENV{JFLAGS} "-Xlint:deprecation")
 
-set(dashboard_do_memcheck TRUE)
-set(CTEST_MEMORYCHECK_COMMAND           "/usr/bin/valgrind")
-set(CTEST_MEMORYCHECK_COMMAND_OPTIONS   "-q --tool=exp-sgcheck")
+#set(dashboard_do_memcheck TRUE)
+#set(CTEST_MEMORYCHECK_COMMAND           "/usr/bin/valgrind")
+#set(CTEST_MEMORYCHECK_COMMAND_OPTIONS   "-q --tool=exp-sgcheck")
 
 macro(dashboard_hook_init)
   set( dashboard_cache "
