@@ -3,6 +3,7 @@
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(CTEST_CONFIGURE_OPTIONS "-DCMAKE_TOOLCHAIN_FILE=${CTEST_SCRIPT_DIRECTORY}/toolchain-mingw64.cmake")
 set(ENV{JFLAGS} "-Xlint:deprecation")
+set(ENV{WINEPREFIX} "$ENV{HOME}/.wine64")
 
 macro(dashboard_hook_init)
   set( dashboard_cache "
