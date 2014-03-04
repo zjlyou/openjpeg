@@ -171,6 +171,8 @@ else()
     set(TRACK_NAME "Nightly Expected")
   elseif("${dashboard_model}" MATCHES "^[C|c]ontinuous$")
     #
+  elseif("${dashboard_model}" MATCHES "^[E|e]xperimental$")
+    #
   else()
     message(FATAL_ERROR "${dashboard_svn_branch} / ${dashboard_model} unhandled")
   endif()
