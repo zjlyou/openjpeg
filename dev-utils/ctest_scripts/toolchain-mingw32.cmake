@@ -1,6 +1,6 @@
 # http://www.cmake.org/Wiki/CmakeMingw
 #
-#  Copyright (c) 2006-2011 Mathieu Malaterre <mathieu.malaterre@gmail.com>
+#  Copyright (c) 2006-2014 Mathieu Malaterre <mathieu.malaterre@voxxl.com>
 #
 #  Redistribution and use is allowed according to the terms of the New
 #  BSD license.
@@ -8,15 +8,15 @@
 #
 
 # the name of the target operating system
-SET(CMAKE_SYSTEM_NAME Windows)
+set(CMAKE_SYSTEM_NAME Windows)
 
 # which compilers to use for C and C++
-SET(CMAKE_C_COMPILER i586-mingw32msvc-gcc)
-SET(CMAKE_CXX_COMPILER i586-mingw32msvc-g++)
-set(CMAKE_RC_COMPILER i586-mingw32msvc-windres)
+set(CMAKE_C_COMPILER i686-w64-mingw32-gcc)
+set(CMAKE_CXX_COMPILER i686-w64-mingw32-g++)
+set(CMAKE_RC_COMPILER i686-w64-mingw32-windres)
 
 # here is the target environment located
-SET(CMAKE_FIND_ROOT_PATH  /usr/i586-mingw32msvc)
+set(CMAKE_FIND_ROOT_PATH  /usr/i686-w64-mingw32)
 
 # adjust the default behaviour of the FIND_XXX() commands:
 # search headers and libraries in the target environment, search
