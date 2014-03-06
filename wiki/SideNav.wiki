@@ -17,6 +17,7 @@
   * [Roadmap OpenJPEG Roadmap]
     * [RoadmapCuda]
     * [Roadmap2_0]
+    * [Roadmap2_1]
     * [FolderReorgProposal New folder organization and naming convention]
     * [Optimization]
   * [GSoC2012 Google Summer of Code 2012]
