@@ -2,7 +2,7 @@
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 
-set(KDUPATH $ENV{HOME}/Dashboard/src/OpenJPEG/kakadu)
+set(KDUPATH $ENV{HOME}/Dashboard/src/OpenJPEG/kakadu73_bin)
 set(CLANGPATH $ENV{HOME}/tools/install/llvm/bin)
 set(ENV{LD_LIBRARY_PATH} ${KDUPATH})
 set(ENV{PATH} $ENV{PATH}:${KDUPATH})

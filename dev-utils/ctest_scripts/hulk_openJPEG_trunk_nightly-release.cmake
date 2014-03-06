@@ -22,7 +22,7 @@ SET( CTEST_SITE                 "hulk.c-s.fr" )       # Generally the output of 
 SET( CTEST_BUILD_CONFIGURATION  Release)                # What type of build do you want ?
 SET( CTEST_BUILD_NAME           "Ubuntu10.04-64bits-trunk-${CTEST_BUILD_CONFIGURATION}") # Build Name
 
-set(KDUPATH $ENV{HOME}/Dashboard/src/OpenJPEG/kakadu)
+set(KDUPATH $ENV{HOME}/Dashboard/src/OpenJPEG/kakadu73_bin)
 set(ENV{LD_LIBRARY_PATH} ${KDUPATH})
 set(ENV{PATH} $ENV{PATH}:${KDUPATH})
 

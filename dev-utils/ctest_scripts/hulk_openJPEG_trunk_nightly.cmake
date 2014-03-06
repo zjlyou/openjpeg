@@ -28,7 +28,7 @@ SET(CTEST_MEMORYCHECK_COMMAND_OPTIONS "--trace-children=yes --quiet --tool=memch
 # If necessery add a file which remove some vlagrind warnings (see InsightValgrind.supp file from ITK)
 SET(CTEST_MEMORYCHECK_SUPPRESSIONS_FILE ${CTEST_SOURCE_DIRECTORY}/CMake/openjpeg_valgrind.supp)
 
-set(KDUPATH $ENV{HOME}/Dashboard/src/OpenJPEG/kakadu)
+set(KDUPATH $ENV{HOME}/Dashboard/src/OpenJPEG/kakadu73_bin)
 set(ENV{LD_LIBRARY_PATH} ${KDUPATH})
 set(ENV{PATH} $ENV{PATH}:${KDUPATH})
 
