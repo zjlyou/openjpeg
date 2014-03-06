@@ -139,7 +139,7 @@ endif()
 
 # Select svn source to use.
 if(NOT DEFINED dashboard_svn_root_url)
-  set(dashboard_svn_root_url "https://openjpeg.googlecode.com/svn")
+  set(dashboard_svn_root_url "http://openjpeg.googlecode.com/svn")
 endif()
 if(NOT DEFINED dashboard_svn_branch)
   if("${dashboard_model}" STREQUAL "Nightly")
