@@ -230,7 +230,7 @@ set(CTEST_CHECKOUT_COMMAND "${CTEST_SVN_COMMAND} co ${dashboard_svn_url} \"${CTE
 if(NOT EXISTS "${CTEST_DASHBOARD_ROOT}/data")
   message("pulling data from scratch")
   execute_process(
-    COMMAND ${CTEST_SVN_COMMAND} "checkout" "https://openjpeg.googlecode.com/svn/data"
+    COMMAND ${CTEST_SVN_COMMAND} "checkout" "http://openjpeg.googlecode.com/svn/data"
     WORKING_DIRECTORY ${CTEST_DASHBOARD_ROOT}
     )
 else()
