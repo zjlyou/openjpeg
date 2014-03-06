@@ -11,17 +11,17 @@ Team:
 = Mission =
 
  # Correct issue #80 & #230. (backport branch 1.5).
- # Import security patches de sécurité (debian) :
-  # http://patch-tracker.debian.org/package/openjpeg/1.3+dfsg-4.7
- # Import ghoscripts (sumatrapdf?) patch  (#235, #236, #237, #238 and al.). branch 1.5 backport ?
+ # ~~Import security patches (debian) :~~
+  # ~~http://patch-tracker.debian.org/package/openjpeg/1.3+dfsg-4.7~~
+ # ~~Import ghoscripts (sumatrapdf?) patch  (#235, #236, #237, #238 and al.). ~~ branch 1.5 backport ?
  # Finalize API openjpeg v2. Check FILE API.
- # New images for conformance tests
-  # Add JP2 file
+ # ~~New images for conformance tests~~
+  # ~~Add JP2 file~~
  # New images for non-regression tests :
   # Kakadu stress tests
   # Richter subsampling tests,
- # Add PEAK/MSE on TIFF images. (See JP2 files).
- # Deactivate tests conformance Class-0 for now,
+ # ~~Add PEAK/MSE on TIFF images. (See JP2 files).~~
+ # ~~Deactivate tests conformance Class-0 for now,~~
  # Update messages -help
  # Suggest reference indentation.
  # bugs triaging.
