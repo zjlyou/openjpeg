@@ -24,10 +24,10 @@ Team:
  # ~~Deactivate tests conformance Class-0 for now,~~
  # Update messages -help
  # Suggest reference indentation.
- # bugs triaging.
+ # ~~bugs triaging.~~
  # Dashboard Maintenance :
-  # fix warnings/errors
-  # Deactivate old (non working) config
+  # ~~fix warnings/errors~~
+  # ~~Deactivate old (non working) config~~
   # Checks tests output, in particular valgrind output
  # Produce OpenJPEG 2.1.0
   # New CPack options to generate `light` version of OpenJPEG (Part 1 only)
