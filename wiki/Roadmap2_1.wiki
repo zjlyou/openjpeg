@@ -11,8 +11,8 @@ Team:
 = Mission =
 
  # Correct issue #80 & #230. (backport branch 1.5).
- # ~~Import security patches (debian) :~~
-  # ~~http://patch-tracker.debian.org/package/openjpeg/1.3+dfsg-4.7~~
+ # ~~ Import security patches (debian) : ~~
+  # ~~ http://patch-tracker.debian.org/package/openjpeg/1.3+dfsg-4.7 ~~
  # ~~Import ghoscripts (sumatrapdf?) patch  (#235, #236, #237, #238 and al.). branch 1.5 backport ?~~
  # Finalize API openjpeg v2. Check FILE API.
  # ~~New images for conformance tests~~
