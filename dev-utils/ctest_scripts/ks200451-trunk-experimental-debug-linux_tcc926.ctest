@@ -8,7 +8,11 @@ macro(dashboard_hook_init)
   set( dashboard_cache "
   BUILD_TESTING:BOOL=ON
   # cmake/tcc do not work in dynamic:
+  # http://cmake.org/Bug/view.php?id=12605
   BUILD_SHARED_LIBS:BOOL=OFF
+  # cmake+tcc is not multi-arch capable:
+  # http://cmake.org/Bug/view.php?id=14792
+  BUILD_THIRDPARTY:BOOL=ON
   # run cppcheck
   OPENJPEG_CPPCHECK:BOOL=ON
     "
