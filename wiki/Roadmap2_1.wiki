@@ -37,3 +37,7 @@ Team:
 How to track issues changes since 19/2/2014:
 
  * http://code.google.com/p/openjpeg/issues/list?can=2&q=modified-after%3A2014%2F2%2F19
+
+How to track issues remaining before 2.1 release:
+
+ * http://code.google.com/p/openjpeg/issues/list?q=milestone=Release2.1
