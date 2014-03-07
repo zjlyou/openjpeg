@@ -2,7 +2,7 @@
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/bin/gcc-4.7)
-set(ENV{CFLAGS} "-Wall -Wextra -pedantic -Wno-long-long")
+set(ENV{CFLAGS} "-Wall -Wextra -pedantic -Wno-long-long -pipe")
 set(ENV{JFLAGS} "-Xlint:deprecation")
 
 macro(dashboard_hook_init)
