@@ -88,6 +88,9 @@ property 'svn:mime-type' set on 'nonregression/opj_c1_mono.ppm'
 property 'svn:mime-type' set on 'nonregression/opj_c2_mono.ppm'
 property 'svn:mime-type' set on 'nonregression/opj_f1_mono.ppm'
 property 'svn:mime-type' set on 'nonregression/opj_f2_mono.ppm'
+}}}
+followed by:
+{{{
 $ svn propset svn:mime-type image/x-portable-pixmap nonregression/*colr.ppm
 property 'svn:mime-type' set on 'nonregression/opj_a2_colr.ppm'
 property 'svn:mime-type' set on 'nonregression/opj_d1_colr.ppm'
