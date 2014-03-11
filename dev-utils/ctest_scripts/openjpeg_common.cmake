@@ -280,10 +280,13 @@ message("Dashboard script configuration:\n${vars}\n")
 # http://www.cmake.org/Wiki/CMake_Scripting_Of_CTest#ctest_using_git
 # Avoid non-ascii characters in tool output.
 set(ENV{LC_ALL} C) # LC_MESSAGES
-# Avoid non-ascii characters in compiler output
+# Avoid non-ascii characters in compiler output (does not work)
 set(ENV{LANG} C)
 
 # Helper macro to write the initial cache.
+# Watch out that for some configuration ctest --interactive-debug-mode 0 is not
+# working as expected, in which case do not use 'Debug':
+# http://cmake.org/Bug/view.php?id=14801#c35380
 macro(write_cache)
   set(cache_build_type "")
   set(cache_make_program "")
