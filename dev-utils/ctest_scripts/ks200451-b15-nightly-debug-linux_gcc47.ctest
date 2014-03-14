@@ -5,7 +5,7 @@ set(ENV{CC} /usr/bin/gcc-4.7)
 set(ENV{CFLAGS} "-g -O2 -fstack-protector --param=ssp-buffer-size=4 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security")
 set(ENV{JFLAGS} "-Xlint:deprecation")
 
-set(dashboard_do_memcheck TRUE)
+set(dashboard_do_memcheck FALSE)
 set(CTEST_MEMORYCHECK_COMMAND           "/usr/bin/valgrind")
 set(CTEST_MEMORYCHECK_COMMAND_OPTIONS   "-q --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=10")
 
