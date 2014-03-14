@@ -42,6 +42,11 @@ File should be pushed to server with UNIX eol
 You should not use tab char, but instead use two white space. See uncrustify example:
  * http://code.google.com/p/openjpeg/source/browse/dev-utils/scripts/opj.cfg
 
+To see it in action:
+
+ * http://code.google.com/p/openjpeg/source/browse/dev-utils/scripts/j2k.c
+ * http://code.google.com/p/openjpeg/source/browse/dev-utils/scripts/tcd.c
+
 == Comment ==
 
 Because OpenJPEG is written in C. One should use C style comment: {{{/*}}} and {{{*/}}}
