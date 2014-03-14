@@ -21,7 +21,7 @@ Instead of re-inventing the wheel, OpenJPEG will use C99 notations in two occasi
  * fixed-type notation
  * large file support
 
-OpenJPEG uses two build-system: cmake & autotools. Both support system inspection and compiler detection. What happen in that:
+OpenJPEG uses a single build-system: cmake. It support system inspection and compiler detection. What happen is that:
  * iff compiler provide a stdint.h we will use it
  * iff compiler provide large file support we will use it
 
