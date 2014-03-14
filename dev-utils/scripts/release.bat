@@ -1,5 +1,10 @@
 @rem generate OpenJPEG release on Windows
 
+@rem should I build only Part-1 ?
+set PART1ONLY=false
+
+if %PART1ONLY%==false set cmake_extra_options=-DBUILD_JPWL:BOOL=ON -DBUILD_MJ2:BOOL=ON -DBUILD_JPIP:BOOL=ON -DBUILD_THIRDPARTY:BOOL=ON
+
 @rem get tmpdir:
 set TMPDIR=%TMP%\openjpeg_release
 @rem set TMPDIR=Z:\tmp\openjpeg_release
@@ -27,7 +32,7 @@ svn checkout -q http://openjpeg.googlecode.com/svn/tags/version.2.0 openjpeg > s
 
 mkdir %TMPDIR%\openjpeg-build
 cd %TMPDIR%\openjpeg-build
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DBUILD_JPWL:BOOL=ON -DBUILD_MJ2:BOOL=ON -DBUILD_JPIP:BOOL=ON -DBUILD_THIRDPARTY:BOOL=ON ..\openjpeg > config.log 2>&1
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo %cmake_extra_options% -DBUILD_THIRDPARTY:BOOL=ON ..\openjpeg > config.log 2>&1
 
 @rem build gdcm
 nmake > nmake.log 2>&1
