@@ -5,6 +5,9 @@
 # control verbosity
 #set -x
 
+# All OpenJPEG (=false) or just Part-1 (=true) ?
+PART1ONLY=false
+
 # get tmpdir:
 TMPDIR=/tmp/openjpeg_release
 
@@ -15,7 +18,7 @@ osxVerMajMin="`echo $osxVerFul | cut -d. -f1-2`"
 fi
 
 mkdir -p $TMPDIR
-mkdir $TMPDIR/openjpeg-build
+mkdir -p $TMPDIR/openjpeg-build
 cd $TMPDIR
 # Use tag to construct package:
 svn checkout -q http://openjpeg.googlecode.com/svn/tags/version.2.0 openjpeg
@@ -23,13 +26,26 @@ svn checkout -q http://openjpeg.googlecode.com/svn/tags/version.2.0 openjpeg
 #svn checkout -q http://openjpeg.googlecode.com/svn/trunk openjpeg
 # END DEBUG
 
-cmake_options="\
+cmake_options_min="\
  -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+ -DBUILD_THIRDPARTY:BOOL=ON \
+ "
+cmake_options_extra="\
  -DBUILD_JPWL:BOOL=ON \
  -DBUILD_MJ2:BOOL=ON \
  -DBUILD_JPIP:BOOL=ON \
- -DBUILD_THIRDPARTY:BOOL=ON \
  "
+if [ "$PART1ONLY" = "true" ]; then
+  echo "Building Part 1 Only"
+  cmake_options=$cmake_options_min
+elif [ "$PART1ONLY" = "false" ]; then
+  echo "Building all Parts"
+  cmake_options="$cmake_options_min $cmake_options_extra"
+else
+  echo "I'm sorry, Dave. I'm afraid I can't do that"
+  exit 1
+fi
+
 # On apple let's build universal binaries
 if [ "$isOSX" != "" ]; then
 if [ "$osxVerMajMin" = "10.4" ]; then
@@ -70,3 +86,6 @@ fi
 
 # create source zip
 cpack -G TGZ --config CPackSourceConfig.cmake > s-tgz.log 2>&1
+
+echo "Tarball generated here:"
+ls $TMPDIR/openjpeg-build/*.tar.gz
