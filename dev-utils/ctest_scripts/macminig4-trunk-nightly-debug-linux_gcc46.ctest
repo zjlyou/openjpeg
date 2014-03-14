@@ -4,9 +4,9 @@ set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(ENV{CC} /usr/bin/gcc-4.6)
 set(ENV{CFLAGS} "-pipe")
 
-set(dashboard_do_memcheck TRUE)
-set(CTEST_MEMORYCHECK_COMMAND           "/usr/bin/valgrind")
-set(CTEST_MEMORYCHECK_COMMAND_OPTIONS   "-q --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=10")
+#set(dashboard_do_memcheck TRUE)
+#set(CTEST_MEMORYCHECK_COMMAND           "/usr/bin/valgrind")
+#set(CTEST_MEMORYCHECK_COMMAND_OPTIONS   "-q --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=10")
 
 macro(dashboard_hook_init)
   set( dashboard_cache "
