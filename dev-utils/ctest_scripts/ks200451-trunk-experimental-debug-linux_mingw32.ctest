@@ -2,6 +2,7 @@
 
 set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
 set(CTEST_CONFIGURE_OPTIONS "-DCMAKE_TOOLCHAIN_FILE=${CTEST_SCRIPT_DIRECTORY}/toolchain-mingw32.cmake")
+set(ENV{CFLAGS} "-D__USE_MINGW_ANSI_STDIO=1")
 set(ENV{JFLAGS} "-Xlint:deprecation")
 set(ENV{WINEPREFIX} "$ENV{HOME}/.wine32")
 
