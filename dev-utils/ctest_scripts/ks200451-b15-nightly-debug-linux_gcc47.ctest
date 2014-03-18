@@ -15,6 +15,7 @@ macro(dashboard_hook_init)
   BUILD_JPIP:BOOL=ON
   BUILD_JPIP_SERVER:BOOL=ON
   BUILD_THIRDPARTY:BOOL=OFF
+  USE_SYSTEM_GETOPT:BOOL=ON
   JPIP_SERVER:STRING=http://localhost/myFCGI
     "
     )
