@@ -1,9 +1,9 @@
 #summary Downloads
 
-As Google Code will soon deprecate its download service (see [http://google-opensource.blogspot.be/2013/05/a-change-to-google-code-download-service.html here]), OpenJPEG will start using the download service from [https://sourceforge.net/projects/openjpeg.mirror/files/ SourceForge].
+As Google Code has deprecated its download service (see [http://google-opensource.blogspot.be/2013/05/a-change-to-google-code-download-service.html here]), OpenJPEG starts using the download service from [https://sourceforge.net/projects/openjpeg.mirror/files/ SourceForge].
 
 Code repository, issue tracking system and everything else except downloads remain on Google Code. If this hybrid solution does not prove to be satisfactory, we might consider migrate everything to !SourceForge.
 
-PLEASE CLICK [https://sourceforge.net/projects/openjpeg.mirror/files/ HERE] TO GO TO SOURCEFORGE DOWNLOADS OR DIRECTLY PICK ONE HEREUNDER.
+*PLEASE CLICK [https://sourceforge.net/projects/openjpeg.mirror/files/ HERE] TO GO TO SOURCEFORGE DOWNLOADS OR DIRECTLY PICK ONE HEREUNDER.*
 
 <wiki:gadget url="http://www.openjpeg.org/gadgetFeedXML/gadget.xml" up_feeds="http://sourceforge.net/api/file/index/project-id/2048818/mtime/desc/limit/50/rss" up_maxFeeds="21" width="500" height="500" border="1"/>
