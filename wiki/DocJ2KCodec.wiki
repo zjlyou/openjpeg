@@ -146,9 +146,11 @@ Irreversible compression (ICT + DWT 9-7). This option offers the possibility to 
   Example : RESTART(4) + RESET(2) + SEGMARK(32) => -M 38
 
 {{{ 
--x <file>
+  -x <file>
 }}}
-  Index file. This index is a text file that summarizes the codestream. This index is useful to create a navigation process. 
+`[`Index generation is currently broken in 2.x. See issue #260.`]`
+
+Index file. This index is a text file that summarizes the codestream. This index is useful to create a navigation process. 
     
     The index structure is the following
     {{{
@@ -336,8 +338,10 @@ opj_decompress ...
   Layer number. Set the maximum number of quality layers to decode. If there are less quality layers than the specified number, all the quality layers are decoded.
 
 {{{ 
--x <file>
+  -x <file>
 }}}
+`[`Index generation is currently broken in 2.x. See issue #260.`]`
+
   Index file. This index is a text file that summarizes the codestream. This index is useful to create a navigation process. It is identical to the one created at the encoder side, except that there is no distortion information.
 
 {{{
