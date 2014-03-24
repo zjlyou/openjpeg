@@ -1,5 +1,6 @@
   * [WhatsNew What's New ?]
   * [Installation Installation]
+  * [Downloads Downloads]
   * Documentation
     * [http://www.openjpeg.org/libdoc/index.html OpenJPEG library (Doxygen)]
     * [DocJ2KCodec JPEG 2000 codec]
