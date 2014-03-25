@@ -206,15 +206,19 @@ opj_compress -i lena.raw -o lena.j2k -F 512,512,3,8,u
   As explained above, in the case of raw images with a component depth comprised between 9 and 16 bits, each component data must be stored on two bytes, the first byte containing the MSBs and the second byte the LSBs.
 
 {{{
--m <file>
+  -mct {0,1,2}
 }}}
-  use array-based MCT, values are coma separated, line by line no specific separators between lines, no space allowed between values.
+  explicitely specifies if a Multiple Component Transform has to be used. 0: no MCT ; 1: RGB->YCC conversion ; 2: custom MCT. If custom MCT, "-m" option has to be used (see hereunder). By default, RGB->YCC conversion is used if there are 3 components or more, no conversion otherwise.
 
 {{{
--jpip
+  -m <file>
 }}}
-  write jpip codestream index box in JP2 output file
-NOTICE: currently supports only RPCL order.
+  use array-based MCT, values are coma separated, line by line no specific separators between lines, no space allowed between values. If this option is used, it automatically sets "-mct" option to 2.
+
+{{{
+  -jpip
+}}}
+  write jpip codestream index box in JP2 output file. NOTICE: currently supports only RPCL order.
 
 {{{
   -h 
