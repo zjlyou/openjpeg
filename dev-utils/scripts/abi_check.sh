@@ -1,11 +1,11 @@
-#!/bin/sh
+#!/bin/sh -x
 
 cwd=`pwd`
 cd /tmp
 
-# Let's compare branch 1.5 ABI to tag 1.4
-svn co http://openjpeg.googlecode.com/svn/tags/version.1.4 opj14
-svn co http://openjpeg.googlecode.com/svn/branches/openjpeg-1.5 opj15
+# Let's compare trunk ABI to tag 2.0
+svn co http://openjpeg.googlecode.com/svn/tags/version.2.0 opj20
+svn co http://openjpeg.googlecode.com/svn/trunk opj21
 
 for i in `ls -d /tmp/opj??`; do
   cd $i;
@@ -16,4 +16,4 @@ done
 
 # check
 cd $cwd
-abi-compliance-checker -l openjpeg -d1 abi_openjpeg_1.4.xml -d2 abi_openjpeg_1.5.xml
+abi-compliance-checker -l openjpeg -d1 abi_openjpeg_2.0.xml -d2 abi_openjpeg_2.1.xml

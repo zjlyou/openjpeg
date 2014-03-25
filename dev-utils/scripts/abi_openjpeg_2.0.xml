@@ -1,0 +1,9 @@
+<version>2.0.0</version>
+<headers>
+/tmp/install/opj20/usr/local/include/openjpeg-2.0
+</headers>
+<libs>
+/tmp/install/opj20/usr/local/lib/
+</libs>
+<include_paths>
+</include_paths>

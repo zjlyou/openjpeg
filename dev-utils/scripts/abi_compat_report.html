@@ -1,16 +1,17 @@
-<!-- verdict:incompatible;affected:42.86;added:0;removed:0;type_problems_high:0;type_problems_medium:9;type_problems_low:2;interface_problems_high:0;interface_problems_medium:2;interface_problems_low:0;changed_constants:0;tool_version:1.96.1 -->
+<!-- kind:binary;verdict:incompatible;affected:5.8;added:3;removed:2;type_problems_high:0;type_problems_medium:0;type_problems_low:2;interface_problems_high:0;interface_problems_medium:1;interface_problems_low:0;changed_constants:0;tool_version:1.97.7 -->
+<!-- kind:source;verdict:incompatible;affected:5.8;added:3;removed:2;type_problems_high:0;type_problems_medium:0;type_problems_low:0;interface_problems_high:0;interface_problems_medium:1;interface_problems_low:0;changed_constants:0;tool_version:1.97.7 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="openjpeg, binary compatibility, API, report" />
-    <meta name="description" content="Binary compatibility report for the openjpeg library between 1.4.0 and 1.5.0 versions on x86_64" />
+    <meta name="keywords" content="openjpeg, compatibility, API, report" />
+    <meta name="description" content="Compatibility report for the openjpeg library between 2.0.0 and 2.1.0 versions" />
     <title>
-        openjpeg: 1.4.0 to 1.5.0 binary compatibility report
+        openjpeg: 2.0.0 to 2.1.0 compatibility report
     </title>
-<style type="text/css">
-body {
-    font-family:Arial;
+    <style type="text/css">
+    body {
+    font-family:Arial, sans-serif;
     color:Black;
     font-size:14px;
 }
@@ -34,18 +35,18 @@ h2 {
 span.section {
     font-weight:bold;
     cursor:pointer;
-    margin-left:7px;
     font-size:16px;
     color:#003E69;
     white-space:nowrap;
+    margin-left:5px;
 }
-span.new_signature {
+span.new_sign {
     font-weight:bold;
-    margin-left:28px;
+    margin-left:26px;
     font-size:16px;
     color:#003E69;
 }
-span.new_signature_label {
+span.new_sign_lbl {
     margin-left:28px;
     font-size:14px;
     color:Black;
@@ -56,12 +57,14 @@ span:hover.section {
 span.section_affected {
     cursor:pointer;
     margin-left:7px;
+    padding-left:15px;
     font-size:14px;
     color:#cc3300;
 }
 span.section_info {
     cursor:pointer;
     margin-left:7px;
+    padding-left:15px;
     font-size:14px;
     color:Black;
 }
@@ -75,24 +78,21 @@ span.h_name {
     font-weight:bold;
 }
 div.h_list {
-    padding-left:10px;
-    color:#333333;
     font-size:15px;
+    padding-left:5px;
 }
 span.ns_title {
-    margin-left:2px;
     color:#408080;
-    font-size:13px;
+    font-size:15px;
 }
 span.ns {
     color:#408080;
-    font-size:13px;
+    font-size:15px;
     font-weight:bold;
 }
 div.lib_list {
-    padding-left:10px;
-    color:#333333;
     font-size:15px;
+    padding-left:5px;
 }
 span.lib_name {
     color:Green;
@@ -103,16 +103,19 @@ span.iname {
     font-weight:bold;
     font-size:16px;
     color:#003E69;
-    margin-left:7px;
+    margin-left:5px;
 }
 span.iname_b {
     font-weight:bold;
     font-size:15px;
-    color:#333333;
 }
-span.int_p {
+span.sym_p {
     font-weight:normal;
     white-space:normal;
+}
+span.sym_kind {
+    color:Black;
+    font-weight:normal;
 }
 div.affect {
     padding-left:15px;
@@ -125,7 +128,7 @@ div.affected {
     padding-left:30px;
     padding-top:5px;
 }
-table.problems_table {
+table.ptable {
     border-collapse:collapse;
     border:1px outset black;
     line-height:16px;
@@ -134,49 +137,32 @@ table.problems_table {
     margin-bottom:3px;
     width:900px;
 }
-table.problems_table td {
+table.ptable td {
     border:1px solid Gray;
+    padding: 3px;
 }
-table.problems_table th {
-    background-color:#eeeeee;
-    color:#333333;
-    font-weight:bold;
-    font-size:13px;
-    font-family:Verdana;
-    border:1px solid Gray;
-    text-align:center;
-    vertical-align:top;
-    white-space:nowrap;
-}
-table.virtual_table {
+table.vtable {
     border-collapse:collapse;
     border:1px outset black;
     line-height:16px;
     margin-left:30px;
-    margin-top:3px;
+    margin-top:10px;
     width:100px;
 }
-table.virtual_table td {
+table.vtable td {
     border:1px solid Gray;
     white-space:nowrap;
-    border:1px solid Gray;
+    padding: 3px;
 }
-table.virtual_table th {
+table.ptable th, table.vtable th {
     background-color:#eeeeee;
-    color:#333333;
     font-weight:bold;
     font-size:13px;
-    font-family:Verdana;
     border:1px solid Gray;
     text-align:center;
     vertical-align:top;
     white-space:nowrap;
-}
-td.vtable_red {
-    background-color:#FFCCCC;
-}
-td.vtable_yellow {
-    background-color:#FFFFCC;
+    padding: 3px;
 }
 table.summary {
     border-collapse:collapse;
@@ -189,21 +175,21 @@ table.summary th {
     font-size:15px;
     white-space:nowrap;
     border:1px inset gray;
+    padding: 3px;
 }
 table.summary td {
-    padding-left:10px;
-    padding-right:5px;
     text-align:right;
     font-size:16px;
     white-space:nowrap;
     border:1px inset gray;
+    padding: 3px 5px 3px 10px;
 }
 table.code_view {
     cursor:text;
     margin-top:7px;
     width:50%;
     margin-left:20px;
-    font-family:Consolas, Monaco, Monospace;
+    font-family:Consolas, 'DejaVu Sans Mono', 'Droid Sans Mono', Monaco, Monospace;
     font-size:14px;
     padding:10px;
     border:1px solid #e0e8e5;
@@ -218,18 +204,19 @@ table.code_view td {
 }
 span.mangled {
     padding-left:15px;
-    font-size:13px;
-    cursor:text;
-    color:#444444;
-}
-span.symver {
-    color:#333333;
     font-size:14px;
+    cursor:text;
+}
+span.sym_ver {
+    font-size:16px;
     white-space:nowrap;
 }
 span.color_p {
     font-style:italic;
     color:Brown;
+}
+span.param {
+    font-style:italic;
 }
 span.focus_p {
     font-style:italic;
@@ -245,11 +232,57 @@ span.value {
     white-space:nowrap;
     font-weight:bold;
 }
-</style>
-
-<script type="text/javascript" language="JavaScript">
-<!--
-function showContent(header, id)   {
+td.passed {
+    background-color:#CCFFCC;
+}
+td.warning {
+    background-color:#F4F4AF;
+}
+td.failed {
+    background-color:#FFC3CE;
+}
+td.new {
+    background-color:#C6DEFF;
+}
+.tabset {
+    float:left;
+}
+a.tab {
+    border:1px solid #AAA;
+    float:left;
+    margin:0px 5px -1px 0px;
+    padding:3px 5px 3px 5px;
+    position:relative;
+    font-size:14px;
+    background-color:#DDD;
+    text-decoration:none;
+    color:Black;
+}
+a.disabled:hover
+{
+    color:Black;
+    background:#EEE;
+}
+a.active:hover
+{
+    color:Black;
+    background:White;
+}
+a.active {
+    border-bottom-color:White;
+    background-color:White;
+}
+div.tab {
+    border:1px solid #AAA;
+    padding:0 7px 0 12px;
+    width:97%;
+    clear:both;
+}
+    </style>
+    <script type="text/javascript" language="JavaScript">
+    <!--
+    function showContent(header, id)
+{
     e = document.getElementById(id);
     if(e.style.display == 'none')
     {
@@ -264,225 +297,315 @@ function showContent(header, id)   {
         header.innerHTML = header.innerHTML.replace(/\[[^0-9 ]\]/gi,"[+]");
     }
 }
--->
-</script>
-</head>
-<body>
-<div><a name='Top'></a>
-<h1><span class='nowrap'>Binary compatibility report for the <span style='color:Blue;'>openjpeg</span> library</span> <span class='nowrap'>&#160;between <span style='color:Red;'>1.4.0</span> and <span style='color:Red;'>1.5.0</span> versions on <span style='color:Blue;'>x86_64</span></span></h1>
+function initTabs()
+{
+    var url = window.location.href;
+    if(url.indexOf('_Source_')!=-1 || url.indexOf('#Source')!=-1)
+    {
+        var tab1 = document.getElementById('BinaryID');
+        var tab2 = document.getElementById('SourceID');
+        tab1.className='tab disabled';
+        tab2.className='tab active';
+    }
+    var sets = document.getElementsByTagName('div');
+    for (var i = 0; i < sets.length; i++)
+    {
+        if (sets[i].className.indexOf('tabset') != -1)
+        {
+            var tabs = [];
+            var links = sets[i].getElementsByTagName('a');
+            for (var j = 0; j < links.length; j++)
+            {
+                if (links[j].className.indexOf('tab') != -1)
+                {
+                    tabs.push(links[j]);
+                    links[j].tabs = tabs;
+                    var tab = document.getElementById(links[j].href.substr(links[j].href.indexOf('#') + 1));
+                    //reset all tabs on start
+                    if (tab)
+                    {
+                        if (links[j].className.indexOf('active')!=-1) {
+                            tab.style.display = 'block';
+                        }
+                        else {
+                            tab.style.display = 'none';
+                        }
+                    }
+                    links[j].onclick = function()
+                    {
+                        var tab = document.getElementById(this.href.substr(this.href.indexOf('#') + 1));
+                        if (tab)
+                        {
+                            //reset all tabs before change
+                            for (var k = 0; k < this.tabs.length; k++)
+                            {
+                                document.getElementById(this.tabs[k].href.substr(this.tabs[k].href.indexOf('#') + 1)).style.display = 'none';
+                                this.tabs[k].className = this.tabs[k].className.replace('active', 'disabled');
+                            }
+                            this.className = 'tab active';
+                            tab.style.display = 'block';
+                            // window.location.hash = this.id.replace('ID', '');
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if(url.indexOf('#')!=-1) {
+        location.href=location.href;
+    }
+}
+if (window.addEventListener) window.addEventListener('load', initTabs, false);
+else if (window.attachEvent) window.attachEvent('onload', initTabs);
+    -->
+    </script>
+    </head><body><a name='Source'></a><a name='Binary'></a><a name='Top'></a><h1><span class='nowrap'>API compatibility report for the <span style='color:Blue;'>openjpeg</span> library</span> <span class='nowrap'>&#160;between <span style='color:Red;'>2.0.0</span> and <span style='color:Red;'>2.1.0</span> versions on <span style='color:Blue;'>x86_64</span></span></h1>
 
+            <br/><div class='tabset'>
+            <a id='BinaryID' href='#BinaryTab' class='tab active'>Binary<br/>Compatibility</a>
+            <a id='SourceID' href='#SourceTab' style='margin-left:3px' class='tab disabled'>Source<br/>Compatibility</a>
+            </div><div id='BinaryTab' class='tab'>
 <h2>Test Info</h2><hr/>
-<table cellpadding='3' cellspacing='0' class='summary'>
+<table class='summary'>
 <tr><th>Library Name</th><td>openjpeg</td></tr>
-<tr><th>Version #1</th><td>1.4.0</td></tr>
-<tr><th>Version #2</th><td>1.5.0</td></tr>
-<tr><th>CPU Architecture</th><td>x86_64</td></tr>
-<tr><th>GCC Version</th><td>4.4.5</td></tr>
+<tr><th>Version #1</th><td>2.0.0</td></tr>
+<tr><th>Version #2</th><td>2.1.0</td></tr>
+<tr><th>CPU Type</th><td>x86_64</td></tr>
+<tr><th>GCC Version</th><td>4.7</td></tr>
+<tr><th>Subject</th><td width='150px'>Binary Compatibility</td></tr>
 </table>
 <h2>Test Results</h2><hr/>
-<table cellpadding='3' cellspacing='0' class='summary'><tr><th>Total Header Files</th><td><a href='#Headers' style='color:Blue;'>1</a></td></tr>
+<table class='summary'><tr><th>Total Header Files</th><td><a href='#Headers' style='color:Blue;'>3</a></td></tr>
 <tr><th>Total Shared Libraries</th><td><a href='#Libs' style='color:Blue;'>1</a></td></tr>
-<tr><th>Total Symbols / Types</th><td>21 / 82</td></tr>
-<tr><th>Verdict</th><td><span style='color:Red;'><b>Incompatible<br/>(42.86%)</b></span></td></tr></table>
+<tr><th>Total Symbols / Types</th><td>43 / 117</td></tr>
+<tr><th>Verdict</th><td><span style='color:Red;'><b>Incompatible<br/>(5.8%)</b></span></td></tr>
+</table>
 <h2>Problem Summary</h2><hr/>
-<table cellpadding='3' cellspacing='0' class='summary'><tr><th></th><th style='text-align:center;'>Severity</th><th style='text-align:center;'>Count</th></tr><tr><th>Added Symbols</th><td>-</td><td>0</td></tr>
-<tr><th>Removed Symbols</th><td style='color:Red;'>High</td><td>0</td></tr>
-<tr><th rowspan='3'>Problems with<br/>Data Types</th><td style='color:Red;'>High</td><td>0</td></tr>
-<tr><td>Medium</td><td><a href='#Type_Problems_Medium' style='color:Blue;'>9</a></td></tr>
-<tr><td>Low</td><td><a href='#Type_Problems_Low' style='color:Blue;'>2</a></td></tr>
-<tr><th rowspan='3'>Problems with<br/>Symbols</th><td style='color:Red;'>High</td><td>0</td></tr>
-<tr><td>Medium</td><td><a href='#Interface_Problems_Medium' style='color:Blue;'>2</a></td></tr>
+<table class='summary'><tr><th></th><th style='text-align:center;'>Severity</th><th style='text-align:center;'>Count</th></tr><tr><th>Added Symbols</th><td>-</td><td class='new'><a href='#Binary_Added' style='color:Blue;'>3</a></td></tr>
+<tr><th>Removed Symbols</th><td>High</td><td class='failed'><a href='#Binary_Removed' style='color:Blue;'>2</a></td></tr>
+<tr><th rowspan='3'>Problems with<br/>Data Types</th><td>High</td><td>0</td></tr>
+<tr><td>Medium</td><td>0</td></tr>
+<tr><td>Low</td><td class='warning'><a href='#Type_Binary_Problems_Low' style='color:Blue;'>2</a></td></tr>
+<tr><th rowspan='3'>Problems with<br/>Symbols</th><td>High</td><td>0</td></tr>
+<tr><td>Medium</td><td class='failed'><a href='#Symbol_Binary_Problems_Medium' style='color:Blue;'>1</a></td></tr>
 <tr><td>Low</td><td>0</td></tr>
 <tr><th>Problems with<br/>Constants</th><td>Low</td><td>0</td></tr>
-<tr><th>Other Changes</th><td>-</td><td>0</td></tr>
+<tr><th>Other Changes<br/>in Data Types</th><td>-</td><td class='passed'><a href='#Other_Binary_Changes_In_Types' style='color:Blue;'>1</a></td></tr>
 </table>
 
-<a name='Medium_Risk_Problems'></a><a name='Type_Problems_Medium'></a>
-<h2>Problems with Data Types, Medium Severity (9)</h2><hr/>
-<span class='h_name'>openjpeg.h</span><br/>
+<a name='Binary_Added'></a><h2>Added Symbols (3)</h2><hr/>
+<span class='h_name'>openjpeg.h</span>, <span class='lib_name'>libopenjp2.so.2.1.0</span><br/>
+<span class="iname">opj_stream_create_default_file_stream_v3&#160;<span class='sym_p'>(&#160;char const* <span class='color_p'>fname</span>, <span class='nowrap'>OPJ_BOOL <span class='color_p'>p_is_read_stream</span> )</span></span></span><br/>
+<span class="iname">opj_stream_create_file_stream_v3&#160;<span class='sym_p'>(&#160;char const* <span class='color_p'>fname</span>, OPJ_SIZE_T <span class='color_p'>p_buffer_size</span>, <span class='nowrap'>OPJ_BOOL <span class='color_p'>p_is_read_stream</span> )</span></span></span><br/>
+<span class="iname">opj_stream_destroy_v3&#160;<span class='sym_p'>(&#160;<span class='nowrap'>opj_stream_t* <span class='color_p'>p_stream</span> )</span></span></span><br/>
+<br/>
+<a style='font-size:11px;' href='#Top'>to the top</a><br/>
+<a name='Binary_Removed'></a><a name='Binary_Withdrawn'></a><h2>Removed Symbols (2)</h2><hr/>
+<span class='h_name'>openjpeg.h</span>, <span class='lib_name'>libopenjp2.so.2.0.0</span><br/>
+<span class="iname">opj_stream_create_default_file_stream&#160;<span class='sym_p'>(&#160;<span class='nowrap'>FILE* <span class='color_p'>p_file</span>,</span> <span class='nowrap'>OPJ_BOOL <span class='color_p'>p_is_read_stream</span> )</span></span></span><br/>
+<span class="iname">opj_stream_create_file_stream&#160;<span class='sym_p'>(&#160;<span class='nowrap'>FILE* <span class='color_p'>p_file</span>,</span> OPJ_SIZE_T <span class='color_p'>p_buffer_size</span>, <span class='nowrap'>OPJ_BOOL <span class='color_p'>p_is_read_stream</span> )</span></span></span><br/>
+<br/>
+<a style='font-size:11px;' href='#Top'>to the top</a><br/>
+<a name='Medium_Risk_Binary_Problems'></a><a name='Symbol_Binary_Problems_Medium'></a><a name='Interface_Binary_Problems_Medium'></a>
+<h2>Problems with Symbols, Medium Severity (1)</h2><hr/>
+<span class='h_name'>openjpeg.h</span>, <span class='lib_name'>libopenjp2.so.2.0.0</span><br/>
 <span class="section" onclick="javascript:showContent(this, 'c_1')">
-<span class='extendable'>[+]</span> <span class='ttype'>struct</span> opj_cinfo (1)</span>
+<span class='extendable'>[+]</span> opj_stream_set_user_data&#160;<span class='sym_p'>(&#160;opj_stream_t* <span class='color_p'>p_stream</span>, <span class='nowrap'>void* <span class='color_p'>p_data</span> )</span></span> (1)</span>
 <br/>
 <div id="c_1" style="display:none;">
-<table cellpadding='3' cellspacing='0' class='problems_table'><tr>
-<th width='2%'></th><th width='47%'>Change</th>
-<th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>Type of field <b>is_decompressor</b> has been changed from <span class='nowrap'><b>bool</b> (<b>1</b> byte)</span> to <span class='nowrap'><b>opj_bool</b> (<b>4</b> bytes)</span>.</td><td align='left' valign='top'>This field may be incorrectly initialized or accessed by applications.</td></tr>
-</table>
-<span style='padding-left:15px'><span class="section_affected" onclick="javascript:showContent(this, 'c_2')">
-[+] affected symbols (5)</span>
-</span><div id="c_2" style="display:none;">
-<div class='affected'><span class='iname_b'>opj_create_compress&#160;<span class='int_p'>(&#160;<span class='nowrap'>OPJ_CODEC_FORMAT <span style='font-style:italic;'>format</span> )</span></span></span><br/><div class='affect'>Return value (pointer) has base type &#39;opj_cinfo&#39;.</div>
-<span class='iname_b'>opj_destroy_compress&#160;<span class='int_p'>(&#160;<span class='nowrap'>opj_cinfo_t* <span class='focus_p'>cinfo</span> )</span></span></span><br/><div class='affect'>1st parameter &#39;cinfo&#39; (pointer) has base type &#39;opj_cinfo&#39;.</div>
-<span class='iname_b'>opj_encode&#160;<span class='int_p'>(&#160;opj_cinfo_t* <span class='focus_p'>cinfo</span>, opj_cio_t* <span style='font-style:italic;'>cio</span>, opj_image_t* <span style='font-style:italic;'>image</span>, <span class='nowrap'>char* <span style='font-style:italic;'>index</span> )</span></span></span><br/><div class='affect'>1st parameter &#39;cinfo&#39; (pointer) has base type &#39;opj_cinfo&#39;.</div>
-<span class='iname_b'>opj_encode_with_info&#160;<span class='int_p'>(&#160;opj_cinfo_t* <span class='focus_p'>cinfo</span>, opj_cio_t* <span style='font-style:italic;'>cio</span>, opj_image_t* <span style='font-style:italic;'>image</span>, <span class='nowrap'>opj_codestream_info_t* <span style='font-style:italic;'>cstr_info</span> )</span></span></span><br/><div class='affect'>1st parameter &#39;cinfo&#39; (pointer) has base type &#39;opj_cinfo&#39;.</div>
-<span class='iname_b'>opj_setup_encoder&#160;<span class='int_p'>(&#160;opj_cinfo_t* <span class='focus_p'>cinfo</span>, opj_cparameters_t* <span style='font-style:italic;'>parameters</span>, <span class='nowrap'>opj_image_t* <span style='font-style:italic;'>image</span> )</span></span></span><br/><div class='affect'>1st parameter &#39;cinfo&#39; (pointer) has base type &#39;opj_cinfo&#39;.</div>
-</div></div>
-<br/><br/></div>
 
-<span class="section" onclick="javascript:showContent(this, 'c_3')">
-<span class='extendable'>[+]</span> <span class='ttype'>struct</span> opj_common_struct (1)</span>
-<br/>
-<div id="c_3" style="display:none;">
-<table cellpadding='3' cellspacing='0' class='problems_table'><tr>
-<th width='2%'></th><th width='47%'>Change</th>
-<th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>Type of field <b>is_decompressor</b> has been changed from <span class='nowrap'><b>bool</b> (<b>1</b> byte)</span> to <span class='nowrap'><b>opj_bool</b> (<b>4</b> bytes)</span>.</td><td align='left' valign='top'>This field may be incorrectly initialized or accessed by applications.</td></tr>
-</table>
-<span style='padding-left:15px'><span class="section_affected" onclick="javascript:showContent(this, 'c_4')">
-[+] affected symbols (9)</span>
-</span><div id="c_4" style="display:none;">
-<div class='affected'><span class='iname_b'>cio_seek&#160;<span class='int_p'>(&#160;<span class='nowrap'>opj_cio_t* <span class='focus_p'>cio</span>,</span> <span class='nowrap'>int <span style='font-style:italic;'>pos</span> )</span></span></span><br/><div class='affect'>Field &#39;cio&#45;&gt;cinfo&#39; in 1st parameter &#39;cio&#39; (pointer) has base type &#39;opj_common_struct&#39;.</div>
-<span class='iname_b'>cio_tell&#160;<span class='int_p'>(&#160;<span class='nowrap'>opj_cio_t* <span class='focus_p'>cio</span> )</span></span></span><br/><div class='affect'>Field &#39;cio&#45;&gt;cinfo&#39; in 1st parameter &#39;cio&#39; (pointer) has base type &#39;opj_common_struct&#39;.</div>
-<span class='iname_b'>opj_cio_close&#160;<span class='int_p'>(&#160;<span class='nowrap'>opj_cio_t* <span class='focus_p'>cio</span> )</span></span></span><br/><div class='affect'>Field &#39;cio&#45;&gt;cinfo&#39; in 1st parameter &#39;cio&#39; (pointer) has base type &#39;opj_common_struct&#39;.</div>
-<span class='iname_b'>opj_cio_open&#160;<span class='int_p'>(&#160;opj_common_ptr <span class='focus_p'>cinfo</span>, unsigned char* <span style='font-style:italic;'>buffer</span>, <span class='nowrap'>int <span style='font-style:italic;'>length</span> )</span></span></span><br/><div class='affect'>1st parameter &#39;cinfo&#39; (pointer) has base type &#39;opj_common_struct&#39;.</div>
-<span class='iname_b'>opj_decode&#160;<span class='int_p'>(&#160;opj_dinfo_t* <span style='font-style:italic;'>dinfo</span>, <span class='nowrap'>opj_cio_t* <span class='focus_p'>cio</span> )</span></span></span><br/><div class='affect'>Field &#39;cio&#45;&gt;cinfo&#39; in 2nd parameter &#39;cio&#39; (pointer) has base type &#39;opj_common_struct&#39;.</div>
-<span class='iname_b'>opj_decode_with_info&#160;<span class='int_p'>(&#160;opj_dinfo_t* <span style='font-style:italic;'>dinfo</span>, <span class='nowrap'>opj_cio_t* <span class='focus_p'>cio</span>,</span> <span class='nowrap'>opj_codestream_info_t* <span style='font-style:italic;'>cstr_info</span> )</span></span></span><br/><div class='affect'>Field &#39;cio&#45;&gt;cinfo&#39; in 2nd parameter &#39;cio&#39; (pointer) has base type &#39;opj_common_struct&#39;.</div>
-<span class='iname_b'>opj_encode&#160;<span class='int_p'>(&#160;opj_cinfo_t* <span style='font-style:italic;'>cinfo</span>, <span class='nowrap'>opj_cio_t* <span class='focus_p'>cio</span>,</span> opj_image_t* <span style='font-style:italic;'>image</span>, <span class='nowrap'>char* <span style='font-style:italic;'>index</span> )</span></span></span><br/><div class='affect'>Field &#39;cio&#45;&gt;cinfo&#39; in 2nd parameter &#39;cio&#39; (pointer) has base type &#39;opj_common_struct&#39;.</div>
-<span class='iname_b'>opj_encode_with_info&#160;<span class='int_p'>(&#160;opj_cinfo_t* <span style='font-style:italic;'>cinfo</span>, <span class='nowrap'>opj_cio_t* <span class='focus_p'>cio</span>,</span> opj_image_t* <span style='font-style:italic;'>image</span>, <span class='nowrap'>opj_codestream_info_t* <span style='font-style:italic;'>cstr_info</span> )</span></span></span><br/><div class='affect'>Field &#39;cio&#45;&gt;cinfo&#39; in 2nd parameter &#39;cio&#39; (pointer) has base type &#39;opj_common_struct&#39;.</div>
-<span class='iname_b'>opj_set_event_mgr&#160;<span class='int_p'>(&#160;opj_common_ptr <span class='focus_p'>cinfo</span>, opj_event_mgr_t* <span style='font-style:italic;'>event_mgr</span>, <span class='nowrap'>void* <span style='font-style:italic;'>context</span> )</span></span></span><br/><div class='affect'>1st parameter &#39;cinfo&#39; (pointer) has base type &#39;opj_common_struct&#39;.</div>
-</div></div>
-<br/><br/></div>
 
-<span class="section" onclick="javascript:showContent(this, 'c_5')">
-<span class='extendable'>[+]</span> <span class='ttype'>struct</span> opj_cparameters (2)</span>
-<br/>
-<div id="c_5" style="display:none;">
-<table cellpadding='3' cellspacing='0' class='problems_table'><tr>
-<th width='2%'></th><th width='47%'>Change</th>
-<th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>Type of field <b>jpwl_epc_on</b> has been changed from <span class='nowrap'><b>bool</b> (<b>1</b> byte)</span> to <span class='nowrap'><b>opj_bool</b> (<b>4</b> bytes)</span>.</td><td align='left' valign='top'>This field may be incorrectly initialized or accessed by applications.</td></tr>
-<tr><th>2</th><td align='left' valign='top'>Type of field <b>tile_size_on</b> has been changed from <span class='nowrap'><b>bool</b> (<b>1</b> byte)</span> to <span class='nowrap'><b>opj_bool</b> (<b>4</b> bytes)</span>.</td><td align='left' valign='top'>This field may be incorrectly initialized or accessed by applications.</td></tr>
-</table>
-<span style='padding-left:15px'><span class="section_affected" onclick="javascript:showContent(this, 'c_6')">
-[+] affected symbols (2)</span>
-</span><div id="c_6" style="display:none;">
-<div class='affected'><span class='iname_b'>opj_set_default_encoder_parameters&#160;<span class='int_p'>(&#160;<span class='nowrap'>opj_cparameters_t* <span class='focus_p'>parameters</span> )</span></span></span><br/><div class='affect'>1st parameter &#39;parameters&#39; (pointer) has base type &#39;opj_cparameters&#39;.</div>
-<span class='iname_b'>opj_setup_encoder&#160;<span class='int_p'>(&#160;opj_cinfo_t* <span style='font-style:italic;'>cinfo</span>, opj_cparameters_t* <span class='focus_p'>parameters</span>, <span class='nowrap'>opj_image_t* <span style='font-style:italic;'>image</span> )</span></span></span><br/><div class='affect'>2nd parameter &#39;parameters&#39; (pointer) has base type &#39;opj_cparameters&#39;.</div>
-</div></div>
-<br/><br/></div>
-
-<span class="section" onclick="javascript:showContent(this, 'c_7')">
-<span class='extendable'>[+]</span> <span class='ttype'>struct</span> opj_dinfo (1)</span>
-<br/>
-<div id="c_7" style="display:none;">
-<table cellpadding='3' cellspacing='0' class='problems_table'><tr>
-<th width='2%'></th><th width='47%'>Change</th>
-<th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>Type of field <b>is_decompressor</b> has been changed from <span class='nowrap'><b>bool</b> (<b>1</b> byte)</span> to <span class='nowrap'><b>opj_bool</b> (<b>4</b> bytes)</span>.</td><td align='left' valign='top'>This field may be incorrectly initialized or accessed by applications.</td></tr>
-</table>
-<span style='padding-left:15px'><span class="section_affected" onclick="javascript:showContent(this, 'c_8')">
-[+] affected symbols (5)</span>
-</span><div id="c_8" style="display:none;">
-<div class='affected'><span class='iname_b'>opj_create_decompress&#160;<span class='int_p'>(&#160;<span class='nowrap'>OPJ_CODEC_FORMAT <span style='font-style:italic;'>format</span> )</span></span></span><br/><div class='affect'>Return value (pointer) has base type &#39;opj_dinfo&#39;.</div>
-<span class='iname_b'>opj_decode&#160;<span class='int_p'>(&#160;opj_dinfo_t* <span class='focus_p'>dinfo</span>, <span class='nowrap'>opj_cio_t* <span style='font-style:italic;'>cio</span> )</span></span></span><br/><div class='affect'>1st parameter &#39;dinfo&#39; (pointer) has base type &#39;opj_dinfo&#39;.</div>
-<span class='iname_b'>opj_decode_with_info&#160;<span class='int_p'>(&#160;opj_dinfo_t* <span class='focus_p'>dinfo</span>, opj_cio_t* <span style='font-style:italic;'>cio</span>, <span class='nowrap'>opj_codestream_info_t* <span style='font-style:italic;'>cstr_info</span> )</span></span></span><br/><div class='affect'>1st parameter &#39;dinfo&#39; (pointer) has base type &#39;opj_dinfo&#39;.</div>
-<span class='iname_b'>opj_destroy_decompress&#160;<span class='int_p'>(&#160;<span class='nowrap'>opj_dinfo_t* <span class='focus_p'>dinfo</span> )</span></span></span><br/><div class='affect'>1st parameter &#39;dinfo&#39; (pointer) has base type &#39;opj_dinfo&#39;.</div>
-<span class='iname_b'>opj_setup_decoder&#160;<span class='int_p'>(&#160;opj_dinfo_t* <span class='focus_p'>dinfo</span>, <span class='nowrap'>opj_dparameters_t* <span style='font-style:italic;'>parameters</span> )</span></span></span><br/><div class='affect'>1st parameter &#39;dinfo&#39; (pointer) has base type &#39;opj_dinfo&#39;.</div>
-</div></div>
-<br/><br/></div>
-
-<span class="section" onclick="javascript:showContent(this, 'c_9')">
-<span class='extendable'>[+]</span> <span class='ttype'>struct</span> opj_dparameters (1)</span>
-<br/>
-<div id="c_9" style="display:none;">
-<table cellpadding='3' cellspacing='0' class='problems_table'><tr>
-<th width='2%'></th><th width='47%'>Change</th>
-<th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>Type of field <b>jpwl_correct</b> has been changed from <span class='nowrap'><b>bool</b> (<b>1</b> byte)</span> to <span class='nowrap'><b>opj_bool</b> (<b>4</b> bytes)</span>.</td><td align='left' valign='top'>This field may be incorrectly initialized or accessed by applications.</td></tr>
-</table>
-<span style='padding-left:15px'><span class="section_affected" onclick="javascript:showContent(this, 'c_10')">
-[+] affected symbols (2)</span>
-</span><div id="c_10" style="display:none;">
-<div class='affected'><span class='iname_b'>opj_set_default_decoder_parameters&#160;<span class='int_p'>(&#160;<span class='nowrap'>opj_dparameters_t* <span class='focus_p'>parameters</span> )</span></span></span><br/><div class='affect'>1st parameter &#39;parameters&#39; (pointer) has base type &#39;opj_dparameters&#39;.</div>
-<span class='iname_b'>opj_setup_decoder&#160;<span class='int_p'>(&#160;opj_dinfo_t* <span style='font-style:italic;'>dinfo</span>, <span class='nowrap'>opj_dparameters_t* <span class='focus_p'>parameters</span> )</span></span></span><br/><div class='affect'>2nd parameter &#39;parameters&#39; (pointer) has base type &#39;opj_dparameters&#39;.</div>
-</div></div>
-<br/><br/></div>
-
-<span class="section" onclick="javascript:showContent(this, 'c_11')">
-<span class='extendable'>[+]</span> <span class='ttype'>struct</span> opj_tile_info (3)</span>
-<br/>
-<div id="c_11" style="display:none;">
-<table cellpadding='3' cellspacing='0' class='problems_table'><tr>
-<th width='2%'></th><th width='47%'>Change</th>
-<th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>Field <b>marker</b> has been added at the middle position of this structural type.</td><td align='left' valign='top'>1) Size of the inclusive type has been changed.<br/>2) Layout of structure fields has been changed and therefore fields at higher positions of the structure definition may be incorrectly accessed by applications.</td></tr>
-<tr><th>2</th><td align='left' valign='top'>Field <b>marknum</b> has been added at the middle position of this structural type.</td><td align='left' valign='top'>1) Size of the inclusive type has been changed.<br/>2) Layout of structure fields has been changed and therefore fields at higher positions of the structure definition may be incorrectly accessed by applications.</td></tr>
-<tr><th>3</th><td align='left' valign='top'>Field <b>maxmarknum</b> has been added at the middle position of this structural type.</td><td align='left' valign='top'>1) Size of the inclusive type has been changed.<br/>2) Layout of structure fields has been changed and therefore fields at higher positions of the structure definition may be incorrectly accessed by applications.</td></tr>
-</table>
-<span style='padding-left:15px'><span class="section_affected" onclick="javascript:showContent(this, 'c_12')">
-[+] affected symbols (3)</span>
-</span><div id="c_12" style="display:none;">
-<div class='affected'><span class='iname_b'>opj_decode_with_info&#160;<span class='int_p'>(&#160;opj_dinfo_t* <span style='font-style:italic;'>dinfo</span>, opj_cio_t* <span style='font-style:italic;'>cio</span>, <span class='nowrap'>opj_codestream_info_t* <span class='focus_p'>cstr_info</span> )</span></span></span><br/><div class='affect'>Field &#39;cstr_info&#45;&gt;tile&#39; in 3rd parameter &#39;cstr_info&#39; (pointer) has base type &#39;opj_tile_info&#39;.</div>
-<span class='iname_b'>opj_destroy_cstr_info&#160;<span class='int_p'>(&#160;<span class='nowrap'>opj_codestream_info_t* <span class='focus_p'>cstr_info</span> )</span></span></span><br/><div class='affect'>Field &#39;cstr_info&#45;&gt;tile&#39; in 1st parameter &#39;cstr_info&#39; (pointer) has base type &#39;opj_tile_info&#39;.</div>
-<span class='iname_b'>opj_encode_with_info&#160;<span class='int_p'>(&#160;opj_cinfo_t* <span style='font-style:italic;'>cinfo</span>, opj_cio_t* <span style='font-style:italic;'>cio</span>, opj_image_t* <span style='font-style:italic;'>image</span>, <span class='nowrap'>opj_codestream_info_t* <span class='focus_p'>cstr_info</span> )</span></span></span><br/><div class='affect'>Field &#39;cstr_info&#45;&gt;tile&#39; in 4th parameter &#39;cstr_info&#39; (pointer) has base type &#39;opj_tile_info&#39;.</div>
-</div></div>
-<br/><br/></div>
-
+<span class='new_sign_lbl'>changed to:</span><br/><span class='new_sign'>opj_stream_set_user_data&#160;<span class='sym_p'>(&#160;opj_stream_t* <span class='color_p'>p_stream</span>, <span class='nowrap'>void* <span class='color_p'>p_data</span>,</span> <span class='nowrap'>opj_stream_free_user_data_fn <span class='color_p'>p_function</span> )</span></span></span><br/>
+<table class='ptable'><tr><th width='2%'></th><th width='47%'>Change</th><th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>Parameter <b>p_function</b> of type <b>opj_stream_free_user_data_fn</b> has been added to the calling stack.</td><td align='left' valign='top'>This parameter will not be initialized by old clients.</td></tr>
+</table><br/>
+</div>
 <br/><a style='font-size:11px;' href='#Top'>to the top</a><br/>
-<a name='Interface_Problems_Medium'></a>
-<h2>Problems with Symbols, Medium Severity (2)</h2><hr/>
-<span class='h_name'>openjpeg.h</span>, <span class='lib_name'>libopenjpeg.so.1.4.0</span><br/>
-<span class="section" onclick="javascript:showContent(this, 'c_13')">
-<span class='extendable'>[+]</span> opj_encode&#160;<span class='int_p'>(&#160;opj_cinfo_t* <span class='color_p'>cinfo</span>, <span class='nowrap'>opj_cio_t* <span class='color_p'>cio</span>,</span> opj_image_t* <span class='color_p'>image</span>, <span class='nowrap'>char* <span class='color_p'>index</span> )</span></span> (1)</span>
-<br/>
-<div id="c_13" style="display:none;">
-
-<table cellpadding='3' cellspacing='0' class='problems_table'><tr><th width='2%'></th><th width='47%'>Change</th><th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>Type of return value has been changed from <span class='nowrap'><b>bool</b> (<b>1</b> byte)</span> to <span class='nowrap'><b>opj_bool</b> (<b>4</b> bytes)</span>.</td><td align='left' valign='top'>Applications will obtain a different return value and execution may change.</td></tr>
-</table><br/></div>
-
-<span class="section" onclick="javascript:showContent(this, 'c_14')">
-<span class='extendable'>[+]</span> opj_encode_with_info&#160;<span class='int_p'>(&#160;opj_cinfo_t* <span class='color_p'>cinfo</span>, <span class='nowrap'>opj_cio_t* <span class='color_p'>cio</span>,</span> opj_image_t* <span class='color_p'>image</span>, <span class='nowrap'>opj_codestream_info_t* <span class='color_p'>cstr_info</span> )</span></span> (1)</span>
-<br/>
-<div id="c_14" style="display:none;">
-
-<table cellpadding='3' cellspacing='0' class='problems_table'><tr><th width='2%'></th><th width='47%'>Change</th><th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>Type of return value has been changed from <span class='nowrap'><b>bool</b> (<b>1</b> byte)</span> to <span class='nowrap'><b>opj_bool</b> (<b>4</b> bytes)</span>.</td><td align='left' valign='top'>Applications will obtain a different return value and execution may change.</td></tr>
-</table><br/></div>
-
-<br/><a style='font-size:11px;' href='#Top'>to the top</a><br/>
-<a name='Low_Risk_Problems'></a><a name='Type_Problems_Low'></a>
+<a name='Low_Risk_Binary_Problems'></a><a name='Type_Binary_Problems_Low'></a>
 <h2>Problems with Data Types, Low Severity (2)</h2><hr/>
 <span class='h_name'>openjpeg.h</span><br/>
-<span class="section" onclick="javascript:showContent(this, 'c_15')">
-<span class='extendable'>[+]</span> <span class='ttype'>struct</span> opj_cparameters (1)</span>
+<span class="section" onclick="javascript:showContent(this, 'c_2')">
+<span class='extendable'>[+]</span> <span class='ttype'>struct</span> opj_image_comp (2)</span>
 <br/>
-<div id="c_15" style="display:none;">
-<table cellpadding='3' cellspacing='0' class='problems_table'><tr>
+<div id="c_2" style="display:none;">
+<table class='ptable'><tr>
 <th width='2%'></th><th width='47%'>Change</th>
-<th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>Field <b>jpip_on</b> has been added to this type.</td><td align='left' valign='top'><b>NOTE</b>: this field should be accessed only from the new library functions, otherwise it may result in crash or incorrect behavior of applications.</td></tr>
+<th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>Field <b>alpha</b> has been added to this type.</td><td align='left' valign='top'>Size of the inclusive type has been changed.<br/><b>NOTE</b>: this field should be accessed only from the new library functions, otherwise it may result in crash or incorrect behavior of applications.</td></tr>
+<tr><th>2</th><td align='left' valign='top'>Size of this type has been changed from <b>56</b> bytes to <b>64</b> bytes.</td><td align='left' valign='top'>The fields or parameters of such data type may be incorrectly initialized or accessed by old client applications.</td></tr>
 </table>
-<span style='padding-left:15px'><span class="section_affected" onclick="javascript:showContent(this, 'c_16')">
-[+] affected symbols (2)</span>
-</span><div id="c_16" style="display:none;">
-<div class='affected'><span class='iname_b'>opj_set_default_encoder_parameters&#160;<span class='int_p'>(&#160;<span class='nowrap'>opj_cparameters_t* <span class='focus_p'>parameters</span> )</span></span></span><br/><div class='affect'>1st parameter &#39;parameters&#39; (pointer) has base type &#39;opj_cparameters&#39;.</div>
-<span class='iname_b'>opj_setup_encoder&#160;<span class='int_p'>(&#160;opj_cinfo_t* <span style='font-style:italic;'>cinfo</span>, opj_cparameters_t* <span class='focus_p'>parameters</span>, <span class='nowrap'>opj_image_t* <span style='font-style:italic;'>image</span> )</span></span></span><br/><div class='affect'>2nd parameter &#39;parameters&#39; (pointer) has base type &#39;opj_cparameters&#39;.</div>
-</div></div>
-<br/><br/></div>
-
-<span class="section" onclick="javascript:showContent(this, 'c_17')">
-<span class='extendable'>[+]</span> <span class='ttype'>struct</span> opj_tile_info (1)</span>
-<br/>
-<div id="c_17" style="display:none;">
-<table cellpadding='3' cellspacing='0' class='problems_table'><tr>
-<th width='2%'></th><th width='47%'>Change</th>
-<th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>Size of this type has been changed from <b>592</b> bytes to <b>608</b> bytes.</td><td align='left' valign='top'>The fields or parameters of such data type may be incorrectly initialized or accessed by old client applications.</td></tr>
-</table>
-<span style='padding-left:15px'><span class="section_affected" onclick="javascript:showContent(this, 'c_18')">
-[+] affected symbols (3)</span>
-</span><div id="c_18" style="display:none;">
-<div class='affected'><span class='iname_b'>opj_decode_with_info&#160;<span class='int_p'>(&#160;opj_dinfo_t* <span style='font-style:italic;'>dinfo</span>, opj_cio_t* <span style='font-style:italic;'>cio</span>, <span class='nowrap'>opj_codestream_info_t* <span class='focus_p'>cstr_info</span> )</span></span></span><br/><div class='affect'>Field &#39;cstr_info&#45;&gt;tile&#39; in 3rd parameter &#39;cstr_info&#39; (pointer) has base type &#39;opj_tile_info&#39;.</div>
-<span class='iname_b'>opj_destroy_cstr_info&#160;<span class='int_p'>(&#160;<span class='nowrap'>opj_codestream_info_t* <span class='focus_p'>cstr_info</span> )</span></span></span><br/><div class='affect'>Field &#39;cstr_info&#45;&gt;tile&#39; in 1st parameter &#39;cstr_info&#39; (pointer) has base type &#39;opj_tile_info&#39;.</div>
-<span class='iname_b'>opj_encode_with_info&#160;<span class='int_p'>(&#160;opj_cinfo_t* <span style='font-style:italic;'>cinfo</span>, opj_cio_t* <span style='font-style:italic;'>cio</span>, opj_image_t* <span style='font-style:italic;'>image</span>, <span class='nowrap'>opj_codestream_info_t* <span class='focus_p'>cstr_info</span> )</span></span></span><br/><div class='affect'>Field &#39;cstr_info&#45;&gt;tile&#39; in 4th parameter &#39;cstr_info&#39; (pointer) has base type &#39;opj_tile_info&#39;.</div>
+<span class="section_affected" onclick="javascript:showContent(this, 'c_3')">
+[+] affected symbols (9)</span>
+<div id="c_3" style="display:none;">
+<div class='affected'><span class='iname_b'>opj_decode&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_decompressor</span>, opj_stream_t* <span class='param'>p_stream</span>, <span class='nowrap'>opj_image_t* <span class='focus_p'>p_image</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;comps&#39; in 3rd parameter &#39;p_image&#39; (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_get_decoded_tile&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_stream_t* <span class='param'>p_stream</span>, opj_image_t* <span class='focus_p'>p_image</span>, <span class='nowrap'>OPJ_UINT32 <span class='param'>tile_index</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;comps&#39; in 3rd parameter &#39;p_image&#39; (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_image_create&#160;<span class='sym_p'>(&#160;OPJ_UINT32 <span class='param'>numcmpts</span>, opj_image_cmptparm_t* <span class='param'>cmptparms</span>, <span class='nowrap'>OPJ_COLOR_SPACE <span class='param'>clrspc</span> )</span></span></span><br/><div class='affect'>Field &#39;retval&#45;&gt;comps&#39; in return value (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_image_destroy&#160;<span class='sym_p'>(&#160;<span class='nowrap'>opj_image_t* <span class='focus_p'>image</span> )</span></span></span><br/><div class='affect'>Field &#39;image&#45;&gt;comps&#39; in 1st parameter &#39;image&#39; (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_image_tile_create&#160;<span class='sym_p'>(&#160;OPJ_UINT32 <span class='param'>numcmpts</span>, opj_image_cmptparm_t* <span class='param'>cmptparms</span>, <span class='nowrap'>OPJ_COLOR_SPACE <span class='param'>clrspc</span> )</span></span></span><br/><div class='affect'>Field &#39;retval&#45;&gt;comps&#39; in return value (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_read_header&#160;<span class='sym_p'>(&#160;opj_stream_t* <span class='param'>p_stream</span>, opj_codec_t* <span class='param'>p_codec</span>, <span class='nowrap'>opj_image_t** <span class='focus_p'>p_image</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;comps&#39; in 3rd parameter &#39;p_image&#39; (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_set_decode_area&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_image_t* <span class='focus_p'>p_image</span>, OPJ_INT32 <span class='param'>p_start_x</span>, OPJ_INT32 <span class='param'>p_start_y</span>, <span class='nowrap'>OPJ_INT32 <span class='param'>p_end_x</span>,</span> <span class='nowrap'>OPJ_INT32 <span class='param'>p_end_y</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;comps&#39; in 2nd parameter &#39;p_image&#39; (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_setup_encoder&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_cparameters_t* <span class='param'>parameters</span>, <span class='nowrap'>opj_image_t* <span class='focus_p'>image</span> )</span></span></span><br/><div class='affect'>Field &#39;image&#45;&gt;comps&#39; in 3rd parameter &#39;image&#39; (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_start_compress&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_image_t* <span class='focus_p'>p_image</span>, <span class='nowrap'>opj_stream_t* <span class='param'>p_stream</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;comps&#39; in 2nd parameter &#39;p_image&#39; (pointer) has base type &#39;opj_image_comp&#39;.</div>
 </div></div>
 <br/><br/></div>
 
 <br/><a style='font-size:11px;' href='#Top'>to the top</a><br/>
-<a name='Headers'></a><h2>Header Files (1)</h2><hr/>
+<a name='Other_Binary_Changes'></a><a name='Other_Binary_Changes_In_Types'></a>
+<h2>Other Changes in Data Types (1)</h2><hr/>
+<span class='h_name'>openjpeg.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_4')">
+<span class='extendable'>[+]</span> <span class='ttype'>enum</span> COLOR_SPACE (1)</span>
+<br/>
+<div id="c_4" style="display:none;">
+<table class='ptable'><tr>
+<th width='2%'></th><th width='47%'>Change</th>
+<th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>The member <b>OPJ_CLRSPC_EYCC</b> with value <b>4</b> has been added.</td><td align='left' valign='top'>No effect.</td></tr>
+</table>
+<span class="section_affected" onclick="javascript:showContent(this, 'c_5')">
+[+] affected symbols (9)</span>
+<div id="c_5" style="display:none;">
+<div class='affected'><span class='iname_b'>opj_decode&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_decompressor</span>, opj_stream_t* <span class='param'>p_stream</span>, <span class='nowrap'>opj_image_t* <span class='focus_p'>p_image</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;color_space&#39; in 3rd parameter &#39;p_image&#39; (pointer) has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_get_decoded_tile&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_stream_t* <span class='param'>p_stream</span>, opj_image_t* <span class='focus_p'>p_image</span>, <span class='nowrap'>OPJ_UINT32 <span class='param'>tile_index</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;color_space&#39; in 3rd parameter &#39;p_image&#39; (pointer) has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_image_create&#160;<span class='sym_p'>(&#160;OPJ_UINT32 <span class='param'>numcmpts</span>, opj_image_cmptparm_t* <span class='param'>cmptparms</span>, <span class='nowrap'>OPJ_COLOR_SPACE <span class='focus_p'>clrspc</span> )</span></span></span><br/><div class='affect'>3rd parameter &#39;clrspc&#39; has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_image_destroy&#160;<span class='sym_p'>(&#160;<span class='nowrap'>opj_image_t* <span class='focus_p'>image</span> )</span></span></span><br/><div class='affect'>Field &#39;image&#45;&gt;color_space&#39; in 1st parameter &#39;image&#39; (pointer) has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_image_tile_create&#160;<span class='sym_p'>(&#160;OPJ_UINT32 <span class='param'>numcmpts</span>, opj_image_cmptparm_t* <span class='param'>cmptparms</span>, <span class='nowrap'>OPJ_COLOR_SPACE <span class='focus_p'>clrspc</span> )</span></span></span><br/><div class='affect'>3rd parameter &#39;clrspc&#39; has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_read_header&#160;<span class='sym_p'>(&#160;opj_stream_t* <span class='param'>p_stream</span>, opj_codec_t* <span class='param'>p_codec</span>, <span class='nowrap'>opj_image_t** <span class='focus_p'>p_image</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;color_space&#39; in 3rd parameter &#39;p_image&#39; (pointer) has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_set_decode_area&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_image_t* <span class='focus_p'>p_image</span>, OPJ_INT32 <span class='param'>p_start_x</span>, OPJ_INT32 <span class='param'>p_start_y</span>, <span class='nowrap'>OPJ_INT32 <span class='param'>p_end_x</span>,</span> <span class='nowrap'>OPJ_INT32 <span class='param'>p_end_y</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;color_space&#39; in 2nd parameter &#39;p_image&#39; (pointer) has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_setup_encoder&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_cparameters_t* <span class='param'>parameters</span>, <span class='nowrap'>opj_image_t* <span class='focus_p'>image</span> )</span></span></span><br/><div class='affect'>Field &#39;image&#45;&gt;color_space&#39; in 3rd parameter &#39;image&#39; (pointer) has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_start_compress&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_image_t* <span class='focus_p'>p_image</span>, <span class='nowrap'>opj_stream_t* <span class='param'>p_stream</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;color_space&#39; in 2nd parameter &#39;p_image&#39; (pointer) has base type &#39;COLOR_SPACE&#39;.</div>
+</div></div>
+<br/><br/></div>
+
+<br/><a style='font-size:11px;' href='#Top'>to the top</a><br/>
+<a name='Headers'></a><h2>Header Files (3)</h2><hr/>
 <div class='h_list'>
 openjpeg.h<br/>
+opj_config.h<br/>
+opj_stdint.h<br/>
 </div>
 <br/><a style='font-size:11px;' href='#Top'>to the top</a><br/>
 <a name='Libs'></a><h2>Shared Libraries (1)</h2><hr/>
 <div class='lib_list'>
-libopenjpeg.so.1.4.0<br/>
+libopenjp2.so.2.0.0<br/>
 </div>
 <br/><a style='font-size:11px;' href='#Top'>to the top</a><br/>
+<br/><br/><br/></div><div id='SourceTab' class='tab'>
+<h2>Test Info</h2><hr/>
+<table class='summary'>
+<tr><th>Library Name</th><td>openjpeg</td></tr>
+<tr><th>Version #1</th><td>2.0.0</td></tr>
+<tr><th>Version #2</th><td>2.1.0</td></tr>
+<tr><th>CPU Type</th><td>x86_64</td></tr>
+<tr><th>GCC Version</th><td>4.7</td></tr>
+<tr><th>Subject</th><td width='150px'>Source Compatibility</td></tr>
+</table>
+<h2>Test Results</h2><hr/>
+<table class='summary'><tr><th>Total Header Files</th><td><a href='#Headers' style='color:Blue;'>3</a></td></tr>
+<tr><th>Total Shared Libraries</th><td><a href='#Libs' style='color:Blue;'>1</a></td></tr>
+<tr><th>Total Symbols / Types</th><td>43 / 117</td></tr>
+<tr><th>Verdict</th><td><span style='color:Red;'><b>Incompatible<br/>(5.8%)</b></span></td></tr>
+</table>
+<h2>Problem Summary</h2><hr/>
+<table class='summary'><tr><th></th><th style='text-align:center;'>Severity</th><th style='text-align:center;'>Count</th></tr><tr><th>Added Symbols</th><td>-</td><td class='new'><a href='#Source_Added' style='color:Blue;'>3</a></td></tr>
+<tr><th>Removed Symbols</th><td>High</td><td class='failed'><a href='#Source_Removed' style='color:Blue;'>2</a></td></tr>
+<tr><th rowspan='3'>Problems with<br/>Data Types</th><td>High</td><td>0</td></tr>
+<tr><td>Medium</td><td>0</td></tr>
+<tr><td>Low</td><td>0</td></tr>
+<tr><th rowspan='3'>Problems with<br/>Symbols</th><td>High</td><td>0</td></tr>
+<tr><td>Medium</td><td class='failed'><a href='#Symbol_Source_Problems_Medium' style='color:Blue;'>1</a></td></tr>
+<tr><td>Low</td><td>0</td></tr>
+<tr><th>Problems with<br/>Constants</th><td>Low</td><td>0</td></tr>
+<tr><th>Other Changes<br/>in Data Types</th><td>-</td><td class='passed'><a href='#Other_Source_Changes_In_Types' style='color:Blue;'>2</a></td></tr>
+</table>
+
+<a name='Source_Added'></a><h2>Added Symbols (3)</h2><hr/>
+<span class='h_name'>openjpeg.h</span><br/>
+<span class="iname">opj_stream_create_default_file_stream_v3&#160;<span class='sym_p'>(&#160;char const* <span class='color_p'>fname</span>, <span class='nowrap'>OPJ_BOOL <span class='color_p'>p_is_read_stream</span> )</span></span></span><br/>
+<span class="iname">opj_stream_create_file_stream_v3&#160;<span class='sym_p'>(&#160;char const* <span class='color_p'>fname</span>, OPJ_SIZE_T <span class='color_p'>p_buffer_size</span>, <span class='nowrap'>OPJ_BOOL <span class='color_p'>p_is_read_stream</span> )</span></span></span><br/>
+<span class="iname">opj_stream_destroy_v3&#160;<span class='sym_p'>(&#160;<span class='nowrap'>opj_stream_t* <span class='color_p'>p_stream</span> )</span></span></span><br/>
+<br/>
+<a style='font-size:11px;' href='#Top'>to the top</a><br/>
+<a name='Source_Removed'></a><a name='Source_Withdrawn'></a><h2>Removed Symbols (2)</h2><hr/>
+<span class='h_name'>openjpeg.h</span><br/>
+<span class="iname">opj_stream_create_default_file_stream&#160;<span class='sym_p'>(&#160;<span class='nowrap'>FILE* <span class='color_p'>p_file</span>,</span> <span class='nowrap'>OPJ_BOOL <span class='color_p'>p_is_read_stream</span> )</span></span></span><br/>
+<span class="iname">opj_stream_create_file_stream&#160;<span class='sym_p'>(&#160;<span class='nowrap'>FILE* <span class='color_p'>p_file</span>,</span> OPJ_SIZE_T <span class='color_p'>p_buffer_size</span>, <span class='nowrap'>OPJ_BOOL <span class='color_p'>p_is_read_stream</span> )</span></span></span><br/>
+<br/>
+<a style='font-size:11px;' href='#Top'>to the top</a><br/>
+<a name='Medium_Risk_Source_Problems'></a><a name='Symbol_Source_Problems_Medium'></a><a name='Interface_Source_Problems_Medium'></a>
+<h2>Problems with Symbols, Medium Severity (1)</h2><hr/>
+<span class='h_name'>openjpeg.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_6')">
+<span class='extendable'>[+]</span> opj_stream_set_user_data&#160;<span class='sym_p'>(&#160;opj_stream_t* <span class='color_p'>p_stream</span>, <span class='nowrap'>void* <span class='color_p'>p_data</span> )</span></span> (1)</span>
+<br/>
+<div id="c_6" style="display:none;">
+
+
+<span class='new_sign_lbl'>changed to:</span><br/><span class='new_sign'>opj_stream_set_user_data&#160;<span class='sym_p'>(&#160;opj_stream_t* <span class='color_p'>p_stream</span>, <span class='nowrap'>void* <span class='color_p'>p_data</span>,</span> <span class='nowrap'>opj_stream_free_user_data_fn <span class='color_p'>p_function</span> )</span></span></span><br/>
+<table class='ptable'><tr><th width='2%'></th><th width='47%'>Change</th><th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>Parameter <b>p_function</b> of type <b>opj_stream_free_user_data_fn</b> has been added to the calling stack.</td><td align='left' valign='top'>Recompilation of a client program may be broken.</td></tr>
+</table><br/>
 </div>
-<br/><br/><br/><hr/>
-<div style='width:100%;font-size:11px;' align='right'><i>Generated on Wed Dec 21 09:48:12 2011 for <span style='font-weight:bold'>openjpeg</span> by <a href='http://forge.ispras.ru/projects/abi-compliance-checker'>ABI Compliance Checker</a> 1.96.1 &#160;<br/>A tool for checking backward binary compatibility of a shared C/C++ library API&#160;&#160;</i></div>
+<br/><a style='font-size:11px;' href='#Top'>to the top</a><br/>
+<a name='Other_Source_Changes'></a><a name='Other_Source_Changes_In_Types'></a>
+<h2>Other Changes in Data Types (2)</h2><hr/>
+<span class='h_name'>openjpeg.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_7')">
+<span class='extendable'>[+]</span> <span class='ttype'>enum</span> COLOR_SPACE (1)</span>
+<br/>
+<div id="c_7" style="display:none;">
+<table class='ptable'><tr>
+<th width='2%'></th><th width='47%'>Change</th>
+<th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>The member <b>OPJ_CLRSPC_EYCC</b> with value <b>4</b> has been added.</td><td align='left' valign='top'>No effect.</td></tr>
+</table>
+<span class="section_affected" onclick="javascript:showContent(this, 'c_8')">
+[+] affected symbols (9)</span>
+<div id="c_8" style="display:none;">
+<div class='affected'><span class='iname_b'>opj_decode&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_decompressor</span>, opj_stream_t* <span class='param'>p_stream</span>, <span class='nowrap'>opj_image_t* <span class='focus_p'>p_image</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;color_space&#39; in 3rd parameter &#39;p_image&#39; (pointer) has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_get_decoded_tile&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_stream_t* <span class='param'>p_stream</span>, opj_image_t* <span class='focus_p'>p_image</span>, <span class='nowrap'>OPJ_UINT32 <span class='param'>tile_index</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;color_space&#39; in 3rd parameter &#39;p_image&#39; (pointer) has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_image_create&#160;<span class='sym_p'>(&#160;OPJ_UINT32 <span class='param'>numcmpts</span>, opj_image_cmptparm_t* <span class='param'>cmptparms</span>, <span class='nowrap'>OPJ_COLOR_SPACE <span class='focus_p'>clrspc</span> )</span></span></span><br/><div class='affect'>3rd parameter &#39;clrspc&#39; has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_image_destroy&#160;<span class='sym_p'>(&#160;<span class='nowrap'>opj_image_t* <span class='focus_p'>image</span> )</span></span></span><br/><div class='affect'>Field &#39;image&#45;&gt;color_space&#39; in 1st parameter &#39;image&#39; (pointer) has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_image_tile_create&#160;<span class='sym_p'>(&#160;OPJ_UINT32 <span class='param'>numcmpts</span>, opj_image_cmptparm_t* <span class='param'>cmptparms</span>, <span class='nowrap'>OPJ_COLOR_SPACE <span class='focus_p'>clrspc</span> )</span></span></span><br/><div class='affect'>3rd parameter &#39;clrspc&#39; has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_read_header&#160;<span class='sym_p'>(&#160;opj_stream_t* <span class='param'>p_stream</span>, opj_codec_t* <span class='param'>p_codec</span>, <span class='nowrap'>opj_image_t** <span class='focus_p'>p_image</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;color_space&#39; in 3rd parameter &#39;p_image&#39; (pointer) has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_set_decode_area&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_image_t* <span class='focus_p'>p_image</span>, OPJ_INT32 <span class='param'>p_start_x</span>, OPJ_INT32 <span class='param'>p_start_y</span>, <span class='nowrap'>OPJ_INT32 <span class='param'>p_end_x</span>,</span> <span class='nowrap'>OPJ_INT32 <span class='param'>p_end_y</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;color_space&#39; in 2nd parameter &#39;p_image&#39; (pointer) has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_setup_encoder&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_cparameters_t* <span class='param'>parameters</span>, <span class='nowrap'>opj_image_t* <span class='focus_p'>image</span> )</span></span></span><br/><div class='affect'>Field &#39;image&#45;&gt;color_space&#39; in 3rd parameter &#39;image&#39; (pointer) has base type &#39;COLOR_SPACE&#39;.</div>
+<span class='iname_b'>opj_start_compress&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_image_t* <span class='focus_p'>p_image</span>, <span class='nowrap'>opj_stream_t* <span class='param'>p_stream</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;color_space&#39; in 2nd parameter &#39;p_image&#39; (pointer) has base type &#39;COLOR_SPACE&#39;.</div>
+</div></div>
+<br/><br/></div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_9')">
+<span class='extendable'>[+]</span> <span class='ttype'>struct</span> opj_image_comp (1)</span>
+<br/>
+<div id="c_9" style="display:none;">
+<table class='ptable'><tr>
+<th width='2%'></th><th width='47%'>Change</th>
+<th>Effect</th></tr><tr><th>1</th><td align='left' valign='top'>Field <b>alpha</b> has been added to this type.</td><td align='left' valign='top'>No effect.</td></tr>
+</table>
+<span class="section_affected" onclick="javascript:showContent(this, 'c_10')">
+[+] affected symbols (9)</span>
+<div id="c_10" style="display:none;">
+<div class='affected'><span class='iname_b'>opj_decode&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_decompressor</span>, opj_stream_t* <span class='param'>p_stream</span>, <span class='nowrap'>opj_image_t* <span class='focus_p'>p_image</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;comps&#39; in 3rd parameter &#39;p_image&#39; (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_get_decoded_tile&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_stream_t* <span class='param'>p_stream</span>, opj_image_t* <span class='focus_p'>p_image</span>, <span class='nowrap'>OPJ_UINT32 <span class='param'>tile_index</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;comps&#39; in 3rd parameter &#39;p_image&#39; (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_image_create&#160;<span class='sym_p'>(&#160;OPJ_UINT32 <span class='param'>numcmpts</span>, opj_image_cmptparm_t* <span class='param'>cmptparms</span>, <span class='nowrap'>OPJ_COLOR_SPACE <span class='param'>clrspc</span> )</span></span></span><br/><div class='affect'>Field &#39;retval&#45;&gt;comps&#39; in return value (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_image_destroy&#160;<span class='sym_p'>(&#160;<span class='nowrap'>opj_image_t* <span class='focus_p'>image</span> )</span></span></span><br/><div class='affect'>Field &#39;image&#45;&gt;comps&#39; in 1st parameter &#39;image&#39; (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_image_tile_create&#160;<span class='sym_p'>(&#160;OPJ_UINT32 <span class='param'>numcmpts</span>, opj_image_cmptparm_t* <span class='param'>cmptparms</span>, <span class='nowrap'>OPJ_COLOR_SPACE <span class='param'>clrspc</span> )</span></span></span><br/><div class='affect'>Field &#39;retval&#45;&gt;comps&#39; in return value (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_read_header&#160;<span class='sym_p'>(&#160;opj_stream_t* <span class='param'>p_stream</span>, opj_codec_t* <span class='param'>p_codec</span>, <span class='nowrap'>opj_image_t** <span class='focus_p'>p_image</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;comps&#39; in 3rd parameter &#39;p_image&#39; (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_set_decode_area&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_image_t* <span class='focus_p'>p_image</span>, OPJ_INT32 <span class='param'>p_start_x</span>, OPJ_INT32 <span class='param'>p_start_y</span>, <span class='nowrap'>OPJ_INT32 <span class='param'>p_end_x</span>,</span> <span class='nowrap'>OPJ_INT32 <span class='param'>p_end_y</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;comps&#39; in 2nd parameter &#39;p_image&#39; (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_setup_encoder&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_cparameters_t* <span class='param'>parameters</span>, <span class='nowrap'>opj_image_t* <span class='focus_p'>image</span> )</span></span></span><br/><div class='affect'>Field &#39;image&#45;&gt;comps&#39; in 3rd parameter &#39;image&#39; (pointer) has base type &#39;opj_image_comp&#39;.</div>
+<span class='iname_b'>opj_start_compress&#160;<span class='sym_p'>(&#160;opj_codec_t* <span class='param'>p_codec</span>, opj_image_t* <span class='focus_p'>p_image</span>, <span class='nowrap'>opj_stream_t* <span class='param'>p_stream</span> )</span></span></span><br/><div class='affect'>Field &#39;p_image&#45;&gt;comps&#39; in 2nd parameter &#39;p_image&#39; (pointer) has base type &#39;opj_image_comp&#39;.</div>
+</div></div>
+<br/><br/></div>
+
+<br/><a style='font-size:11px;' href='#Top'>to the top</a><br/>
+<a name='Headers'></a><h2>Header Files (3)</h2><hr/>
+<div class='h_list'>
+openjpeg.h<br/>
+opj_config.h<br/>
+opj_stdint.h<br/>
+</div>
+<br/><a style='font-size:11px;' href='#Top'>to the top</a><br/>
+<a name='Libs'></a><h2>Shared Libraries (1)</h2><hr/>
+<div class='lib_list'>
+libopenjp2.so.2.0.0<br/>
+</div>
+<br/><a style='font-size:11px;' href='#Top'>to the top</a><br/>
+<br/><br/><br/></div><div style='width:97%;padding-top:3px;font-size:11px;' align='right'><i>Generated on Tue Mar 25 11:11:46 2014 for <span style='font-weight:bold'>openjpeg</span> by <a href='http://ispras.linuxbase.org/index.php/ABI_compliance_checker'>ABI Compliance Checker</a> 1.97.7 &#160;<br/>A tool for checking backward compatibility of a C/C++ library API&#160;&#160;</i></div>
 <div style='height:999px;'></div>
 </body></html>

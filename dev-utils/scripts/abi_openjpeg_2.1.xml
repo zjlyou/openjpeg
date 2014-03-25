@@ -1,0 +1,9 @@
+<version>2.1.0</version>
+<headers>
+/tmp/install/opj21/usr/local/include/openjpeg-2.1
+</headers>
+<libs>
+/tmp/install/opj21/usr/local/lib/
+</libs>
+<include_paths>
+</include_paths>
