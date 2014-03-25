@@ -7,6 +7,7 @@ cd /tmp
 svn co http://openjpeg.googlecode.com/svn/tags/version.2.0 opj20
 svn co http://openjpeg.googlecode.com/svn/trunk opj21
 
+export CFLAGS='-fvisibility=hidden'
 for i in `ls -d /tmp/opj??`; do
   cd $i;
   mkdir -p bin && cd bin;
