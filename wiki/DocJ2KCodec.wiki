@@ -206,6 +206,17 @@ opj_compress -i lena.raw -o lena.j2k -F 512,512,3,8,u
   As explained above, in the case of raw images with a component depth comprised between 9 and 16 bits, each component data must be stored on two bytes, the first byte containing the MSBs and the second byte the LSBs.
 
 {{{
+-m <file>
+}}}
+  use array-based MCT, values are coma separated, line by line no specific separators between lines, no space allowed between values.
+
+{{{
+-jpip
+}}}
+  write jpip codestream index box in JP2 output file
+NOTICE: currently supports only RPCL order.
+
+{{{
   -h 
 }}}
   Print a help message and exit.
