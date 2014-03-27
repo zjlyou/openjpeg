@@ -1,9 +1,9 @@
-#!/bin/sh -e
+#!/bin/sh
 # generate OpenJPEG release on *NIX (both Linux and MacOSX)
 # There are two cases for MacOSX: 10.4 compat (PPC) and 10.6 and above (intel only 32 & 64 bits)
 
 # control verbosity
-#set -x
+set -x
 
 # All OpenJPEG (=false) or just Part-1 (=true) ?
 PART1ONLY=false
@@ -21,7 +21,7 @@ mkdir -p $TMPDIR
 mkdir -p $TMPDIR/openjpeg-build
 cd $TMPDIR
 # Use tag to construct package:
-svn checkout -q http://openjpeg.googlecode.com/svn/tags/version.2.0 openjpeg
+svn checkout -q http://openjpeg.googlecode.com/svn/tags/version.1.5.2 openjpeg
 # DEBUG: use openjpeg from trunk
 #svn checkout -q http://openjpeg.googlecode.com/svn/trunk openjpeg
 # END DEBUG
@@ -55,8 +55,6 @@ cmake_options="$cmake_options -DCMAKE_OSX_ARCHITECTURES:STRING=i386;x86_64 -DCMA
 fi
 fi
 
-# carefully define out API:
-CFLAGS="-fvisibility=hidden"
 # On linux 64 bits machines, build 32 bits version
 # (comment if needed)
 is64="`uname -m | grep -i x86_64`"
