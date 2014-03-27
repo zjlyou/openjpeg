@@ -19,4 +19,6 @@ If you have a windows box, from a CMD console:
 
 > release.bat
 
+3. Upload:
 
+./upload_sf_net.sh /tmp/openjpeg_release/openjpeg-build/openjpeg*
