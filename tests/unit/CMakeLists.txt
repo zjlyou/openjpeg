@@ -1,17 +1,9 @@
 # UNIT TESTS 
 
-include_directories(
-  ${OPENJPEG_BINARY_DIR}/src/lib/openjp2 # opj_config.h
-  ${OPENJPEG_SOURCE_DIR}/src/lib/openjp2
-)
+add_executable(testempty1 testempty1.c)
+add_executable(testempty2 testempty2.c)
+target_link_libraries(testempty1 openjpeg)
+target_link_libraries(testempty2 openjpeg)
 
-set(unit_test
-  testempty0
-  testempty1
-  testempty2
-)
-foreach(ut ${unit_test})
-  add_executable(${ut} ${ut}.c)
-  target_link_libraries(${ut} openjp2)
-  add_test(NAME ${ut} COMMAND ${ut})
-endforeach()
+add_test(NAME testempty1 COMMAND testempty1)
+add_test(NAME testempty2 COMMAND testempty2)
