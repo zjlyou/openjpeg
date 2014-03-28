@@ -11,6 +11,17 @@ $ svn copy https://openjpeg.googlecode.com/svn/branches/openjpeg-2.0 https://ope
 $ svn add CHANGES ../../tags/version.2.0
 $ svn commit
 
+Add a NEWS file.
+
+Make sure that both files are set with:
+
+  $ svn propset svn:mime-type "text/plain; charset=UTF-8" CHANGES NEWS
+
+This allows proper HTTP viewing:
+
+  $ HEAD http://openjpeg.googlecode.com/svn/tags/version.1.5.2/CHANGES | grep -i Content-Type
+  Content-Type: text/plain; charset=UTF-8
+
 2. Generates the source tarball + binary tarball (OSX package on Mac):
 
 $ ./release.sh
