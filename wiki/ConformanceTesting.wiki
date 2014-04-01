@@ -9,7 +9,7 @@ The tests procedures are described in JPEG 2000 part 4 (15444-4), available [htt
 
 = Files =
 
-All files required for testing the conformance of openjpeg are available [https://docs.google.com/leaf?id=0B9lJIDXo2oPYMzQ0N2I2M2QtNmFkMS00N2I4LThkZDItZjgyM2NmZDkzYzFi&hl=en_US here]
+All files required for testing the conformance of openjpeg are available [https://drive.google.com/file/d/0B9lJIDXo2oPYZlNnVnRKRFdwVDg/edit?usp=sharing here]
 
 = Decoder validation =
 
@@ -20,7 +20,7 @@ The decoder should be tested in the following way:
 
 == Decoder tests suite ==
 
-Here is the list of tests to achieve to validate the openjpeg decoder.
+Here is the list of tests achieved to validate the openjpeg decoder.
 
 {{{
 j2k_to_image -i p0_01.j2k -o p0_01.pgx
