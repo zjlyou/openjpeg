@@ -1,6 +1,7 @@
 # Client maintainer: mathieu . malaterre  gmail . com
 
 set(CTEST_CMAKE_GENERATOR "NMake Makefiles")
+set(ENV{CFLAGS} "/W4")
 
 macro(dashboard_hook_init)
   set( dashboard_cache "
