@@ -1097,8 +1097,6 @@ void opj_jp2_apply_cdef(opj_image_t *image, opj_jp2_color_t *color)
     asoc = info[i].asoc;
     if(asoc == 0 || asoc == 65535)
       {
-      if (i < image->numcomps)
-        image->comps[i].alpha = info[i].typ;
       continue;
       }
 
@@ -1122,7 +1120,6 @@ void opj_jp2_apply_cdef(opj_image_t *image, opj_jp2_color_t *color)
 			info[acn].asoc = (OPJ_UINT16)(info[acn].cn + 1);
 		}
 
-		image->comps[cn].alpha = info[i].typ;
 	}
 
 	if(color->jp2_cdef->info) opj_free(color->jp2_cdef->info);
@@ -1308,8 +1305,6 @@ OPJ_BOOL opj_jp2_decode(opj_jp2_t *jp2,
 		    p_image->color_space = OPJ_CLRSPC_GRAY;
 	    else if (jp2->enumcs == 18)
 		    p_image->color_space = OPJ_CLRSPC_SYCC;
-            else if (jp2->enumcs == 24)
-                    p_image->color_space = OPJ_CLRSPC_EYCC;
 	    else
 		    p_image->color_space = OPJ_CLRSPC_UNKNOWN;
 

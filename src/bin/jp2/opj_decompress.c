@@ -682,6 +682,8 @@ static void info_callback(const char *msg, void *client_data) {
 /* -------------------------------------------------------------------------- */
 int main(int argc, char **argv)
 {
+	FILE *fsrc = NULL;
+
 	opj_dparameters_t parameters;			/* decompression parameters */
 	opj_image_t* image = NULL;
 	opj_stream_t *l_stream = NULL;				/* Stream */
@@ -751,10 +753,16 @@ int main(int argc, char **argv)
 
 		/* read the input file and put it in memory */
 		/* ---------------------------------------- */
+		fsrc = fopen(parameters.infile, "rb");
+		if (!fsrc) {
+			fprintf(stderr, "ERROR -> failed to open %s for reading\n", parameters.infile);
+			return EXIT_FAILURE;
+		}
 
-		l_stream = opj_stream_create_default_file_stream_v3(parameters.infile,1);
+		l_stream = opj_stream_create_default_file_stream(fsrc,1);
 		if (!l_stream){
-			fprintf(stderr, "ERROR -> failed to create the stream from the file %s\n", parameters.infile);
+			fclose(fsrc);
+			fprintf(stderr, "ERROR -> failed to create the stream from the file\n");
 			return EXIT_FAILURE;
 		}
 
@@ -782,7 +790,7 @@ int main(int argc, char **argv)
 			}
 			default:
 				fprintf(stderr, "skipping file..\n");
-				opj_stream_destroy_v3(l_stream);
+				opj_stream_destroy(l_stream);
 				continue;
 		}
 
@@ -794,7 +802,8 @@ int main(int argc, char **argv)
 		/* Setup the decoder decoding parameters using user parameters */
 		if ( !opj_setup_decoder(l_codec, &parameters) ){
 			fprintf(stderr, "ERROR -> opj_compress: failed to setup the decoder\n");
-			opj_stream_destroy_v3(l_stream);
+			opj_stream_destroy(l_stream);
+			fclose(fsrc);
 			opj_destroy_codec(l_codec);
 			return EXIT_FAILURE;
 		}
@@ -803,7 +812,8 @@ int main(int argc, char **argv)
 		/* Read the main header of the codestream and if necessary the JP2 boxes*/
 		if(! opj_read_header(l_stream, l_codec, &image)){
 			fprintf(stderr, "ERROR -> opj_decompress: failed to read the header\n");
-			opj_stream_destroy_v3(l_stream);
+			opj_stream_destroy(l_stream);
+			fclose(fsrc);
 			opj_destroy_codec(l_codec);
 			opj_image_destroy(image);
 			return EXIT_FAILURE;
@@ -814,9 +824,10 @@ int main(int argc, char **argv)
 			if (!opj_set_decode_area(l_codec, image, (OPJ_INT32)parameters.DA_x0,
 					(OPJ_INT32)parameters.DA_y0, (OPJ_INT32)parameters.DA_x1, (OPJ_INT32)parameters.DA_y1)){
 				fprintf(stderr,	"ERROR -> opj_decompress: failed to set the decoded area\n");
-				opj_stream_destroy_v3(l_stream);
+				opj_stream_destroy(l_stream);
 				opj_destroy_codec(l_codec);
 				opj_image_destroy(image);
+				fclose(fsrc);
 				return EXIT_FAILURE;
 			}
 
@@ -824,8 +835,9 @@ int main(int argc, char **argv)
 			if (!(opj_decode(l_codec, l_stream, image) && opj_end_decompress(l_codec,	l_stream))) {
 				fprintf(stderr,"ERROR -> opj_decompress: failed to decode image!\n");
 				opj_destroy_codec(l_codec);
-				opj_stream_destroy_v3(l_stream);
+				opj_stream_destroy(l_stream);
 				opj_image_destroy(image);
+				fclose(fsrc);
 				return EXIT_FAILURE;
 			}
 		}
@@ -835,23 +847,26 @@ int main(int argc, char **argv)
 			/*if (!opj_set_decoded_resolution_factor(l_codec, 5)) {
 				fprintf(stderr, "ERROR -> opj_decompress: failed to set the resolution factor tile!\n");
 				opj_destroy_codec(l_codec);
-				opj_stream_destroy_v3(l_stream);
+				opj_stream_destroy(l_stream);
 				opj_image_destroy(image);
+				fclose(fsrc);
 				return EXIT_FAILURE;
 			}*/
 
 			if (!opj_get_decoded_tile(l_codec, l_stream, image, parameters.tile_index)) {
 				fprintf(stderr, "ERROR -> opj_decompress: failed to decode tile!\n");
 				opj_destroy_codec(l_codec);
-				opj_stream_destroy_v3(l_stream);
+				opj_stream_destroy(l_stream);
 				opj_image_destroy(image);
+				fclose(fsrc);
 				return EXIT_FAILURE;
 			}
 			fprintf(stdout, "tile %d is decoded!\n\n", parameters.tile_index);
 		}
 
 		/* Close the byte stream */
-		opj_stream_destroy_v3(l_stream);
+		opj_stream_destroy(l_stream);
+		fclose(fsrc);
 
 		if(image->color_space == OPJ_CLRSPC_SYCC){
 			color_sycc_to_rgb(image); /* FIXME */

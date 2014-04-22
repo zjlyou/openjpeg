@@ -968,13 +968,9 @@ static int parse_cmdline_encoder(int argc, char **argv, opj_cparameters_t *param
             int fps=0;
             sscanf(opj_optarg,"%d",&fps);
             if(fps == 24){
-                parameters->rsiz = OPJ_PROFILE_CINEMA_2K;
-                parameters->max_comp_size = OPJ_CINEMA_24_COMP;
-                parameters->max_cs_size = OPJ_CINEMA_24_CS;
+                parameters->cp_cinema = OPJ_CINEMA2K_24;
             }else if(fps == 48 ){
-                parameters->rsiz = OPJ_PROFILE_CINEMA_2K;
-                parameters->max_comp_size = OPJ_CINEMA_48_COMP;
-                parameters->max_cs_size = OPJ_CINEMA_48_CS;
+                parameters->cp_cinema = OPJ_CINEMA2K_48;
             }else {
                 fprintf(stderr,"Incorrect value!! must be 24 or 48\n");
                 return 1;
@@ -989,7 +985,7 @@ static int parse_cmdline_encoder(int argc, char **argv, opj_cparameters_t *param
 
         case 'y':			/* Digital Cinema 4K profile compliance*/
         {
-            parameters->rsiz = OPJ_PROFILE_CINEMA_4K;
+            parameters->cp_cinema = OPJ_CINEMA4K_24;
             fprintf(stdout,"CINEMA 4K profile activated\n"
                     "Other options specified could be overriden\n");
         }
@@ -1511,6 +1507,7 @@ static void info_callback(const char *msg, void *client_data) {
  */
 /* -------------------------------------------------------------------------- */
 int main(int argc, char **argv) {
+	FILE *fout = NULL;
 
     opj_cparameters_t parameters;	/* compression parameters */
 
@@ -1738,7 +1735,7 @@ int main(int argc, char **argv) {
         }
         default:
             fprintf(stderr, "skipping file..\n");
-            opj_stream_destroy_v3(l_stream);
+            opj_stream_destroy(l_stream);
             continue;
         }
 
@@ -1756,8 +1753,16 @@ int main(int argc, char **argv) {
         }
         opj_setup_encoder(l_codec, &parameters, image);
 
+		/* Open the output file*/
+		fout = fopen(parameters.outfile, "wb");
+		if (! fout) {
+			fprintf(stderr, "Not enable to create output file!\n");
+			opj_stream_destroy(l_stream);
+			return 1;
+		}
+
         /* open a byte stream for writing and allocate memory for all tiles */
-        l_stream = opj_stream_create_default_file_stream_v3(parameters.outfile,OPJ_FALSE);
+        l_stream = opj_stream_create_default_file_stream(fout,OPJ_FALSE);
         if (! l_stream){
             return 1;
         }
@@ -1776,7 +1781,8 @@ int main(int argc, char **argv) {
             for (i=0;i<l_nb_tiles;++i) {
                 if (! opj_write_tile(l_codec,i,l_data,l_data_size,l_stream)) {
                     fprintf(stderr, "ERROR -> test_tile_encoder: failed to write the tile %d!\n",i);
-                    opj_stream_destroy_v3(l_stream);
+                    opj_stream_destroy(l_stream);
+          fclose(fout);
                     opj_destroy_codec(l_codec);
                     opj_image_destroy(image);
                     return 1;
@@ -1796,7 +1802,8 @@ int main(int argc, char **argv) {
         }
 
         if (!bSuccess)  {
-            opj_stream_destroy_v3(l_stream);
+            opj_stream_destroy(l_stream);
+          fclose(fout);
             opj_destroy_codec(l_codec);
             opj_image_destroy(image);
             fprintf(stderr, "failed to encode image\n");
@@ -1805,7 +1812,8 @@ int main(int argc, char **argv) {
 
         fprintf(stderr,"Generated outfile %s\n",parameters.outfile);
         /* close and free the byte stream */
-        opj_stream_destroy_v3(l_stream);
+        opj_stream_destroy(l_stream);
+		fclose(fout);
 
         /* free remaining compression structures */
         opj_destroy_codec(l_codec);

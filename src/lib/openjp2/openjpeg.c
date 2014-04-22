@@ -639,11 +639,10 @@ void OPJ_CALLCONV opj_set_default_encoder_parameters(opj_cparameters_t *paramete
 	if(parameters) {
 		memset(parameters, 0, sizeof(opj_cparameters_t));
 		/* default coding parameters */
-        parameters->cp_cinema = OPJ_OFF; /* DEPRECATED */
-        parameters->rsiz = OPJ_PROFILE_NONE;
+		parameters->cp_cinema = OPJ_OFF; 
 		parameters->max_comp_size = 0;
 		parameters->numresolution = 6;
-        parameters->cp_rsiz = OPJ_STD_RSIZ; /* DEPRECATED */
+		parameters->cp_rsiz = OPJ_STD_RSIZ;
 		parameters->cblockw_init = 64;
 		parameters->cblockh_init = 64;
 		parameters->prog_order = OPJ_LRCP;
@@ -794,11 +793,8 @@ OPJ_BOOL OPJ_CALLCONV opj_set_MCT(opj_cparameters_t *parameters,
 	OPJ_UINT32 l_mct_total_size = l_matrix_size + l_dc_shift_size;
 
 	/* add MCT capability */
-    if (OPJ_IS_PART2(parameters->rsiz)) {
-        parameters->rsiz |= OPJ_EXTENSION_MCT;
-    } else {
-        parameters->rsiz = ((OPJ_PROFILE_PART2) | (OPJ_EXTENSION_MCT));
-    }
+	OPJ_INT32 rsiz = (OPJ_INT32)parameters->cp_rsiz | (OPJ_INT32)OPJ_MCT;
+	parameters->cp_rsiz = (OPJ_RSIZ_CAPABILITIES)rsiz;
 	parameters->irreversible = 1;
 
 	/* use array based MCT */
@@ -921,44 +917,33 @@ void OPJ_CALLCONV opj_destroy_cstr_index(opj_codestream_index_t **p_cstr_index)
 	}
 }
 
-opj_stream_t* OPJ_CALLCONV opj_stream_create_default_file_stream_v3 (const char *fname, OPJ_BOOL p_is_read_stream)
+/* ---------------------------------------------------------------------- */
+opj_stream_t* OPJ_CALLCONV opj_stream_create_default_file_stream (FILE * p_file, OPJ_BOOL p_is_read_stream)
 {
-    return opj_stream_create_file_stream_v3(fname, OPJ_J2K_STREAM_CHUNK_SIZE, p_is_read_stream);
+	return opj_stream_create_file_stream(p_file,OPJ_J2K_STREAM_CHUNK_SIZE,p_is_read_stream);
 }
 
-opj_stream_t* OPJ_CALLCONV opj_stream_create_file_stream_v3 (
-        const char *fname, 
-		OPJ_SIZE_T p_size, 
-        OPJ_BOOL p_is_read_stream)
+opj_stream_t* OPJ_CALLCONV opj_stream_create_file_stream (	FILE * p_file, 
+															OPJ_SIZE_T p_size, 
+															OPJ_BOOL p_is_read_stream)
 {
-    opj_stream_t* l_stream = 00;
-    FILE *p_file;
-    const char *mode;
+	opj_stream_t* l_stream = 00;
 
-    if (! fname) {
-        return NULL;
-    }
-    
-    if(p_is_read_stream) mode = "rb"; else mode = "wb";
+	if (! p_file) {
+		return NULL;
+	}
 
-    p_file = fopen(fname, mode);
+	l_stream = opj_stream_create(p_size,p_is_read_stream);
+	if (! l_stream) {
+		return NULL;
+	}
 
-    if (! p_file) {
-	    return NULL;
-    }
+	opj_stream_set_user_data(l_stream, p_file);
+	opj_stream_set_user_data_length(l_stream, opj_get_data_length_from_file(p_file));
+	opj_stream_set_read_function(l_stream, (opj_stream_read_fn) opj_read_from_file);
+	opj_stream_set_write_function(l_stream, (opj_stream_write_fn) opj_write_from_file);
+	opj_stream_set_skip_function(l_stream, (opj_stream_skip_fn) opj_skip_from_file);
+	opj_stream_set_seek_function(l_stream, (opj_stream_seek_fn) opj_seek_from_file);
 
-    l_stream = opj_stream_create(p_size,p_is_read_stream);
-    if (! l_stream) {
-        fclose(p_file);
-        return NULL;
-    }
-
-    opj_stream_set_user_data_v3(l_stream, p_file, (opj_stream_free_user_data_fn) fclose);
-    opj_stream_set_user_data_length(l_stream, opj_get_data_length_from_file(p_file));
-    opj_stream_set_read_function(l_stream, (opj_stream_read_fn) opj_read_from_file);
-    opj_stream_set_write_function(l_stream, (opj_stream_write_fn) opj_write_from_file);
-    opj_stream_set_skip_function(l_stream, (opj_stream_skip_fn) opj_skip_from_file);
-    opj_stream_set_seek_function(l_stream, (opj_stream_seek_fn) opj_seek_from_file);
-
-    return l_stream;
+	return l_stream;
 }

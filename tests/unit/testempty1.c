@@ -71,6 +71,7 @@ int main(int argc, char *argv[])
   opj_image_t *image;
   opj_codec_t* l_codec = 00;
   OPJ_BOOL bSuccess;
+  FILE *f;
 	opj_stream_t *l_stream = 00;
   (void)argc;
   (void)argv;
@@ -110,12 +111,16 @@ int main(int argc, char *argv[])
 
   opj_setup_encoder(l_codec, &parameters, image);
 
-  l_stream = opj_stream_create_default_file_stream_v3("testempty1.j2k",OPJ_FALSE);
+  strcpy(parameters.outfile, "testempty1.j2k");
+  f = fopen(parameters.outfile, "wb");
+  assert( f );
+
+  l_stream = opj_stream_create_default_file_stream(f,OPJ_FALSE);
   assert(l_stream);
   bSuccess = opj_start_compress(l_codec,image,l_stream);
   if( !bSuccess )
     {
-    opj_stream_destroy_v3(l_stream);
+    opj_stream_destroy(l_stream);
     opj_destroy_codec(l_codec);
     opj_image_destroy(image);
     return 0;
@@ -127,7 +132,8 @@ int main(int argc, char *argv[])
   bSuccess = opj_end_compress(l_codec, l_stream);
   assert( bSuccess );
 
-  opj_stream_destroy_v3(l_stream);
+  opj_stream_destroy(l_stream);
+  fclose(f);
 
   opj_destroy_codec(l_codec);
   opj_image_destroy(image);

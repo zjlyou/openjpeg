@@ -304,6 +304,8 @@ typedef struct opj_tcp
 
 typedef struct opj_encoding_param
 {
+	/** Digital cinema profile*/
+	OPJ_CINEMA_MODE m_cinema;
 	/** Maximum rate for each component. If == 0, component size limitation is not considered */
 	OPJ_UINT32 m_max_comp_size;
 	/** Position of tile part flag in progression order*/
@@ -341,7 +343,7 @@ typedef struct opj_cp
 	/** Size of the image in bits*/
 	/*int img_size;*/
 	/** Rsiz*/
-    OPJ_UINT16 rsiz;
+	OPJ_RSIZ_CAPABILITIES rsiz;
 	/** XTOsiz */
 	OPJ_UINT32 tx0; /* MSD see norm */
 	/** YTOsiz */

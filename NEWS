@@ -2,7 +2,7 @@
 OpenJPEG NEWS - user visible changes
 ====================================
 
-Changes from OpenJPEG 2.0.0 to OpenJPEG 2.X.X
+Changes from OpenJPEG 2.0.0 to OpenJPEG 2.0.1
 ----------------------------------------------
 
 New Features:
@@ -12,19 +12,9 @@ New Features:
     * extended RAW support: it is now possible to input raw images
 	  with subsampled color components (422, 420, etc)
 	  
-API/ABI modifications: (see abi_compat_report in dev-utils/scripts)
+API/ABI modifications: (see abi_compat_report_2.0.1.html in dev-utils/scripts)
 
-    * Removed deprecated functions 
-	    - opj_stream_create_default_file_stream(FILE*,...)
-        - opj_stream_create_file_stream(FILE*,...)
-	* Added 
-        - opj_stream_create_default_file_stream_v3(char*,...)
-        - opj_stream_create_file_stream_v3(char*,...)
-        - opj_stream_destroy_v3(opj_stream_t*)
-        - opj_stream_set_user_data_v3(opj_stream_t* p_stream, ...)
-    * Changed
-        - 'alpha' field added to 'opj_image_comp' structure
-        - 'OPJ_CLRSPC_EYCC' added to enum COLOR_SPACE
+    * No changes, API/ABI fully compatible with 2.0.0
     
 Misc:
 
