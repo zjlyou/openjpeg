@@ -1,6 +1,9 @@
 #!/bin/sh -e
 
 # Upload script, you need to hve build openjpeg first
+# Steps:
+# $ ./release.sh
+# $ ./upload_sf_net.sh /tmp/openjpeg_release/openjpeg-build/openjpeg-2.0.1.tar.gz       
 
 # set -x
 
