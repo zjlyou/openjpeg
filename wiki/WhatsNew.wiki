@@ -5,6 +5,10 @@
 
 <wiki:gadget url="http://www.openjpeg.org/gadgetFeedXML/gadget.xml" up_feeds="https://code.google.com/feeds/p/openjpeg/svnchanges/basic" up_maxFeeds="1" width="500" height="150" border="1"/>
 
+==April 2014: OpenJPEG 2.0.1 released==
+
+[Downloads OpenJPEG 2.0.1] has been released. More info [http://openjpeg.googlecode.com/svn/tags/version.2.0.1/NEWS here] and a detailed view [http://openjpeg.googlecode.com/svn/tags/version.2.0.1/CHANGES here].
+
 ==March 2014: OpenJPEG 1.5.2 released==
 
 [Downloads OpenJPEG 1.5.2] has been released. More info [http://openjpeg.googlecode.com/svn/tags/version.1.5.2/NEWS here] and a detailed view [http://openjpeg.googlecode.com/svn/tags/version.1.5.2/CHANGES here].
