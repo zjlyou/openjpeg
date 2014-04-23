@@ -1,0 +1,18 @@
+In order to install a x64 compiler with Visual Studio Express 2010 you may want to read first:
+
+* http://stackoverflow.com/questions/19366006/error-when-installing-windows-sdk-7-1
+* http://stackoverflow.com/questions/1901279/windows-7-sdk-installation-failure
+* http://stackoverflow.com/questions/1865069/how-to-compile-a-64-bit-application-using-visual-c-2010-express
+* http://stackoverflow.com/questions/8044385/64-bit-build-on-microsoft-visual-c-express-2010
+
+In summary you need to install (uninstall everything if needed) in this order:
+1. VS2010 C++ Express
+2. SDK 7.1
+3. VS2010 SP1
+4. SP1 Compiler patch KB2519277
+
+After Step 4, you'll find cl.exe at:
+
+C:/Program Files/Microsoft Visual Studio 10.0/VC/bin/cl.exe
+C:/Program Files/Microsoft Visual Studio 10.0/VC/bin/x86_amd64/cl.exe
+
