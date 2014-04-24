@@ -1,12 +1,14 @@
 # Client maintainer: mathieu . malaterre  gmail . com
 
 set(CTEST_CMAKE_GENERATOR "NMake Makefiles")
-set(ENV{CFLAGS} "/W3")
 
 macro(dashboard_hook_init)
   set( dashboard_cache "
   BUILD_TESTING:BOOL=ON
   BUILD_THIRDPARTY:BOOL=ON
+  BUILD_JPIP:BOOL=ON
+  BUILD_JPIP_SERVER:BOOL=ON
+  BUILD_SHARED_LIBS:BOOL=OFF
     "
     )
 endmacro(dashboard_hook_init)
