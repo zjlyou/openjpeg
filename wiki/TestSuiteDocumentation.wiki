@@ -96,3 +96,46 @@ property 'svn:mime-type' set on 'nonregression/opj_a2_colr.ppm'
 property 'svn:mime-type' set on 'nonregression/opj_d1_colr.ppm'
 property 'svn:mime-type' set on 'nonregression/opj_d2_colr.ppm'
 }}}
+
+== encapsulated stream extraction ==
+
+openjpeg test suite requires that the input is either a jp2 or a j2k. Sometimes the bug appears within an encapsulated stream, eg. DICOM or PDF.
+
+=== DICOM extraction ===
+
+To extract a JP2 file from a DICOM file, you can use GDCM tools. Steps on a debian system:
+
+{{{
+$ sudo apt-get install gdcm-tools
+}}}
+
+Easy case, single image:
+
+{{{
+$ gdcmraw corrupt.dcm output.j2k
+$ file output.j2k
+output.j2k: JPEG 2000 codestream
+}}}
+
+=== pdf extraction ===
+
+To extract a JP2 file from a PDF file, you can use mupdf tools. Steps on a debian system:
+
+{{{
+$ sudo apt-get install mupdf-tools
+}}}
+
+Display the list of JPEG 2000 streams (JP2 file):
+
+{{{
+$ mutool show  corrupt.pdf grep | grep JPXDecode
+corrupt.pdf:5: <</BitsPerComponent 8/ColorSpace/DeviceRGB/Filter[/JPXDecode]/Height 48/Length 282624/Subtype/Image/Type/XObject/Width 48>>
+}}}
+
+The above case is easy since there is only a single object (object #5) to extract:
+
+{{{
+$ mutool show -be -o obj5.jp2 corrupt.pdf 5
+$ file obj5.jp2
+obj5.jp2: JPEG 2000 Part 1 (JP2)
+}}}
