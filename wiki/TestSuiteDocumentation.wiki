@@ -106,7 +106,7 @@ openjpeg test suite requires that the input is either a jp2 or a j2k. Sometimes 
 To extract a JP2 file from a DICOM file, you can use GDCM tools. Steps on a debian system:
 
 {{{
-$ sudo apt-get install gdcm-tools
+$ sudo apt-get install libgdcm-tools
 }}}
 
 Easy case, single image:
@@ -115,6 +115,36 @@ Easy case, single image:
 $ gdcmraw corrupt.dcm output.j2k
 $ file output.j2k
 output.j2k: JPEG 2000 codestream
+}}}
+
+While forbiden, it happens that a JP2 file is contained instead of a JPEG 2000 codestream, you need to pay attention to file extension for a clean test suite in OpenJPEG:
+
+{{{
+$ gdcmraw bogusjp2.dcm output.jp2
+$ file output.jp2
+output.jp2: JPEG 2000 Part 1 (JP2)
+}}}
+
+In some cases multiples JPEG 2000 codestream are contained in the DICOM file:
+
+{{{
+$ gdcminfo multi.dcm
+MediaStorage is 1.2.840.10008.5.1.4.1.1.12.1 [X-Ray Angiographic Image Storage]
+TransferSyntax is 1.2.840.10008.1.2.4.90 [JPEG 2000 Image Compression (Lossless Only)]
+NumberOfDimensions: 3
+Dimensions: (512,512,4)
+...
+}}}
+
+In which case you need to use the following syntax:
+
+{{{
+$ gdcmraw --split-frags -i multi.dcm -o output --pattern %02d.j2k
+$ file output*.j2k
+output00.j2k: JPEG 2000 codestream
+output01.j2k: JPEG 2000 codestream
+output02.j2k: JPEG 2000 codestream
+output03.j2k: JPEG 2000 codestream
 }}}
 
 === pdf extraction ===
