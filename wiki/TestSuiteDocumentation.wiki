@@ -169,3 +169,15 @@ $ mutool show -be -o obj5.jp2 corrupt.pdf 5
 $ file obj5.jp2
 obj5.jp2: JPEG 2000 Part 1 (JP2)
 }}}
+
+=== pdf extraction (difficult) ===
+
+Sometimes the PDF comes from a fuzz engine. And the PDF itself is corrupted. So it is harder to extract the JP2 stream. In those case, you can use the `pdf2jp2` command line tool (UNIX only) from openjpeg. You'll find it at:
+
+* https://code.google.com/p/openjpeg/source/browse/trunk/tests/pdf2jp2.c
+
+Of course you need to uncomment the line:
+
+https://code.google.com/p/openjpeg/source/browse/trunk/tests/CMakeLists.txt#103
+
+To have it compiled on your machine. Enjoy (feel free to report also bug with this tool on the mailing list)
